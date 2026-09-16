@@ -35,9 +35,20 @@
         const sectionIndex = Math.min(Math.floor(progress * 4), 3);
         setActiveSection(sectionIndex);
 
-        const video = videoRef.current;
-        if (video && video.duration && !isNaN(video.duration)) {
-          video.currentTime = progress * video.duration;
+      const handleScroll = useCallback(() => {
+  const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+  if (totalScroll <= 0) return;
+  const currentScroll = window.scrollY;
+  const progress = Math.min(Math.max(currentScroll / totalScroll, 0), 1);
+  setScrollProgress(progress);
+  const sectionIndex = Math.min(Math.floor(progress * 4), 3);
+  setActiveSection(sectionIndex);
+
+  const video = videoRef.current;
+  if (video && video.duration && !isNaN(video.duration)) {
+    video.currentTime = progress * video.duration;
+  }
+}, []);
         }
       }, []);
 
