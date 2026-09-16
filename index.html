@@ -1,590 +1,182 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Volume2, VolumeX, Sparkles, ChevronDown, Check, ArrowRight, X } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ASTRUT Genève • Calibre A-01</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM via CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel pour interpréter le React/JSX dans le navigateur -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-black text-white antialiased selection:bg-[#c9a96e] selection:text-black">
 
-export default function App() {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [activeSection, setActiveSection] = useState(0);
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
+  <div id="root"></div>
 
-  // Audio synthesizer ref for subtle mechanical ticking
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const tickIntervalRef = useRef<number | null>(null);
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useCallback } = React;
 
-  // Exact target/current playhead values for scrubbing
-  const currentPosRef = useRef(0);
-  const targetPosRef = useRef(0);
-  const lastTimeRef = useRef(performance.now());
-  const requestRef = useRef<number | null>(null);
+    function App() {
+      const videoRef = useRef(null);
+      const [scrollProgress, setScrollProgress] = useState(0);
+      const [activeSection, setActiveSection] = useState(0);
+      const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Check prefers-reduced-motion
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setIsReducedMotion(mediaQuery.matches);
+      const handleScroll = useCallback(() => {
+        const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+        if (totalScroll <= 0) return;
+        const currentScroll = window.scrollY;
+        const progress = Math.min(Math.max(currentScroll / totalScroll, 0), 1);
+        setScrollProgress(progress);
+        const sectionIndex = Math.min(Math.floor(progress * 4), 3);
+        setActiveSection(sectionIndex);
 
-    const handler = (e: MediaQueryListEvent) => {
-      setIsReducedMotion(e.matches);
-    };
-
-    mediaQuery.addEventListener('change', handler);
-    return () => mediaQuery.removeEventListener('change', handler);
-  }, []);
-
-  // Update target time and scroll progress on scroll
-  const handleScroll = useCallback(() => {
-    const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-    if (totalScroll <= 0) return;
-
-    const currentScroll = window.scrollY;
-    const progress = Math.min(Math.max(currentScroll / totalScroll, 0), 1);
-    setScrollProgress(progress);
-
-    // Section determination (0 to 3 for the 4 sections)
-    const sectionIndex = Math.min(Math.floor(progress * 4), 3);
-    setActiveSection(sectionIndex);
-
-    // Drive target time from scroll
-    const video = videoRef.current;
-    if (video && video.duration && !isNaN(video.duration) && video.duration > 0) {
-      targetPosRef.current = progress * video.duration;
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  // Video Scrubbing Animation Loop with strict exact smoothing formula
-  useEffect(() => {
-    const updateScrub = (now: number) => {
-      const dt = Math.min((now - lastTimeRef.current) / 1000, 0.1);
-      lastTimeRef.current = now;
-
-      const video = videoRef.current;
-
-      if (isReducedMotion) {
-        if (video && video.currentTime !== 0) {
-          try {
-            video.currentTime = 0;
-          } catch {
-            // Ignore potential seek errors
-          }
+        const video = videoRef.current;
+        if (video && video.duration && !isNaN(video.duration)) {
+          video.currentTime = progress * video.duration;
         }
-        currentPosRef.current = 0;
-      } else {
-        const target = targetPosRef.current;
-        let current = currentPosRef.current;
+      }, []);
 
-        // Exact smoothing logic requested: current += (target - current) * (1 - Math.exp(-dt * 8))
-        current += (target - current) * (1 - Math.exp(-dt * 8));
-        currentPosRef.current = current;
+      useEffect(() => {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, [handleScroll]);
 
-        if (video && video.duration && !isNaN(video.duration) && video.duration > 0) {
-          const clamped = Math.min(Math.max(current, 0), video.duration);
-          if (Math.abs(video.currentTime - clamped) > 0.003) {
-            try {
-              video.currentTime = clamped;
-            } catch {
-              // Ignore seek exceptions during fast scroll
-            }
-          }
-        }
-      }
+      const scrollToSection = (index) => {
+        const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const targetScroll = (index / 3) * totalScroll;
+        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
+      };
 
-      requestRef.current = requestAnimationFrame(updateScrub);
-    };
+      return (
+        <div class="relative w-full text-white bg-black font-sans">
+          {/* Vidéo de fond */}
+          <video
+            ref={videoRef}
+            src="Vidéo WhatsApp 2026-09-16 à 15:43:00.mp4"
+            muted
+            playsInline
+            preload="auto"
+            class="fixed top-0 left-0 w-full h-full object-cover z-0 pointer-events-none"
+          />
+          <div class="fixed top-0 left-0 w-full h-full bg-black/40 z-0 pointer-events-none"></div>
 
-    lastTimeRef.current = performance.now();
-    requestRef.current = requestAnimationFrame(updateScrub);
-
-    return () => {
-      if (requestRef.current) {
-        cancelAnimationFrame(requestRef.current);
-      }
-    };
-  }, [isReducedMotion]);
-
-  // Handle video loaded metadata
-  const onVideoLoadedMetadata = () => {
-    const video = videoRef.current;
-    if (video) {
-      video.pause();
-      handleScroll();
-    }
-  };
-
-  // Web Audio Haute Horlogerie mechanical tick synthesis
-  const toggleAudio = () => {
-    if (isAudioEnabled) {
-      if (tickIntervalRef.current) clearInterval(tickIntervalRef.current);
-      setIsAudioEnabled(false);
-    } else {
-      try {
-        const AudioContextClass =
-          window.AudioContext ||
-          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        const ctx = new AudioContextClass();
-        audioCtxRef.current = ctx;
-
-        const playTick = () => {
-          if (!audioCtxRef.current || audioCtxRef.current.state === 'suspended') return;
-          const osc = audioCtxRef.current.createOscillator();
-          const gain = audioCtxRef.current.createGain();
-          const filter = audioCtxRef.current.createBiquadFilter();
-
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(1400, audioCtxRef.current.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(300, audioCtxRef.current.currentTime + 0.02);
-
-          filter.type = 'highpass';
-          filter.frequency.setValueAtTime(800, audioCtxRef.current.currentTime);
-
-          gain.gain.setValueAtTime(0.015, audioCtxRef.current.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtxRef.current.currentTime + 0.02);
-
-          osc.connect(filter);
-          filter.connect(gain);
-          gain.connect(audioCtxRef.current.destination);
-
-          osc.start();
-          osc.stop(audioCtxRef.current.currentTime + 0.025);
-        };
-
-        if (ctx.state === 'suspended') {
-          ctx.resume();
-        }
-
-        tickIntervalRef.current = window.setInterval(playTick, 250); // 4Hz = 28,800 A/h
-        setIsAudioEnabled(true);
-      } catch (err) {
-        console.error('Audio initialization error:', err);
-      }
-    }
-  };
-
-  // Smooth scroll helper
-  const scrollToSection = (index: number) => {
-    const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-    const targetScroll = (index / 3) * totalScroll;
-    window.scrollTo({
-      top: targetScroll,
-      behavior: isReducedMotion ? 'auto' : 'smooth',
-    });
-  };
-
-  return (
-    <div className="relative min-h-screen bg-[#070709] text-white selection:bg-[#c9a96e]/30 selection:text-white">
-      {/* Background Video Element in position: fixed, width: 100vw, height: 100vh, object-fit: cover, z-index: -1 */}
-      <video
-        ref={videoRef}
-        id="bg-video"
-        src="Vidéo WhatsApp 2026-09-16 à 15:43:00.mp4"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        onLoadedMetadata={onVideoLoadedMetadata}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          objectFit: 'cover',
-          zIndex: -1,
-        }}
-      >
-        <source src="Vidéo WhatsApp 2026-09-16 à 15:43:00.mp4" type="video/mp4" />
-        <source src="WhatsApp Video 2026-09-16 at 15.43.00.mp4" type="video/mp4" />
-      </video>
-
-      {/* Subtle Dark Luxury Vignette Overlay for Text Legibility */}
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{
-          zIndex: 0,
-          background:
-            'radial-gradient(circle at center, rgba(7,7,9,0.2) 0%, rgba(7,7,9,0.55) 70%, rgba(7,7,9,0.85) 100%)',
-        }}
-      />
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{
-          zIndex: 0,
-          background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 75%, rgba(0,0,0,0.7) 100%)',
-        }}
-      />
-
-      {/* Top Luxury Minimalist Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-6 pointer-events-none">
-        <div className="flex items-center space-x-4 pointer-events-auto">
-          <span className="font-display tracking-[0.35em] text-sm md:text-base font-semibold text-white/90">
-            ASTRUT
-          </span>
-          <span className="hidden sm:inline-block w-px h-3 bg-white/20"></span>
-          <span className="hidden sm:inline-block text-[11px] uppercase tracking-[0.25em] text-white/50 font-sans-luxury">
-            Genève • Calibre A-01
-          </span>
-        </div>
-
-        {/* Minimal Actions & Status */}
-        <div className="flex items-center space-x-4 md:space-x-6 pointer-events-auto">
-          {/* Subtle audio toggle */}
-          <button
-            id="audio-toggle-btn"
-            onClick={toggleAudio}
-            title={isAudioEnabled ? "Désactiver le son mécanique" : "Activer l'ambiance mécanique"}
-            className="flex items-center space-x-2 text-xs tracking-widest uppercase text-white/60 hover:text-[#c9a96e] transition-colors duration-300 px-3 py-1.5 rounded-full border border-white/10 hover:border-[#c9a96e]/40 backdrop-blur-md bg-black/20"
-          >
-            {isAudioEnabled ? (
-              <>
-                <Volume2 className="w-3.5 h-3.5 text-[#c9a96e] animate-pulse" />
-                <span className="hidden md:inline text-[10px]">28,800 A/h</span>
-              </>
-            ) : (
-              <>
-                <VolumeX className="w-3.5 h-3.5" />
-                <span className="hidden md:inline text-[10px]">Son</span>
-              </>
-            )}
-          </button>
-
-          {/* Section Indicator */}
-          <div className="text-xs font-mono tracking-widest text-white/40">
-            <span className="text-[#c9a96e] font-medium">0{activeSection + 1}</span>
-            <span className="mx-1 opacity-30">/</span>
-            <span>04</span>
-          </div>
-        </div>
-      </header>
-
-      {/* Chapter Vertical Navigation Pills (Right side) */}
-      <nav className="fixed right-6 md:right-10 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col space-y-4">
-        {[0, 1, 2, 3].map((idx) => (
-          <button
-            key={idx}
-            id={`nav-dot-${idx}`}
-            onClick={() => scrollToSection(idx)}
-            className="group flex items-center space-x-3 text-right cursor-pointer py-1"
-          >
-            <span
-              className={`text-[10px] uppercase tracking-[0.2em] transition-all duration-300 font-sans-luxury opacity-0 group-hover:opacity-100 ${
-                activeSection === idx ? 'text-[#c9a96e] opacity-100' : 'text-white/40'
-              }`}
-            >
-              {['Astrut', 'Précision', 'Tourbillon', 'Collection'][idx]}
-            </span>
-            <span
-              className={`w-1.5 transition-all duration-500 rounded-full ${
-                activeSection === idx
-                  ? 'h-6 bg-[#c9a96e] shadow-[0_0_8px_rgba(201,169,110,0.8)]'
-                  : 'h-1.5 bg-white/20 group-hover:bg-white/60'
-              }`}
-            />
-          </button>
-        ))}
-      </nav>
-
-      {/* 400vh Scrollable Container with 4 Distinct 100vh Storytelling Sections */}
-      <main className="relative z-10 w-full" style={{ height: '400vh' }}>
-        {/* SECTION 1: ASTRUT TIMEPIECE (Centré, Élégant) */}
-        <section
-          id="section-1"
-          className="h-screen w-full flex flex-col items-center justify-center text-center px-6 sticky top-0"
-        >
-          <div
-            className={`max-w-4xl mx-auto flex flex-col items-center transition-all duration-700 ease-out transform ${
-              activeSection === 0
-                ? 'opacity-100 translate-y-0 scale-100'
-                : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-            }`}
-          >
-            <div className="inline-flex items-center space-x-2 text-[#c9a96e] text-xs uppercase tracking-[0.35em] mb-4 font-sans-luxury">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Haute Horlogerie Suisse</span>
+          <!-- Header -->
+          <header class="fixed top-0 left-0 w-full p-8 flex justify-between items-center z-20 mix-blend-difference">
+            <div class="text-xs uppercase tracking-[0.3em] font-medium">
+              ASTRUT Genève • Calibre A-01
             </div>
-
-            <h1 className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-[0.25em] sm:tracking-[0.35em] font-light text-white mb-6 uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
-              ASTRUT
-              <span className="block text-2xl sm:text-4xl md:text-5xl font-extralight tracking-[0.3em] text-[#e4d5b7] mt-2">
-                TIMEPIECE
-              </span>
-            </h1>
-
-            <p className="max-w-xl text-sm sm:text-base text-zinc-300 font-serif-luxury italic tracking-wide leading-relaxed mb-8">
-              La quintessence de l&apos;ingénierie mécanique suisse incarnée dans un boîtier d&apos;exception.
-            </p>
-
-            <div className="flex items-center space-x-8 text-[11px] uppercase tracking-[0.25em] text-zinc-400 font-sans-luxury border-t border-b border-white/10 py-3 px-6">
-              <span>Série Limitée : 25 Pièces</span>
-              <span className="w-1 h-1 rounded-full bg-[#c9a96e]"></span>
-              <span>Calibre A-01</span>
+            <div class="text-xs uppercase tracking-[0.2em] font-mono">
+              0{activeSection + 1} / 04
             </div>
+          </header>
 
-            {/* Subtle Scroll Hint */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 opacity-70 animate-bounce">
-              <span className="text-[9px] uppercase tracking-[0.3em] text-white/50">Défiler</span>
-              <ChevronDown className="w-4 h-4 text-[#c9a96e]" />
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 2: L'Art de la Précision (Aligné à gauche) */}
-        <section
-          id="section-2"
-          className="h-screen w-full flex items-center justify-start px-8 sm:px-16 md:px-24 lg:px-32 sticky top-0"
-        >
-          <div
-            className={`max-w-2xl text-left transition-all duration-700 ease-out transform ${
-              activeSection === 1
-                ? 'opacity-100 translate-x-0'
-                : 'opacity-0 -translate-x-12 pointer-events-none'
-            }`}
-          >
-            <div className="text-xs uppercase tracking-[0.35em] text-[#c9a96e] mb-3 font-mono">
-              02 / Architecture & Mécanique
-            </div>
-
-            <h2 className="font-display text-3xl sm:text-5xl md:text-6xl tracking-[0.15em] font-normal text-white mb-6 uppercase">
-              L&apos;Art de la <br />
-              <span className="text-[#e4d5b7] font-light italic font-serif-luxury lowercase tracking-normal text-4xl sm:text-6xl md:text-7xl">
-                Précision
-              </span>
-            </h2>
-
-            <p className="text-base sm:text-lg text-zinc-300 font-sans-luxury font-light leading-relaxed mb-8 max-w-lg">
-              Chaque composant est façonné et anglé à la main au micron près. Une symbiose parfaite entre tradition séculaire et tolérances nanométriques.
-            </p>
-
-            <div className="grid grid-cols-2 gap-6 pt-4 border-t border-white/10 max-w-md">
-              <div>
-                <span className="block font-display text-xl sm:text-2xl text-white">28,800</span>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-sans-luxury">
-                  Alternances / Heure
-                </span>
-              </div>
-              <div>
-                <span className="block font-display text-xl sm:text-2xl text-white">72 Heures</span>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-sans-luxury">
-                  Réserve de Marche
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 3: Mouvement Tourbillon (Aligné à droite) */}
-        <section
-          id="section-3"
-          className="h-screen w-full flex items-center justify-end px-8 sm:px-16 md:px-24 lg:px-32 sticky top-0"
-        >
-          <div
-            className={`max-w-2xl text-right transition-all duration-700 ease-out transform ${
-              activeSection === 2
-                ? 'opacity-100 translate-x-0'
-                : 'opacity-0 translate-x-12 pointer-events-none'
-            }`}
-          >
-            <div className="text-xs uppercase tracking-[0.35em] text-[#c9a96e] mb-3 font-mono">
-              03 / Complication Majeure
-            </div>
-
-            <h2 className="font-display text-3xl sm:text-5xl md:text-6xl tracking-[0.15em] font-normal text-white mb-6 uppercase">
-              Mouvement <br />
-              <span className="text-[#e4d5b7] font-light italic font-serif-luxury lowercase tracking-normal text-4xl sm:text-6xl md:text-7xl">
-                Tourbillon
-              </span>
-            </h2>
-
-            <p className="text-base sm:text-lg text-zinc-300 font-sans-luxury font-light leading-relaxed mb-8 max-w-lg ml-auto">
-              Une cage volante défiant la gravité terrestre pour une régularité chronométrique absolue. Réalisée en titane poli miroir pesant à peine 0,28 gramme.
-            </p>
-
-            <div className="flex justify-end space-x-6 pt-4 border-t border-white/10 max-w-md ml-auto">
-              <div>
-                <span className="block font-display text-xl sm:text-2xl text-white">Titane G5</span>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-sans-luxury">
-                  Cage 1 Tour / Min
-                </span>
-              </div>
-              <div>
-                <span className="block font-display text-xl sm:text-2xl text-white">33 Rubis</span>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-sans-luxury">
-                  Pivots Synthétiques
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SECTION 4: Découvrir la Collection (Centré avec bouton d'action minimaliste) */}
-        <section
-          id="section-4"
-          className="h-screen w-full flex flex-col items-center justify-center text-center px-6 sticky top-0"
-        >
-          <div
-            className={`max-w-3xl mx-auto flex flex-col items-center transition-all duration-700 ease-out transform ${
-              activeSection === 3
-                ? 'opacity-100 translate-y-0 scale-100'
-                : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-            }`}
-          >
-            <div className="text-xs uppercase tracking-[0.35em] text-[#c9a96e] mb-4 font-mono">
-              04 / L&apos;Écrin Temporel
-            </div>
-
-            <h2 className="font-display text-4xl sm:text-6xl md:text-7xl tracking-[0.2em] font-light text-white mb-6 uppercase">
-              Découvrir la <br />
-              <span className="text-[#e4d5b7] font-light italic font-serif-luxury lowercase tracking-normal text-5xl sm:text-7xl md:text-8xl">
-                Collection
-              </span>
-            </h2>
-
-            <p className="max-w-lg text-sm sm:text-base text-zinc-300 font-sans-luxury font-light leading-relaxed mb-10">
-              Acquisition exclusive sur demande privée auprès de nos maîtres horlogers de Genève.
-            </p>
-
-            {/* Minimalist Luxury Action Button */}
-            <div className="flex flex-col sm:flex-row items-center gap-4">
+          <!-- Navigation droite -->
+          <nav class="fixed right-8 top-1/2 -translate-y-1/2 z-20 flex flex-col space-y-4">
+            {['Astrut', 'Précision', 'Tourbillon', 'Collection'].map((item, idx) => (
               <button
-                id="cta-reserve-btn"
-                onClick={() => setIsModalOpen(true)}
-                className="group relative inline-flex items-center space-x-3 px-8 py-4 bg-white text-black hover:bg-[#c9a96e] hover:text-black font-sans-luxury text-xs uppercase tracking-[0.25em] font-medium transition-all duration-500 rounded-none shadow-[0_4px_30px_rgba(255,255,255,0.15)] hover:shadow-[0_4px_30px_rgba(201,169,110,0.4)] cursor-pointer"
+                key={idx}
+                onClick={() => scrollToSection(idx)}
+                class={`text-right text-xs uppercase tracking-[0.2em] transition-all duration-300 ${
+                  activeSection === idx ? 'text-[#c9a96e] font-bold' : 'text-white/50 hover:text-white'
+                }`}
               >
-                <span>Prendre Rendez-vous</span>
-                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+                {item}
               </button>
+            ))}
+          </nav>
 
-              <button
-                id="cta-specs-btn"
-                onClick={() => scrollToSection(0)}
-                className="inline-flex items-center space-x-2 px-6 py-4 border border-white/20 hover:border-white text-white/80 hover:text-white font-sans-luxury text-xs uppercase tracking-[0.25em] transition-all duration-300 cursor-pointer"
-              >
-                <span>Revoir l&apos;Expérience</span>
-              </button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Minimalist Luxury Concierge Acquisition Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fade-in">
-          <div
-            id="concierge-modal"
-            className="relative w-full max-w-lg bg-[#0c0c0f] border border-[#c9a96e]/30 p-8 sm:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.9)]"
-          >
-            <button
-              id="close-modal-btn"
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-6 right-6 text-white/40 hover:text-white transition-colors cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            <div className="text-center mb-8">
-              <span className="text-[10px] uppercase tracking-[0.35em] text-[#c9a96e] font-mono block mb-2">
-                Manufacture Astrut • Service Privé
-              </span>
-              <h3 className="font-display text-2xl sm:text-3xl tracking-[0.15em] text-white uppercase mb-2">
-                Consultation Privée
-              </h3>
-              <p className="text-xs text-zinc-400 font-serif-luxury italic">
-                Réservez une présentation confidentielle de la pièce numéro 07/25.
+          <!-- Sections -->
+          <main class="relative z-10">
+            <!-- Section 1 -->
+            <section class="h-screen flex flex-col justify-center items-center text-center px-4">
+              <span class="text-xs uppercase tracking-[0.4em] text-[#c9a96e] mb-4">Haute Horlogerie Suisse</span>
+              <h1 class="text-5xl md:text-7xl font-light tracking-tight mb-6">ASTRUT TIMEPIECE</h1>
+              <p class="max-w-md text-sm text-white/70 tracking-wide font-light mb-8">
+                La quintessence de l'ingénierie mécanique suisse incarnée dans un boîtier d'exception.
               </p>
-            </div>
+              <span class="text-[10px] uppercase tracking-[0.3em] text-white/40">Série Limitée : 25 Pièces Calibre A-01</span>
+            </section>
 
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert(
-                  'Votre demande de rendez-vous a été transmise à notre concierge privé. Nous vous contacterons sous 24 heures.'
-                );
-                setIsModalOpen(false);
-              }}
-              className="space-y-4 text-left"
-            >
-              <div>
-                <label htmlFor="client-name" className="block text-[10px] uppercase tracking-[0.2em] text-zinc-400 mb-1">
-                  Nom & Prénom
-                </label>
-                <input
-                  id="client-name"
-                  required
-                  type="text"
-                  placeholder="M. / Mme"
-                  className="w-full bg-[#141418] border border-white/10 px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#c9a96e] transition-colors"
-                />
-              </div>
+            <!-- Section 2 -->
+            <section class="h-screen flex flex-col justify-center items-start px-12 md:px-24">
+              <span class="text-xs uppercase tracking-[0.4em] text-[#c9a96e] mb-4">02 / Architecture & Mécanique</span>
+              <h2 class="text-4xl md:text-6xl font-light mb-6">L'Art de la<br />Précision</h2>
+              <p class="max-w-sm text-sm text-white/70 tracking-wide font-light mb-6">
+                Chaque composant est façonné et anglé à la main au micron près. Une symbiose parfaite entre tradition séculaire et tolérances nanométriques.
+              </p>
+            </section>
 
-              <div>
-                <label htmlFor="client-email" className="block text-[10px] uppercase tracking-[0.2em] text-zinc-400 mb-1">
-                  Email Confidentiel
-                </label>
-                <input
-                  id="client-email"
-                  required
-                  type="email"
-                  placeholder="contact@domaine.com"
-                  className="w-full bg-[#141418] border border-white/10 px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#c9a96e] transition-colors"
-                />
-              </div>
+            <!-- Section 3 -->
+            <section class="h-screen flex flex-col justify-center items-end text-right px-12 md:px-24">
+              <span class="text-xs uppercase tracking-[0.4em] text-[#c9a96e] mb-4">03 / Complication Majeure</span>
+              <h2 class="text-4xl md:text-6xl font-light mb-6">Mouvement<br />Tourbillon</h2>
+              <p class="max-w-sm text-sm text-white/70 tracking-wide font-light mb-6">
+                Une cage volante défiant la gravité terrestre pour une régularité chronométrique absolue. Réalisée en titane poli miroir pesant à peine 0,28 gramme.
+              </p>
+            </section>
 
-              <div>
-                <label htmlFor="client-location" className="block text-[10px] uppercase tracking-[0.2em] text-zinc-400 mb-1">
-                  Lieu de présentation souhaité
-                </label>
-                <select
-                  id="client-location"
-                  className="w-full bg-[#141418] border border-white/10 px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#c9a96e] transition-colors"
-                >
-                  <option value="geneve">Salon Privé — Genève, Rue du Rhône</option>
-                  <option value="paris">Salon Privé — Paris, Place Vendôme</option>
-                  <option value="zurich">Salon Privé — Zurich, Bahnhofstrasse</option>
-                  <option value="visio">Présentation Virtuelle Sécurisée</option>
-                </select>
-              </div>
+            <!-- Section 4 -->
+            <section class="h-screen flex flex-col justify-center items-center text-center px-4">
+              <span class="text-xs uppercase tracking-[0.4em] text-[#c9a96e] mb-4">04 / L'Écrin Temporel</span>
+              <h2 class="text-4xl md:text-6xl font-light mb-6">Découvrir la<br />Collection</h2>
+              <p class="max-w-md text-sm text-white/70 tracking-wide font-light mb-8">
+                Acquisition exclusive sur demande privée auprès de nos maîtres horlogers de Genève.
+              </p>
+              <button
+                onClick={() => setIsModalOpen(true)}
+                class="px-8 py-4 bg-white text-black hover:bg-[#c9a96e] font-xs uppercase tracking-[0.25em] font-medium transition-all duration-300"
+              >
+                Prendre Rendez-vous
+              </button>
+            </section>
+          </main>
 
-              <div className="pt-4">
+          <!-- Modal -->
+          {isModalOpen && (
+            <div class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+              <div class="bg-zinc-900 border border-white/10 p-8 max-w-md w-full relative text-left">
                 <button
-                  type="submit"
-                  id="submit-request-btn"
-                  className="w-full py-3.5 bg-[#c9a96e] hover:bg-[#dfbe80] text-black font-sans-luxury text-xs uppercase tracking-[0.25em] font-semibold transition-all duration-300 cursor-pointer"
+                  onClick={() => setIsModalOpen(false)}
+                  class="absolute top-4 right-4 text-white/50 hover:text-white"
                 >
-                  Confirmer la demande
+                  ✕
                 </button>
+                <h3 class="text-xl font-light mb-2">Consultation Privée</h3>
+                <p class="text-xs text-white/60 mb-6">Réservez une présentation confidentielle de la pièce numéro 07/25.</p>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  alert('Votre demande de rendez-vous a été transmise à notre concierge privé.');
+                  setIsModalOpen(false);
+                }} class="space-y-4 text-xs">
+                  <input type="text" placeholder="Nom & Prénom" required class="w-full bg-black/50 border border-white/20 p-3 text-white focus:outline-none focus:border-[#c9a96e]" />
+                  <input type="email" placeholder="Email Confidentiel" required class="w-full bg-black/50 border border-white/20 p-3 text-white focus:outline-none focus:border-[#c9a96e]" />
+                  <button type="submit" class="w-full py-3 bg-[#c9a96e] text-black font-medium uppercase tracking-widest hover:bg-white transition-colors">
+                    Confirmer la demande
+                  </button>
+                </form>
               </div>
-            </form>
-
-            <div className="mt-6 flex items-center justify-center space-x-2 text-[10px] text-zinc-500 tracking-wider">
-              <Check className="w-3.5 h-3.5 text-[#c9a96e]" />
-              <span>Garantie internationale de 5 ans & Certificat d&apos;Origine</span>
             </div>
-          </div>
-        </div>
-      )}
+          )}
 
-      {/* Minimal Fixed Bottom Status Bar */}
-      <footer className="fixed bottom-0 left-0 right-0 z-40 px-6 md:px-12 py-4 flex items-center justify-between pointer-events-none text-[10px] uppercase tracking-[0.25em] text-white/30 font-sans-luxury">
-        <div>© {new Date().getFullYear()} ASTRUT TIMEPIECE SA</div>
-        <div className="hidden sm:flex items-center space-x-2">
-          <span>Progression</span>
-          <div className="w-20 h-[2px] bg-white/10 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-[#c9a96e] transition-all duration-75 ease-out"
-              style={{ width: `${Math.round(scrollProgress * 100)}%` }}
-            />
-          </div>
-          <span>{Math.round(scrollProgress * 100)}%</span>
+          <!-- Footer -->
+          <footer class="fixed bottom-0 left-0 w-full p-6 flex justify-between items-center z-20 text-[10px] uppercase tracking-[0.2em] text-white/40 pointer-events-none">
+            <div>© {new Date().getFullYear()} ASTRUT TIMEPIECE SA</div>
+            <div>Progression {Math.round(scrollProgress * 100)}%</div>
+            <div>Swiss Made</div>
+          </footer>
         </div>
-        <div>Swiss Made</div>
-      </footer>
-    </div>
-  );
-}
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
