@@ -12,8 +12,14 @@
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
   <!-- Babel Standalone -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    /* Ombre subtile pour garder le texte parfaitement lisible sans bulles */
+    .text-[#c9a96e], .text-white, h1, h2, p, span {
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    }
+  </style>
 </head>
-<body class="bg-[#e5e7eb] text-zinc-900 antialiased selection:bg-[#b89456] selection:text-white overflow-x-hidden">
+<body class="bg-[#0a0a0a] text-white antialiased selection:bg-[#c9a96e] selection:text-black overflow-x-hidden">
 
   <div id="root"></div>
 
@@ -54,29 +60,25 @@
       };
 
       return (
-        <div class="relative w-full min-h-screen font-sans">
-          {/* Arrière-plan vidéo dézoomé sur fond gris clair */}
-          <div class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#f3f4f6]">
-            <div class="w-[85%] h-[85%] max-w-5xl max-h-[80vh] relative flex items-center justify-center">
-              <video
-                ref={videoRef}
-                src="video.mp4"
-                muted
-                playsInline
-                preload="auto"
-                class="w-full h-full object-contain rounded-3xl shadow-2xl transition-all duration-300 mix-blend-multiply opacity-90"
-              />
-            </div>
-            {/* Voile adoucissant léger */}
-            <div class="absolute inset-0 bg-gradient-to-b from-[#f3f4f6]/60 via-transparent to-[#f3f4f6]/80 pointer-events-none"></div>
+        <div class="relative w-full min-h-screen font-sans bg-[#0a0a0a]">
+          {/* Vidéo centrée avec fond totalement raccordé */}
+          <div class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#0a0a0a]">
+            <video
+              ref={videoRef}
+              src="video.mp4"
+              muted
+              playsInline
+              preload="auto"
+              class="w-[75%] h-[75%] max-w-4xl max-h-[75vh] object-contain opacity-95 pointer-events-none"
+            />
           </div>
 
-          {/* En-tête */}
+          {/* En-tête sans fond */}
           <header class="fixed top-0 left-0 w-full p-8 flex justify-between items-center z-20">
-            <div class="text-[11px] uppercase tracking-[0.3em] font-medium text-zinc-800">
+            <div class="text-[11px] uppercase tracking-[0.3em] font-medium text-white/80">
               ASTRUT Genève • Calibre A-01
             </div>
-            <div class="text-[11px] uppercase tracking-[0.2em] font-mono text-[#9e7a3b]">
+            <div class="text-[11px] uppercase tracking-[0.2em] font-mono text-[#c9a96e]">
               0{activeSection + 1} / 04
             </div>
           </header>
@@ -88,7 +90,7 @@
                 key={idx}
                 onClick={() => scrollToSection(idx)}
                 class={`text-right text-[10px] uppercase tracking-[0.25em] transition-all duration-300 ${
-                  activeSection === idx ? 'text-[#9e7a3b] font-bold scale-105' : 'text-zinc-400 hover:text-zinc-800'
+                  activeSection === idx ? 'text-[#c9a96e] font-bold scale-105' : 'text-white/40 hover:text-white'
                 }`}
               >
                 {item}
@@ -96,17 +98,17 @@
             ))}
           </nav>
 
-          {/* Contenu principal */}
+          {/* Contenu principal épuré (textes volants) */}
           <main class="relative z-10">
             {/* Section 1 */}
             <section class="h-screen flex flex-col justify-center items-center text-center px-4">
-              <div class="p-8 rounded-2xl bg-white/70 backdrop-blur-md border border-white/60 shadow-xl max-w-xl">
-                <span class="text-[10px] uppercase tracking-[0.4em] text-[#9e7a3b] font-semibold block mb-3">Haute Horlogerie Suisse</span>
-                <h1 class="text-4xl md:text-6xl font-extralight tracking-tight text-zinc-900 mb-4">ASTRUT TIMEPIECE</h1>
-                <p class="text-xs text-zinc-600 tracking-wider font-light mb-6 leading-relaxed">
+              <div class="max-w-xl">
+                <span class="text-[10px] uppercase tracking-[0.4em] text-[#c9a96e] block mb-3 font-medium">Haute Horlogerie Suisse</span>
+                <h1 class="text-4xl md:text-6xl font-extralight tracking-tight mb-4">ASTRUT TIMEPIECE</h1>
+                <p class="text-xs text-white/70 tracking-wider font-light mb-6 leading-relaxed">
                   La quintessence de l'ingénierie mécanique suisse incarnée dans un boîtier d'exception.
                 </p>
-                <span class="text-[9px] uppercase tracking-[0.3em] text-zinc-500 border-t border-b border-zinc-200 py-2 px-4 inline-block">
+                <span class="text-[9px] uppercase tracking-[0.3em] text-white/40 border-t border-b border-white/10 py-2 px-4 inline-block">
                   Série Limitée : 25 Pièces • Calibre A-01
                 </span>
               </div>
@@ -114,20 +116,20 @@
 
             {/* Section 2 */}
             <section class="h-screen flex flex-col justify-center items-start px-8 md:px-24">
-              <div class="p-8 rounded-2xl bg-white/70 backdrop-blur-md border border-white/60 shadow-xl max-w-md">
-                <span class="text-[10px] uppercase tracking-[0.4em] text-[#9e7a3b] font-semibold block mb-3">02 / Architecture & Mécanique</span>
-                <h2 class="text-3xl md:text-5xl font-extralight text-zinc-900 mb-4">L'Art de la<br /><span class="italic text-[#9e7a3b]">Précision</span></h2>
-                <p class="text-xs text-zinc-600 tracking-wider font-light mb-6 leading-relaxed">
+              <div class="max-w-md">
+                <span class="text-[10px] uppercase tracking-[0.4em] text-[#c9a96e] block mb-3 font-medium">02 / Architecture & Mécanique</span>
+                <h2 class="text-3xl md:text-5xl font-extralight mb-4">L'Art de la<br /><span class="italic text-[#e4d5b7]">Précision</span></h2>
+                <p class="text-xs text-white/70 tracking-wider font-light mb-6 leading-relaxed">
                   Chaque composant est façonné et anglé à la main au micron près. Une symbiose parfaite entre tradition séculaire et tolérances nanométriques.
                 </p>
-                <div class="flex space-x-8 text-xs border-t border-zinc-200 pt-4">
+                <div class="flex space-x-8 text-xs border-t border-white/10 pt-4">
                   <div>
-                    <span class="block text-base font-semibold text-zinc-900">28,800</span>
-                    <span class="text-zinc-500 uppercase tracking-widest text-[8px]">Alternances / h</span>
+                    <span class="block text-base font-medium text-[#c9a96e]">28,800</span>
+                    <span class="text-white/40 uppercase tracking-widest text-[8px]">Alternances / h</span>
                   </div>
                   <div>
-                    <span class="block text-base font-semibold text-zinc-900">72H</span>
-                    <span class="text-zinc-500 uppercase tracking-widest text-[8px]">Réserve de Marche</span>
+                    <span class="block text-base font-medium text-[#c9a96e]">72H</span>
+                    <span class="text-white/40 uppercase tracking-widest text-[8px]">Réserve de Marche</span>
                   </div>
                 </div>
               </div>
@@ -135,10 +137,10 @@
 
             {/* Section 3 */}
             <section class="h-screen flex flex-col justify-center items-end text-right px-8 md:px-24">
-              <div class="p-8 rounded-2xl bg-white/70 backdrop-blur-md border border-white/60 shadow-xl max-w-md">
-                <span class="text-[10px] uppercase tracking-[0.4em] text-[#9e7a3b] font-semibold block mb-3">03 / Complication Majeure</span>
-                <h2 class="text-3xl md:text-5xl font-extralight text-zinc-900 mb-4">Mouvement<br /><span class="italic text-[#9e7a3b]">Tourbillon</span></h2>
-                <p class="text-xs text-zinc-600 tracking-wider font-light leading-relaxed">
+              <div class="max-w-md">
+                <span class="text-[10px] uppercase tracking-[0.4em] text-[#c9a96e] block mb-3 font-medium">03 / Complication Majeure</span>
+                <h2 class="text-3xl md:text-5xl font-extralight mb-4">Mouvement<br /><span class="italic text-[#e4d5b7]">Tourbillon</span></h2>
+                <p class="text-xs text-white/70 tracking-wider font-light leading-relaxed">
                   Une cage volante défiant la gravité terrestre pour une régularité chronométrique absolue. Réalisée en titane poli miroir pesant à peine 0,28 gramme.
                 </p>
               </div>
@@ -146,15 +148,15 @@
 
             {/* Section 4 */}
             <section class="h-screen flex flex-col justify-center items-center text-center px-4">
-              <div class="p-8 rounded-2xl bg-white/70 backdrop-blur-md border border-white/60 shadow-xl max-w-xl">
-                <span class="text-[10px] uppercase tracking-[0.4em] text-[#9e7a3b] font-semibold block mb-3">04 / L'Écrin Temporel</span>
-                <h2 class="text-3xl md:text-5xl font-extralight text-zinc-900 mb-4">Découvrir la<br /><span class="italic text-[#9e7a3b]">Collection</span></h2>
-                <p class="text-xs text-zinc-600 tracking-wider font-light mb-8">
+              <div class="max-w-xl">
+                <span class="text-[10px] uppercase tracking-[0.4em] text-[#c9a96e] block mb-3 font-medium">04 / L'Écrin Temporel</span>
+                <h2 class="text-3xl md:text-5xl font-extralight mb-4">Découvrir la<br /><span class="italic text-[#e4d5b7]">Collection</span></h2>
+                <p class="text-xs text-white/70 tracking-wider font-light mb-8">
                   Acquisition exclusive sur demande privée auprès de nos maîtres horlogers de Genève.
                 </p>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  class="px-8 py-3.5 bg-zinc-900 text-white hover:bg-[#9e7a3b] text-[10px] uppercase tracking-[0.25em] font-medium transition-all duration-300 rounded-lg shadow-md"
+                  class="px-8 py-3.5 bg-transparent border border-[#c9a96e] text-[#c9a96e] hover:bg-[#c9a96e] hover:text-black text-[10px] uppercase tracking-[0.25em] font-medium transition-all duration-300 rounded-xs"
                 >
                   Prendre Rendez-vous
                 </button>
@@ -164,24 +166,24 @@
 
           {/* Modal */}
           {isModalOpen && (
-            <div class="fixed inset-0 bg-zinc-900/40 backdrop-blur-md z-50 flex items-center justify-center p-4">
-              <div class="bg-white border border-zinc-200 p-8 max-w-md w-full relative text-left rounded-2xl shadow-2xl">
+            <div class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
+              <div class="bg-[#121212] border border-white/10 p-8 max-w-md w-full relative text-left rounded-lg">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  class="absolute top-4 right-4 text-zinc-400 hover:text-zinc-900 text-sm"
+                  class="absolute top-4 right-4 text-white/50 hover:text-white text-sm"
                 >
                   ✕
                 </button>
-                <h3 class="text-lg font-normal text-zinc-900 mb-1">Consultation Privée</h3>
-                <p class="text-[11px] text-zinc-500 mb-6">Réservez une présentation confidentielle de la pièce numéro 07/25.</p>
+                <h3 class="text-lg font-light mb-1">Consultation Privée</h3>
+                <p class="text-[11px] text-white/50 mb-6">Réservez une présentation confidentielle de la pièce numéro 07/25.</p>
                 <form onSubmit={(e) => {
                   e.preventDefault();
                   alert('Votre demande de rendez-vous a été transmise à notre concierge privé.');
                   setIsModalOpen(false);
                 }} class="space-y-4 text-xs">
-                  <input type="text" placeholder="Nom & Prénom" required class="w-full bg-zinc-50 border border-zinc-200 p-3 text-zinc-900 rounded-lg focus:outline-none focus:border-[#9e7a3b]" />
-                  <input type="email" placeholder="Email Confidentiel" required class="w-full bg-zinc-50 border border-zinc-200 p-3 text-zinc-900 rounded-lg focus:outline-none focus:border-[#9e7a3b]" />
-                  <button type="submit" class="w-full py-3 bg-[#9e7a3b] text-white font-medium uppercase tracking-widest hover:bg-zinc-900 transition-colors rounded-lg">
+                  <input type="text" placeholder="Nom & Prénom" required class="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-[#c9a96e]" />
+                  <input type="email" placeholder="Email Confidentiel" required class="w-full bg-black/50 border border-white/10 p-3 text-white focus:outline-none focus:border-[#c9a96e]" />
+                  <button type="submit" class="w-full py-3 bg-[#c9a96e] text-black font-medium uppercase tracking-widest hover:bg-white transition-colors">
                     Confirmer la demande
                   </button>
                 </form>
@@ -190,7 +192,7 @@
           )}
 
           {/* Pied de page */}
-          <footer class="fixed bottom-0 left-0 w-full p-6 flex justify-between items-center z-20 text-[9px] uppercase tracking-[0.2em] text-zinc-500 pointer-events-none">
+          <footer class="fixed bottom-0 left-0 w-full p-6 flex justify-between items-center z-20 text-[9px] uppercase tracking-[0.2em] text-white/30 pointer-events-none">
             <div>© ASTRUT TIMEPIECE SA</div>
             <div>Progression {Math.round(scrollProgress * 100)}%</div>
             <div>Swiss Made</div>
