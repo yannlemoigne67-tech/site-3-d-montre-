@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ASTRUT Genève • Calibre A-01</title>
+  <title>YLM • Haute Horlogerie</title>
   
-  <!-- Importation des polices élégantes (Cormorant Garamond + Montserrat) -->
+  <!-- Typographie Ultra-Moderne (Montserrat) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -22,12 +22,8 @@
     body {
       font-family: 'Montserrat', sans-serif;
     }
-    h1, h2, h3, .font-serif-luxury {
-      font-family: 'Cormorant Garamond', serif;
-    }
-    /* Ombre portée prononcée pour garantir une lisibilité maximale sur la vidéo */
     .text-glow {
-      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.95), 0 1px 4px rgba(0, 0, 0, 0.9);
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95), 0 2px 6px rgba(0, 0, 0, 0.9);
     }
   </style>
 </head>
@@ -43,6 +39,7 @@
       const [scrollProgress, setScrollProgress] = useState(0);
       const [activeSection, setActiveSection] = useState(0);
       const [isModalOpen, setIsModalOpen] = useState(false);
+      const [hoveredLetter, setHoveredLetter] = useState(null);
 
       const handleScroll = useCallback(() => {
         const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -71,6 +68,12 @@
         window.scrollTo({ top: targetScroll, behavior: 'smooth' });
       };
 
+      const homages = {
+        Y: { title: "YVES", sub: "Esthétique & Vision", desc: "Hommage au raffinement des formes et à la finesse architecturale." },
+        L: { title: "LOUIS", sub: "Héritage Breguet", desc: "Hommage au père de la haute horlogerie et inventeur du Tourbillon." },
+        M: { title: "MUDGE", sub: "Génie Mécanique", desc: "Hommage à l'inventeur de l'échappement à ancre, cœur des montres automatiques." }
+      };
+
       return (
         <div class="relative w-full min-h-screen bg-[#1e1e1e]">
           {/* Arrière-plan vidéo 16:9 */}
@@ -93,24 +96,51 @@
             </div>
           </div>
 
-          {/* En-tête */}
-          <header class="fixed top-0 left-0 w-full p-8 flex justify-between items-center z-20">
-            <div class="text-xs uppercase tracking-[0.4em] font-medium text-white text-glow">
-              ASTRUT Genève • Calibre A-01
+          {/* En-tête avec Logo YLM Interactif */}
+          <header class="fixed top-0 left-0 w-full px-8 py-6 flex justify-between items-center z-20 text-glow border-b border-white/10 backdrop-blur-xs bg-black/20">
+            {/* Gauche : Menu */}
+            <button class="flex items-center space-x-3 text-xs tracking-[0.2em] font-semibold hover:opacity-70 transition-opacity">
+              <span class="text-base">—</span>
+              <span>MENU</span>
+            </button>
+
+            {/* Centre : Logo Y L M Interactif */}
+            <div class="flex items-center space-x-3 text-2xl md:text-3xl font-black tracking-[0.3em] uppercase text-white font-sans">
+              {['Y', 'L', 'M'].map((letter) => (
+                <span
+                  key={letter}
+                  onMouseEnter={() => setHoveredLetter(letter)}
+                  onMouseLeave={() => setHoveredLetter(null)}
+                  class="cursor-pointer transition-all duration-300 hover:text-white hover:scale-125 text-white/90"
+                >
+                  {letter}
+                </span>
+              ))}
             </div>
-            <div class="text-xs uppercase tracking-[0.3em] font-mono text-white/80 text-glow">
-              0{activeSection + 1} / 04
+
+            {/* Droite : Liens */}
+            <div class="flex items-center space-x-6 text-[11px] tracking-[0.2em] font-medium text-white/90">
+              <button class="hidden md:inline hover:text-white transition-colors">COLLECTIONS</button>
             </div>
           </header>
 
+          {/* Info-Bulle d'Hommage en temps réel au survol des lettres */}
+          {hoveredLetter && (
+            <div class="fixed top-24 left-1/2 -translate-x-1/2 z-30 bg-black/90 border border-white/20 px-6 py-4 rounded-none text-center shadow-2xl backdrop-blur-md animate-fade-in max-w-sm">
+              <div class="text-xs font-black tracking-[0.3em] text-white">{homages[hoveredLetter].title}</div>
+              <div class="text-[10px] uppercase tracking-[0.2em] text-white/60 mb-1">{homages[hoveredLetter].sub}</div>
+              <p class="text-[11px] text-white/80 font-normal leading-tight">{homages[hoveredLetter].desc}</p>
+            </div>
+          )}
+
           {/* Navigation latérale */}
           <nav class="fixed right-8 top-1/2 -translate-y-1/2 z-20 flex flex-col space-y-6">
-            {['Astrut', 'Précision', 'Tourbillon', 'Collection'].map((item, idx) => (
+            {['Vision', 'Manifeste', 'Ingénierie', 'Réservation'].map((item, idx) => (
               <button
                 key={idx}
                 onClick={() => scrollToSection(idx)}
-                class={`text-right text-[11px] uppercase tracking-[0.3em] transition-all duration-300 text-glow ${
-                  activeSection === idx ? 'text-white font-bold scale-110 border-r-2 border-white pr-3' : 'text-white/40 hover:text-white'
+                class={`text-right text-[10px] uppercase tracking-[0.25em] transition-all duration-300 text-glow ${
+                  activeSection === idx ? 'text-white font-extrabold scale-110 border-r-2 border-white pr-3' : 'text-white/40 hover:text-white'
                 }`}
               >
                 {item}
@@ -118,50 +148,52 @@
             ))}
           </nav>
 
-          {/* Contenu principal avec textes grands et très lisibles */}
+          {/* Contenu principal */}
           <main class="relative z-10">
             {/* Section 1 */}
-            <section class="h-screen flex flex-col justify-center items-center text-center px-4">
+            <section class="h-screen flex flex-col justify-end pb-24 md:pb-32 px-8 md:px-20 text-left">
               <div class="max-w-3xl text-glow">
-                <span class="text-xs uppercase tracking-[0.6em] text-white/90 block mb-4 font-medium">Haute Horlogerie Suisse</span>
-                <h1 class="text-6xl md:text-8xl font-light tracking-tight mb-6 text-white leading-none">ASTRUT TIMEPIECE</h1>
-                <p class="text-sm md:text-base text-white/90 tracking-widest font-normal mb-8 leading-relaxed max-w-xl mx-auto">
-                  La quintessence de l'ingénierie mécanique suisse incarnée dans un boîtier d'exception.
+                <span class="text-xs uppercase tracking-[0.4em] font-bold text-white/70 block mb-3">ÉDITION SPÉCIALE</span>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tight uppercase mb-4 leading-none">YLM CALIBRE 01</h1>
+                <p class="text-sm md:text-base text-white/90 tracking-wide font-normal max-w-xl leading-relaxed">
+                  L'union de trois visions horlogères réunies dans une architecture squelette d'exception.
                 </p>
-                <span class="text-[10px] uppercase tracking-[0.4em] text-white border-t border-b border-white/40 py-3 px-8 inline-block font-medium">
-                  Série Limitée : 25 Pièces • Calibre A-01
-                </span>
               </div>
             </section>
 
-            {/* Section 2 */}
-            <section class="h-screen flex flex-col justify-center items-start px-8 md:px-24">
-              <div class="max-w-xl text-glow">
-                <span class="text-xs uppercase tracking-[0.6em] text-white/90 block mb-3 font-medium">02 / Architecture & Mécanique</span>
-                <h2 class="text-5xl md:text-7xl font-light mb-6 text-white leading-none">L'Art de la<br /><span class="italic font-serif-luxury text-white">Précision</span></h2>
-                <p class="text-sm md:text-base text-white/90 tracking-wider font-normal mb-8 leading-relaxed">
-                  Chaque composant est façonné et anglé à la main au micron près. Une symbiose parfaite entre tradition séculaire et tolérances nanométriques.
-                </p>
-                <div class="flex space-x-12 border-t border-white/30 pt-6">
+            {/* Section 2 : Explication du nom YLM */}
+            <section class="h-screen flex flex-col justify-end pb-24 md:pb-32 px-8 md:px-20 text-left">
+              <div class="max-w-4xl text-glow">
+                <span class="text-xs uppercase tracking-[0.4em] font-bold text-white/70 block mb-4">HOMMAGE HORLOGER</span>
+                <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase mb-8 leading-none">TROIS LETTRES.<br />TROIS PIONNIERS.</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-white/20 pt-6">
                   <div>
-                    <span class="block text-2xl md:text-3xl font-light text-white font-serif-luxury">28,800</span>
-                    <span class="text-white/70 uppercase tracking-widest text-[9px] font-medium">Alternances / h</span>
+                    <span class="text-3xl font-black text-white block mb-1">Y</span>
+                    <span class="text-xs uppercase font-bold tracking-widest text-white/90 block">Yves</span>
+                    <p class="text-xs text-white/70 mt-2 font-normal">La recherche permanente de la finesse et de l'élégance contemporaine.</p>
                   </div>
                   <div>
-                    <span class="block text-2xl md:text-3xl font-light text-white font-serif-luxury">72H</span>
-                    <span class="text-white/70 uppercase tracking-widest text-[9px] font-medium">Réserve de Marche</span>
+                    <span class="text-3xl font-black text-white block mb-1">L</span>
+                    <span class="text-xs uppercase font-bold tracking-widest text-white/90 block">Louis</span>
+                    <p class="text-xs text-white/70 mt-2 font-normal">L'héritage d'Abraham-Louis Breguet et la maîtrise des grandes complications.</p>
+                  </div>
+                  <div>
+                    <span class="text-3xl font-black text-white block mb-1">M</span>
+                    <span class="text-xs uppercase font-bold tracking-widest text-white/90 block">Mudge</span>
+                    <p class="text-xs text-white/70 mt-2 font-normal">Le génie mécanique de Thomas Mudge, créateur de l'échappement moderne.</p>
                   </div>
                 </div>
               </div>
             </section>
 
             {/* Section 3 */}
-            <section class="h-screen flex flex-col justify-center items-end text-right px-8 md:px-24">
-              <div class="max-w-xl text-glow">
-                <span class="text-xs uppercase tracking-[0.6em] text-white/90 block mb-3 font-medium">03 / Complication Majeure</span>
-                <h2 class="text-5xl md:text-7xl font-light mb-6 text-white leading-none">Mouvement<br /><span class="italic font-serif-luxury text-white">Tourbillon</span></h2>
-                <p class="text-sm md:text-base text-white/90 tracking-wider font-normal leading-relaxed">
-                  Une cage volante défiant la gravité terrestre pour une régularité chronométrique absolue. Réalisée en titane poli miroir pesant à peine 0,28 gramme.
+            <section class="h-screen flex flex-col justify-end pb-24 md:pb-32 px-8 md:px-20 text-left">
+              <div class="max-w-3xl text-glow">
+                <span class="text-xs uppercase tracking-[0.4em] font-bold text-white/70 block mb-3">CONSTRUCTION</span>
+                <h2 class="text-5xl md:text-7xl font-black tracking-tight uppercase mb-4 leading-none">PRÉCISION ABSOLUE</h2>
+                <p class="text-sm md:text-base text-white/90 tracking-wide font-normal max-w-xl leading-relaxed">
+                  Cadran ajouré révélant les rouages d'un mouvement automatique à haute fréquence.
                 </p>
               </div>
             </section>
@@ -169,42 +201,42 @@
             {/* Section 4 */}
             <section class="h-screen flex flex-col justify-center items-center text-center px-4">
               <div class="max-w-2xl text-glow">
-                <span class="text-xs uppercase tracking-[0.6em] text-white/90 block mb-4 font-medium">04 / L'Écrin Temporel</span>
-                <h2 class="text-5xl md:text-7xl font-light mb-6 text-white leading-none">Découvrir la<br /><span class="italic font-serif-luxury text-white">Collection</span></h2>
-                <p class="text-sm md:text-base text-white/90 tracking-wider font-normal mb-10">
-                  Acquisition exclusive sur demande privée auprès de nos maîtres horlogers de Genève.
+                <span class="text-xs uppercase tracking-[0.4em] font-bold text-white/70 block mb-4">ACQUISITION</span>
+                <h2 class="text-5xl md:text-7xl font-black tracking-tight uppercase mb-6 leading-none">ÉCRIN YLM</h2>
+                <p class="text-sm md:text-base text-white/90 tracking-wide font-normal mb-8">
+                  Série très limitée numérotée à la main.
                 </p>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  class="px-12 py-5 bg-white text-black hover:bg-white/90 text-xs uppercase tracking-[0.35em] font-semibold transition-all duration-300 rounded-none shadow-2xl"
+                  class="px-10 py-4 bg-white text-black text-xs uppercase tracking-[0.3em] font-extrabold hover:bg-white/90 transition-all rounded-none shadow-2xl"
                 >
-                  Prendre Rendez-vous
+                  PRENDRE RENDEZ-VOUS
                 </button>
               </div>
             </section>
           </main>
 
-          {/* Fenêtre modale */}
+          {/* Modale */}
           {isModalOpen && (
             <div class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
-              <div class="bg-[#181818] border border-white/30 p-10 max-w-lg w-full relative text-left rounded-none shadow-2xl">
+              <div class="bg-[#181818] border border-white/20 p-8 max-w-md w-full relative text-left rounded-none shadow-2xl">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  class="absolute top-5 right-5 text-white/60 hover:text-white text-lg"
+                  class="absolute top-4 right-4 text-white/60 hover:text-white text-lg font-bold"
                 >
                   ✕
                 </button>
-                <h3 class="text-3xl font-light mb-2 text-white font-serif-luxury">Consultation Privée</h3>
-                <p class="text-xs uppercase tracking-wider text-white/70 mb-8">Réservez une présentation confidentielle de la pièce numéro 07/25.</p>
+                <h3 class="text-xl font-black uppercase mb-2 text-white tracking-wider">DEMANDE D'ATTRIBUTION</h3>
+                <p class="text-xs text-white/60 mb-6">Réservation prioritaire pour la collection YLM Calibre 01.</p>
                 <form onSubmit={(e) => {
                   e.preventDefault();
-                  alert('Votre demande de rendez-vous a été transmise à notre concierge privé.');
+                  alert('Votre demande d\'attribution YLM a été enregistrée.');
                   setIsModalOpen(false);
-                }} class="space-y-5 text-sm">
-                  <input type="text" placeholder="Nom & Prénom" required class="w-full bg-black/70 border border-white/30 p-4 text-white placeholder-white/50 focus:outline-none focus:border-white" />
-                  <input type="email" placeholder="Email Confidentiel" required class="w-full bg-black/70 border border-white/30 p-4 text-white placeholder-white/50 focus:outline-none focus:border-white" />
-                  <button type="submit" class="w-full py-4 bg-white text-black font-semibold uppercase tracking-[0.25em] text-xs hover:bg-white/90 transition-colors">
-                    Confirmer la demande
+                }} class="space-y-4 text-xs font-semibold">
+                  <input type="text" placeholder="NOM & PRÉNOM" required class="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
+                  <input type="email" placeholder="EMAIL CONFIDENTIEL" required class="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
+                  <button type="submit" class="w-full py-4 bg-white text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white/90 transition-colors">
+                    SOUMETTRE LA DEMANDE
                   </button>
                 </form>
               </div>
@@ -212,10 +244,10 @@
           )}
 
           {/* Pied de page */}
-          <footer class="fixed bottom-0 left-0 w-full p-6 flex justify-between items-center z-20 text-[10px] uppercase tracking-[0.3em] text-white/60 pointer-events-none text-glow">
-            <div>© ASTRUT TIMEPIECE SA</div>
-            <div>Progression {Math.round(scrollProgress * 100)}%</div>
-            <div>Swiss Made</div>
+          <footer class="fixed bottom-0 left-0 w-full px-8 py-5 flex justify-between items-center z-20 text-[10px] uppercase tracking-[0.25em] font-bold text-white/60 pointer-events-none text-glow border-t border-white/5">
+            <div>© YLM TIMEPIECES</div>
+            <div>0{activeSection + 1} / 04</div>
+            <div>SWISS DESIGN</div>
           </footer>
         </div>
       );
