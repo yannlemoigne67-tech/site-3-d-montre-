@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ASTRUT Genève • Calibre A-01</title>
   
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React & ReactDOM CDN -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel Standalone -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
+    /* Ombre subtile pour garantir une excellente lisibilité du texte au-dessus de la vidéo */
     .text-glow {
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
     }
   </style>
 </head>
@@ -57,28 +61,28 @@
 
       return (
         <div class="relative w-full min-h-screen font-sans bg-[#1e1e1e]">
-          {/* Conteneur vidéo avec fondu de bordure invisible */}
+          {/* Vidéo 16:9 fluide en arrière-plan */}
           <div class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#1e1e1e]">
-            <div class="relative w-[70%] h-[70%] max-w-3xl max-h-[70vh] flex items-center justify-center">
+            <div class="relative w-full h-full max-w-6xl max-h-screen aspect-video flex items-center justify-center p-4">
               <video
                 ref={videoRef}
-                src="video.mp4"
+                src="vidéo.mp4"
                 muted
                 playsInline
                 preload="auto"
-                class="w-full h-full object-contain pointer-events-none"
+                class="w-full h-full object-cover md:object-contain pointer-events-none"
               />
-              {/* Masque circulaire pour eliminer les bords du rectangle de la vidéo */}
+              {/* Masque fondu doux pour l'intégration des bords */}
               <div 
                 class="absolute inset-0 pointer-events-none"
                 style={{
-                  background: 'radial-gradient(circle, transparent 40%, #1e1e1e 80%)'
+                  background: 'radial-gradient(circle, transparent 55%, #1e1e1e 90%)'
                 }}
               ></div>
             </div>
           </div>
 
-          {/* En-tête */}
+          {/* En-tête sans fond */}
           <header class="fixed top-0 left-0 w-full p-8 flex justify-between items-center z-20">
             <div class="text-[11px] uppercase tracking-[0.3em] font-medium text-white/80 text-glow">
               ASTRUT Genève • Calibre A-01
@@ -103,17 +107,17 @@
             ))}
           </nav>
 
-          {/* Contenu principal */}
+          {/* Contenu principal : Textes volants au-dessus de la vidéo */}
           <main class="relative z-10">
             {/* Section 1 */}
             <section class="h-screen flex flex-col justify-center items-center text-center px-4">
-              <div class="max-w-xl text-glow">
+              <div class="max-w-2xl text-glow">
                 <span class="text-[10px] uppercase tracking-[0.4em] text-[#c9a96e] block mb-3 font-medium">Haute Horlogerie Suisse</span>
                 <h1 class="text-4xl md:text-6xl font-extralight tracking-tight mb-4">ASTRUT TIMEPIECE</h1>
-                <p class="text-xs text-white/70 tracking-wider font-light mb-6 leading-relaxed">
+                <p class="text-xs text-white/80 tracking-wider font-light mb-6 leading-relaxed max-w-lg mx-auto">
                   La quintessence de l'ingénierie mécanique suisse incarnée dans un boîtier d'exception.
                 </p>
-                <span class="text-[9px] uppercase tracking-[0.3em] text-white/40 border-t border-b border-white/10 py-2 px-4 inline-block">
+                <span class="text-[9px] uppercase tracking-[0.3em] text-white/50 border-t border-b border-white/10 py-2 px-4 inline-block">
                   Série Limitée : 25 Pièces • Calibre A-01
                 </span>
               </div>
@@ -124,17 +128,17 @@
               <div class="max-w-md text-glow">
                 <span class="text-[10px] uppercase tracking-[0.4em] text-[#c9a96e] block mb-3 font-medium">02 / Architecture & Mécanique</span>
                 <h2 class="text-3xl md:text-5xl font-extralight mb-4">L'Art de la<br /><span class="italic text-[#e4d5b7]">Précision</span></h2>
-                <p class="text-xs text-white/70 tracking-wider font-light mb-6 leading-relaxed">
+                <p class="text-xs text-white/80 tracking-wider font-light mb-6 leading-relaxed">
                   Chaque composant est façonné et anglé à la main au micron près. Une symbiose parfaite entre tradition séculaire et tolérances nanométriques.
                 </p>
                 <div class="flex space-x-8 text-xs border-t border-white/10 pt-4">
                   <div>
                     <span class="block text-base font-medium text-[#c9a96e]">28,800</span>
-                    <span class="text-white/40 uppercase tracking-widest text-[8px]">Alternances / h</span>
+                    <span class="text-white/50 uppercase tracking-widest text-[8px]">Alternances / h</span>
                   </div>
                   <div>
                     <span class="block text-base font-medium text-[#c9a96e]">72H</span>
-                    <span class="text-white/40 uppercase tracking-widest text-[8px]">Réserve de Marche</span>
+                    <span class="text-white/50 uppercase tracking-widest text-[8px]">Réserve de Marche</span>
                   </div>
                 </div>
               </div>
@@ -145,7 +149,7 @@
               <div class="max-w-md text-glow">
                 <span class="text-[10px] uppercase tracking-[0.4em] text-[#c9a96e] block mb-3 font-medium">03 / Complication Majeure</span>
                 <h2 class="text-3xl md:text-5xl font-extralight mb-4">Mouvement<br /><span class="italic text-[#e4d5b7]">Tourbillon</span></h2>
-                <p class="text-xs text-white/70 tracking-wider font-light leading-relaxed">
+                <p class="text-xs text-white/80 tracking-wider font-light leading-relaxed">
                   Une cage volante défiant la gravité terrestre pour une régularité chronométrique absolue. Réalisée en titane poli miroir pesant à peine 0,28 gramme.
                 </p>
               </div>
@@ -156,12 +160,12 @@
               <div class="max-w-xl text-glow">
                 <span class="text-[10px] uppercase tracking-[0.4em] text-[#c9a96e] block mb-3 font-medium">04 / L'Écrin Temporel</span>
                 <h2 class="text-3xl md:text-5xl font-extralight mb-4">Découvrir la<br /><span class="italic text-[#e4d5b7]">Collection</span></h2>
-                <p class="text-xs text-white/70 tracking-wider font-light mb-8">
+                <p class="text-xs text-white/80 tracking-wider font-light mb-8">
                   Acquisition exclusive sur demande privée auprès de nos maîtres horlogers de Genève.
                 </p>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  class="px-8 py-3.5 bg-transparent border border-[#c9a96e] text-[#c9a96e] hover:bg-[#c9a96e] hover:text-black text-[10px] uppercase tracking-[0.25em] font-medium transition-all duration-300 rounded-xs"
+                  class="px-8 py-3.5 bg-transparent border border-[#c9a96e] text-[#c9a96e] hover:bg-[#c9a96e] hover:text-black text-[10px] uppercase tracking-[0.25em] font-medium transition-all duration-300 rounded-xs shadow-lg"
                 >
                   Prendre Rendez-vous
                 </button>
@@ -169,7 +173,7 @@
             </section>
           </main>
 
-          {/* Modal */}
+          {/* Fenêtre modale de prise de rendez-vous */}
           {isModalOpen && (
             <div class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4">
               <div class="bg-[#181818] border border-white/10 p-8 max-w-md w-full relative text-left rounded-lg">
