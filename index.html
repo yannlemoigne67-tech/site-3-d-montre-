@@ -16,10 +16,10 @@
   
   <style>
     body { font-family: 'Montserrat', sans-serif; }
-    .text-glow { text-shadow: 0 4px 25px rgba(0, 0, 0, 0.6); }
+    .text-glow { text-shadow: 0 4px 25px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.9); }
   </style>
 </head>
-<body class="bg-[#121212] text-white antialiased selection:bg-black selection:text-white">
+<body class="bg-[#121212] text-white antialiased selection:bg-white selection:text-black overflow-x-hidden">
 
   <div id="root"></div>
 
@@ -31,23 +31,21 @@
       const [activeSection, setActiveSection] = useState(0);
       const [isModalOpen, setIsModalOpen] = useState(false);
       const [hoveredLetter, setHoveredLetter] = useState(null);
-      const [scrollProgress, setScrollProgress] = useState(0);
 
       const handleScroll = useCallback(() => {
         const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
         if (totalScroll <= 0) return;
         const currentScroll = window.scrollY;
         const progress = Math.min(Math.max(currentScroll / totalScroll, 0), 1);
-        setScrollProgress(progress);
         
         // Détermination de la section active (0 à 3)
         const sectionIndex = Math.min(Math.floor(progress * 3.99), 3);
         setActiveSection(sectionIndex);
 
-        // Contrôle vidéo synchronisé avec le scroll
+        // Contrôle de la première vidéo au scroll
         const video = videoRef.current;
         if (video && video.duration && !isNaN(video.duration)) {
-          video.currentTime = progress * video.duration;
+          video.currentTime = Math.min(progress * 2, 1) * video.duration;
         }
       }, []);
 
@@ -59,7 +57,7 @@
 
       const scrollToSection = (index) => {
         const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const targetScroll = (index / 3) * (totalScroll * 0.5); // Scroll vers la partie haute
+        const targetScroll = (index / 3) * (totalScroll * 0.4);
         window.scrollTo({ top: targetScroll, behavior: 'smooth' });
       };
 
@@ -69,34 +67,21 @@
         M: { title: "MUDGE", sub: "Génie Mécanique", desc: "Hommage à l'inventeur de l'échappement à ancre." }
       };
 
-      // Liste des montres de la collection YLM
       const watches = [
-        { id: 1, name: "YLM Diver Squelette", type: "Plongée", desc: "Boîtier en acier inoxydable avec lunette bleue et cadran squelette révélant le mouvement automatique.", image: "montre1.jpg" },
-        { id: 2, name: "YLM Classique Noir", type: "Cœur Ouvert", desc: "Boîtier polished silver, cadran noir mat avec chiffres romains et ouverture sur le balancier à 9h.", image: "montre2.jpg" },
-        { id: 3, name: "YLM Tonneau Bleu", type: "Design Moderne", desc: "Forme tonneau distinctive en ton or rose et bleu, cadran ajouré et bracelet en caoutchouc texturé.", image: "montre3.jpg" },
-        { id: 4, name: "YLM Octo Acier", type: "Style Genta", desc: "Design géométrique octogonal, acier brossé avec cadran noir guilloché et guichet de date.", image: "montre4.jpg" }
+        { id: 1, name: "YLM Diver Squelette", type: "Plongée", desc: "Boîtier en acier inoxydable avec lunette bleue et cadran squelette révélant le mouvement automatique." },
+        { id: 2, name: "YLM Classique Noir", type: "Cœur Ouvert", desc: "Boîtier polished silver, cadran noir mat avec chiffres romains et ouverture sur le balancier à 9h." },
+        { id: 3, name: "YLM Tonneau Bleu", type: "Design Moderne", desc: "Forme tonneau distinctive en ton or rose et bleu, cadran ajouré et bracelet en caoutchouc texturé." },
+        { id: 4, name: "YLM Octo Acier", type: "Style Genta", desc: "Design géométrique octogonal, acier brossé avec cadran noir guilloché et guichet de date." }
       ];
 
-      // Gestion dynamique de la couleur de fond (Noir vers Blanc Cassé)
-      const bgStyle = {
-        backgroundColor: scrollProgress < 0.5 
-          ? '#121212' 
-          : `rgb(${Math.round(18 + (245 - 18) * ((scrollProgress - 0.5) * 2))}, ${Math.round(18 + (242 - 18) * ((scrollProgress - 0.5) * 2))}, ${Math.round(18 + (235 - 18) * ((scrollProgress - 0.5) * 2))})`
-      };
-
-      const isLightBg = scrollProgress > 0.65;
-      const textColorClass = isLightBg ? 'text-black' : 'text-white';
-      const subTextColorClass = isLightBg ? 'text-black/70' : 'text-white/80';
-      const borderColorClass = isLightBg ? 'border-black/20' : 'border-white/10';
-
       return (
-        <div class="relative w-full transition-colors duration-500" style={bgStyle}>
+        <div class="relative w-full bg-[#121212]">
           
-          {/* Hauteur virtuelle globale pour le scroll (Expérience vidéo + catalogue) */}
-          <div class="h-[600vh] w-full absolute top-0 left-0 pointer-events-none"></div>
+          {/* Hauteur virtuelle pour la première partie (scroll vidéo coffret) */}
+          <div class="h-[400vh] w-full absolute top-0 left-0 pointer-events-none"></div>
 
-          {/* Arrière-plan Vidéo Centré */}
-          <div class={`fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center transition-opacity duration-700 ${scrollProgress > 0.75 ? 'opacity-20' : 'opacity-100'}`}>
+          {/* Arrière-plan Première Vidéo Centré (Fixe au début) */}
+          <div class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212]">
             <div class="relative w-full h-full max-w-5xl max-h-screen aspect-video flex items-center justify-center p-4">
               <video
                 ref={videoRef}
@@ -106,38 +91,42 @@
                 preload="auto"
                 class="w-full h-full object-contain pointer-events-none"
               />
+              <div 
+                class="absolute inset-0 pointer-events-none"
+                style={{ background: 'radial-gradient(circle, transparent 40%, #121212 85%)' }}
+              ></div>
             </div>
           </div>
 
           {/* Header */}
-          <header class={`fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b ${borderColorClass} backdrop-blur-md bg-black/10 transition-colors duration-500 ${textColorClass}`}>
+          <header class="fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30">
             <button class="flex items-center space-x-3 text-[11px] tracking-[0.25em] font-bold hover:opacity-70 transition-opacity">
               <span>— MENU</span>
             </button>
 
             {/* Logo YLM avec Survol */}
-            <div class="flex items-center space-x-2 text-2xl font-black tracking-[0.3em] uppercase font-sans">
+            <div class="flex items-center space-x-2 text-2xl font-black tracking-[0.3em] uppercase text-white font-sans">
               {['Y', 'L', 'M'].map((letter) => (
                 <span
                   key={letter}
                   onMouseEnter={() => setHoveredLetter(letter)}
                   onMouseLeave={() => setHoveredLetter(null)}
-                  class="cursor-pointer transition-all duration-300 hover:scale-125 opacity-90 hover:opacity-100"
+                  class="cursor-pointer transition-all duration-300 hover:text-white hover:scale-125 text-white/90"
                 >
                   {letter}
                 </span>
               ))}
             </div>
 
-            <div class="flex items-center space-x-6 text-[11px] tracking-[0.2em] font-medium">
-              <a href="#collection" class="hidden md:inline hover:opacity-70 transition-opacity">COLLECTIONS</a>
+            <div class="flex items-center space-x-6 text-[11px] tracking-[0.2em] font-medium text-white/80">
+              <a href="#collection-section" class="hidden md:inline hover:text-white transition-colors">COLLECTIONS</a>
             </div>
           </header>
 
           {/* Info-Bulle d'Hommage */}
           {hoveredLetter && (
-            <div class="fixed top-20 left-1/2 -translate-x-1/2 z-40 bg-black/90 border border-white/20 px-6 py-4 text-center shadow-2xl backdrop-blur-md max-w-xs pointer-events-none text-white">
-              <div class="text-xs font-black tracking-[0.3em]">{homages[hoveredLetter].title}</div>
+            <div class="fixed top-20 left-1/2 -translate-x-1/2 z-40 bg-black/90 border border-white/20 px-6 py-4 text-center shadow-2xl backdrop-blur-md max-w-xs pointer-events-none">
+              <div class="text-xs font-black tracking-[0.3em] text-white">{homages[hoveredLetter].title}</div>
               <div class="text-[9px] uppercase tracking-[0.2em] text-white/60 mb-1">{homages[hoveredLetter].sub}</div>
               <p class="text-[10px] text-white/80 font-normal">{homages[hoveredLetter].desc}</p>
             </div>
@@ -150,27 +139,25 @@
                 key={idx}
                 onClick={() => scrollToSection(idx)}
                 class={`text-right text-[10px] uppercase tracking-[0.25em] transition-all duration-500 ${
-                  activeSection === idx && scrollProgress <= 0.65
-                    ? `${textColorClass} font-black scale-110 border-r-2${isLightBg ? 'border-black' : 'border-white'} pr-3` 
-                    : 'opacity-40 hover:opacity-100'
-                } ${textColorClass}`}
+                  activeSection === idx ? 'text-white font-black scale-110 border-r-2 border-white pr-3' : 'text-white/30 hover:text-white'
+                }`}
               >
                 {item}
               </button>
             ))}
           </nav>
 
-          {/* CONTENU TEXTE FIXE À GAUCHE (Fondu fluide au scroll vidéo) */}
-          <div class={`fixed inset-0 z-20 pointer-events-none flex items-center px-8 md:px-20 transition-opacity duration-500 ${scrollProgress > 0.6 ? 'opacity-0' : 'opacity-100'}`}>
-            <div class={`w-full max-w-sm md:max-w-md ${textColorClass}`}>
+          {/* CONTENU TEXTE FIXE À GAUCHE */}
+          <div class="fixed inset-0 z-20 pointer-events-none flex items-center px-8 md:px-20">
+            <div class="w-full max-w-sm md:max-w-md text-glow">
 
               {/* Section 0 : Vision */}
               <div class={`transition-all duration-700 absolute top-1/2 -translate-y-1/2 ${
                 activeSection === 0 ? 'opacity-100 translate-y-[-50%] pointer-events-auto' : 'opacity-0 translate-y-[-40%] pointer-events-none'
               }`}>
-                <span class="text-[10px] uppercase tracking-[0.4em] font-bold opacity-60 block mb-2">ÉDITION SPÉCIALE</span>
+                <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ÉDITION SPÉCIALE</span>
                 <h1 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">YLM CALIBRE 01</h1>
-                <p class={`text-xs md:text-sm tracking-wide font-normal leading-relaxed ${subTextColorClass}`}>
+                <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
                   L'union de trois visions horlogères réunies dans une architecture squelette d'exception.
                 </p>
               </div>
@@ -179,12 +166,12 @@
               <div class={`transition-all duration-700 absolute top-1/2 -translate-y-1/2 ${
                 activeSection === 1 ? 'opacity-100 translate-y-[-50%] pointer-events-auto' : 'opacity-0 translate-y-[-40%] pointer-events-none'
               }`}>
-                <span class="text-[10px] uppercase tracking-[0.4em] font-bold opacity-60 block mb-2">HOMMAGE HORLOGER</span>
+                <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">HOMMAGE HORLOGER</span>
                 <h2 class="text-3xl md:text-4xl font-black tracking-tight uppercase mb-4 leading-none">TROIS LETTRES.<br />TROIS PIONNIERS.</h2>
-                <p class={`text-xs leading-relaxed mb-4 ${subTextColorClass}`}>
+                <p class="text-xs text-white/80 leading-relaxed mb-4">
                   <strong>Y</strong>ves • <strong>L</strong>ouis • <strong>M</strong>udge
                 </p>
-                <p class={`text-xs leading-relaxed ${subTextColorClass}`}>
+                <p class="text-xs text-white/70 leading-relaxed">
                   Un hommage à l'élégance des formes, l'invention du tourbillon et le génie de l'échappement mécanique.
                 </p>
               </div>
@@ -193,9 +180,9 @@
               <div class={`transition-all duration-700 absolute top-1/2 -translate-y-1/2 ${
                 activeSection === 2 ? 'opacity-100 translate-y-[-50%] pointer-events-auto' : 'opacity-0 translate-y-[-40%] pointer-events-none'
               }`}>
-                <span class="text-[10px] uppercase tracking-[0.4em] font-bold opacity-60 block mb-2">CONSTRUCTION</span>
+                <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">CONSTRUCTION</span>
                 <h2 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">PRÉCISION ABSOLUE</h2>
-                <p class={`text-xs md:text-sm tracking-wide font-normal leading-relaxed ${subTextColorClass}`}>
+                <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
                   Cadran ajouré et finitions brossées à la main révélant les rouages d'un mouvement automatique haute fréquence.
                 </p>
               </div>
@@ -204,14 +191,14 @@
               <div class={`transition-all duration-700 absolute top-1/2 -translate-y-1/2 ${
                 activeSection === 3 ? 'opacity-100 translate-y-[-50%] pointer-events-auto' : 'opacity-0 translate-y-[-40%] pointer-events-none'
               }`}>
-                <span class="text-[10px] uppercase tracking-[0.4em] font-bold opacity-60 block mb-2">ACQUISITION</span>
+                <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ACQUISITION</span>
                 <h2 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">ÉCRIN YLM</h2>
-                <p class={`text-xs md:text-sm tracking-wide font-normal mb-6 ${subTextColorClass}`}>
+                <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal mb-6">
                   Série limitée numérotée à la main.
                 </p>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  class="px-8 py-3 bg-black text-white text-[10px] uppercase tracking-[0.3em] font-extrabold hover:bg-black/80 transition-all rounded-none shadow-2xl pointer-events-auto"
+                  class="px-8 py-3 bg-white text-black text-[10px] uppercase tracking-[0.3em] font-extrabold hover:bg-white/90 transition-all rounded-none shadow-2xl pointer-events-auto"
                 >
                   PRENDRE RENDEZ-VOUS
                 </button>
@@ -220,50 +207,81 @@
             </div>
           </div>
 
-          {/* SECTION CATALOGUE - APPARAÎT APRÈS LA VIDÉO DANS LE DÉGRADÉ BLANC CASSÉ */}
-          <div id="collection" class="relative z-20 pt-[250vh] pb-32 px-8 md:px-16 max-w-7xl mx-auto">
-            <div class="text-center mb-20 text-black">
-              <span class="text-[11px] uppercase tracking-[0.4em] font-bold opacity-60 block mb-3">LA COLLECTION</span>
-              <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase mb-6">GARDES-TEMPS YLM</h2>
-              <p class="text-sm max-w-xl mx-auto text-black/70 leading-relaxed font-medium">
-                Chaque pièce incarne notre savoir-faire d'exception. Découvrez l'alliance unique entre mécanique fine et design contemporain.
-              </p>
-            </div>
+          {/* ========================================================================= */}
+          {/* SUITE DU SITE : DÉGRADÉ DU NOIR AU BLANC CASSÉ + DEUXIÈME VIDÉO & CARTES */}
+          {/* ========================================================================= */}
+          <div id="collection-section" class="relative z-20 mt-[350vh]">
+            
+            <!-- Dégradé de fond continu : Noir vers Blanc Cassé (#F5F2EB) -->
+            <div class="w-full h-64 bg-gradient-to-b from-[#121212] via-[#222222] to-[#F5F2EB]"></div>
 
-            {/* Grille des montres */}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 text-black">
-              {watches.map((watch) => (
-                <div key={watch.id} class="group bg-[#EFECE6] border border-black/10 p-8 rounded-none transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between">
-                  <div>
-                    <div class="w-full aspect-square bg-[#E6E2DA] mb-6 overflow-hidden flex items-center justify-center relative border border-black/5">
-                      <span class="text-xs uppercase tracking-widest text-black/40 font-bold">[ Photo {watch.name} ]</span>
-                    </div>
-                    <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-1">{watch.type}</span>
-                    <h3 class="text-2xl font-black uppercase mb-3">{watch.name}</h3>
-                    <p class="text-xs text-black/70 leading-relaxed mb-6 font-medium">{watch.desc}</p>
-                  </div>
-                  <button 
-                    onClick={() => setIsModalOpen(true)}
-                    class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300"
-                  >
-                    DÉCOUVRIR LE MODÈLE
-                  </button>
+            <!-- Section principale sur fond Blanc Cassé -->
+            <div class="bg-[#F5F2EB] text-black px-8 md:px-16 pb-32">
+              
+              <!-- Titre de présentation -->
+              <div class="text-center max-w-3xl mx-auto pt-8 pb-16">
+                <span class="text-[11px] uppercase tracking-[0.4em] font-bold text-black/50 block mb-3">LA COLLECTION EN ACTION</span>
+                <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase mb-6">DÉCOUVRIR LES MODÈLES</h2>
+                <p class="text-xs md:text-sm text-black/70 font-medium leading-relaxed">
+                  Visionnez la présentation dynamique de nos garde-temps puis explorez les caractéristiques détaillées de chaque pièce.
+                </p>
+              </div>
+
+              <!-- DEUXIÈME VIDÉO (Lecteur intégré) -->
+              <div class="max-w-5xl mx-auto mb-24 rounded-2xl overflow-hidden shadow-2xl border border-black/10 bg-black">
+                <video
+                  autoplay
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  class="w-full h-auto object-cover"
+                >
+                  <source src="ylm-collection-showcase.mp4" type="video/mp4" />
+                  Votre navigateur ne prend pas en charge la lecture de vidéo.
+                </video>
+              </div>
+
+              <!-- Grille des cartes descriptives de chaque montre -->
+              <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                  <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">CATALOGUE</span>
+                  <h3 class="text-2xl md:text-3xl font-black uppercase tracking-wider">CARACTÉRISTIQUES DES MONTRES</h3>
                 </div>
-              ))}
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  {watches.map((watch) => (
+                    <div key={watch.id} class="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                      <div>
+                        <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">{watch.type}</span>
+                        <h4 class="text-2xl font-black uppercase mb-4">{watch.name}</h4>
+                        <p class="text-xs text-black/70 font-medium leading-relaxed mb-6">{watch.desc}</p>
+                      </div>
+                      <button 
+                        onClick={() => setIsModalOpen(true)}
+                        class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300"
+                      >
+                        RÉSERVER CE MODÈLE
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
 
-          {/* Modale de réservation */}
+          {/* Modale */}
           {isModalOpen && (
             <div class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
-              <div class="bg-[#181818] border border-white/20 p-8 max-w-md w-full relative text-left rounded-none shadow-2xl text-white">
+              <div class="bg-[#181818] border border-white/20 p-8 max-w-md w-full relative text-left rounded-none shadow-2xl">
                 <button
                   onClick={() => setIsModalOpen(false)}
                   class="absolute top-4 right-4 text-white/60 hover:text-white text-lg font-bold"
                 >
                   ✕
                 </button>
-                <h3 class="text-lg font-black uppercase mb-2 tracking-wider">DEMANDE D'ATTRIBUTION</h3>
+                <h3 class="text-lg font-black uppercase mb-2 text-white tracking-wider">DEMANDE D'ATTRIBUTION</h3>
                 <p class="text-xs text-white/60 mb-6">Réservation prioritaire pour la collection YLM Calibre 01.</p>
                 <form onSubmit={(e) => {
                   e.preventDefault();
@@ -280,10 +298,10 @@
             </div>
           )}
 
-          {/* Footer */}
-          <footer class={`fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold transition-colors duration-500 pointer-events-none border-t ${borderColorClass} backdrop-blur-xs bg-black/10 ${textColorClass}`}>
+          {/* Footer ultra-épuré */}
+          <footer class="fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20">
             <div>© YLM TIMEPIECES</div>
-            <div>0{Math.min(activeSection + 1, 4)} / 04</div>
+            <div>0{activeSection + 1} / 04</div>
             <div>SWISS DESIGN</div>
           </footer>
 
