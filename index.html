@@ -10,281 +10,252 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   
   <style>
     body { font-family: 'Montserrat', sans-serif; }
     .text-glow { text-shadow: 0 4px 25px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.9); }
+    .section-content { transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; }
   </style>
 </head>
 <body class="bg-[#121212] text-white antialiased selection:bg-white selection:text-black overflow-x-hidden">
 
-  <div id="root"></div>
+  <!-- Hauteur virtuelle pour le scroll de la première vidéo -->
+  <div class="h-[350vh] w-full absolute top-0 left-0 pointer-events-none"></div>
 
-  <script type="text/babel">
-    const { useState, useEffect, useRef, useCallback } = React;
+  <!-- Première vidéo fixe au scroll -->
+  <div class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212]">
+    <div class="relative w-full h-full max-w-5xl max-h-screen aspect-video flex items-center justify-center p-4">
+      <video
+        id="bgVideo"
+        src="ylm-showcase-box.mp4"
+        muted
+        playsinline
+        preload="auto"
+        class="w-full h-full object-contain pointer-events-none"
+      ></video>
+      <div 
+        class="absolute inset-0 pointer-events-none"
+        style="background: radial-gradient(circle, transparent 40%, #121212 85%);"
+      ></div>
+    </div>
+  </div>
 
-    function App() {
-      const videoRef = useRef(null);
-      const [activeSection, setActiveSection] = useState(0);
-      const [isModalOpen, setIsModalOpen] = useState(false);
-      const [hoveredLetter, setHoveredLetter] = useState(null);
+  <!-- Header -->
+  <header class="fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30">
+    <button class="flex items-center space-x-3 text-[11px] tracking-[0.25em] font-bold hover:opacity-70 transition-opacity">
+      <span>— MENU</span>
+    </button>
 
-      const handleScroll = useCallback(() => {
-        const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-        if (totalScroll <= 0) return;
-        const currentScroll = window.scrollY;
-        const progress = Math.min(Math.max(currentScroll / totalScroll, 0), 1);
-        
-        const sectionIndex = Math.min(Math.floor(progress * 3.99), 3);
-        setActiveSection(sectionIndex);
+    <!-- Logo YLM -->
+    <div class="flex items-center space-x-2 text-2xl font-black tracking-[0.3em] uppercase text-white font-sans">
+      <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">Y</span>
+      <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">L</span>
+      <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">M</span>
+    </div>
 
-        const video = videoRef.current;
-        if (video && video.duration && !isNaN(video.duration)) {
-          video.currentTime = Math.min(progress * 2, 1) * video.duration;
-        }
-      }, []);
+    <div class="flex items-center space-x-6 text-[11px] tracking-[0.2em] font-medium text-white/80">
+      <a href="#collection-section" class="hidden md:inline hover:text-white transition-colors">COLLECTIONS</a>
+    </div>
+  </header>
 
-      useEffect(() => {
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        handleScroll();
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, [handleScroll]);
+  <!-- Navigation Latérale Droite -->
+  <nav class="fixed right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col space-y-6">
+    <button onclick="scrollToIndex(0)" id="nav-0" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300">Vision</button>
+    <button onclick="scrollToIndex(1)" id="nav-1" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Manifeste</button>
+    <button onclick="scrollToIndex(2)" id="nav-2" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Ingénierie</button>
+    <button onclick="scrollToIndex(3)" id="nav-3" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Réservation</button>
+  </nav>
 
-      const scrollToSection = (index) => {
-        const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-        const targetScroll = (index / 3) * (totalScroll * 0.4);
-        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-      };
+  <!-- Contenu Texte Fixe à Gauche -->
+  <div class="fixed inset-0 z-20 pointer-events-none flex items-center px-8 md:px-20">
+    <div class="w-full max-w-sm md:max-w-md text-glow relative h-64">
 
-      const homages = {
-        Y: { title: "YVES", sub: "Esthétique & Vision", desc: "Hommage au raffinement des formes et à la finesse architecturale." },
-        L: { title: "LOUIS", sub: "Héritage Breguet", desc: "Hommage au père de la haute horlogerie et inventeur du Tourbillon." },
-        M: { title: "MUDGE", sub: "Génie Mécanique", desc: "Hommage à l'inventeur de l'échappement à ancre." }
-      };
+      <!-- Section 0 -->
+      <div id="sec-0" class="section-content absolute inset-0 opacity-100 translate-y-0 pointer-events-auto">
+        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ÉDITION SPÉCIALE</span>
+        <h1 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">YLM CALIBRE 01</h1>
+        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
+          L'union de trois visions horlogères réunies dans une architecture squelette d'exception.
+        </p>
+      </div>
 
-      const watches = [
-        { id: 1, name: "YLM Diver Squelette", type: "Plongée", desc: "Boîtier en acier inoxydable avec lunette bleue et cadran squelette révélant le mouvement automatique." },
-        { id: 2, name: "YLM Classique Noir", type: "Cœur Ouvert", desc: "Boîtier polished silver, cadran noir mat avec chiffres romains et ouverture sur le balancier à 9h." },
-        { id: 3, name: "YLM Tonneau Bleu", type: "Design Moderne", desc: "Forme tonneau distinctive en ton or rose et bleu, cadran ajouré et bracelet en caoutchouc texturé." },
-        { id: 4, name: "YLM Octo Acier", type: "Style Genta", desc: "Design géométrique octogonal, acier brossé avec cadran noir guilloché et guichet de date." }
-      ];
+      <!-- Section 1 -->
+      <div id="sec-1" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
+        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">HOMMAGE HORLOGER</span>
+        <h2 class="text-3xl md:text-4xl font-black tracking-tight uppercase mb-4 leading-none">TROIS LETTRES.<br />TROIS PIONNIERS.</h2>
+        <p class="text-xs text-white/80 leading-relaxed mb-4">
+          <strong>Y</strong>ves • <strong>L</strong>ouis • <strong>M</strong>udge
+        </p>
+        <p class="text-xs text-white/70 leading-relaxed">
+          Un hommage à l'élégance des formes, l'invention du tourbillon et le génie de l'échappement mécanique.
+        </p>
+      </div>
 
-      return (
-        <div className="relative w-full bg-[#121212]">
-          
-          <div className="h-[400vh] w-full absolute top-0 left-0 pointer-events-none"></div>
+      <!-- Section 2 -->
+      <div id="sec-2" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
+        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">CONSTRUCTION</span>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">PRÉCISION ABSOLUE</h2>
+        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
+          Cadran ajouré et finitions brossées à la main révélant les rouages d'un mouvement automatique haute fréquence.
+        </p>
+      </div>
 
-          <div className="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212]">
-            <div className="relative w-full h-full max-w-5xl max-h-screen aspect-video flex items-center justify-center p-4">
-              <video
-                ref={videoRef}
-                src="ylm-showcase-box.mp4"
-                muted
-                playsInline
-                preload="auto"
-                className="w-full h-full object-contain pointer-events-none"
-              />
-              <div 
-                className="absolute inset-0 pointer-events-none"
-                style={{ background: 'radial-gradient(circle, transparent 40%, #121212 85%)' }}
-              ></div>
-            </div>
-          </div>
+      <!-- Section 3 -->
+      <div id="sec-3" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
+        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ACQUISITION</span>
+        <h2 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">ÉCRIN YLM</h2>
+        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal mb-6">
+          Série limitée numérotée à la main.
+        </p>
+        <button onclick="toggleModal(true)" class="px-8 py-3 bg-white text-black text-[10px] uppercase tracking-[0.3em] font-extrabold hover:bg-white/90 transition-all shadow-2xl pointer-events-auto">
+          PRENDRE RENDEZ-VOUS
+        </button>
+      </div>
 
-          <header className="fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30">
-            <button className="flex items-center space-x-3 text-[11px] tracking-[0.25em] font-bold hover:opacity-70 transition-opacity">
-              <span>— MENU</span>
-            </button>
+    </div>
+  </div>
 
-            <div className="flex items-center space-x-2 text-2xl font-black tracking-[0.3em] uppercase text-white font-sans">
-              {['Y', 'L', 'M'].map((letter) => (
-                <span
-                  key={letter}
-                  onMouseEnter={() => setHoveredLetter(letter)}
-                  onMouseLeave={() => setHoveredLetter(null)}
-                  className="cursor-pointer transition-all duration-300 hover:text-white hover:scale-125 text-white/90"
-                >
-                  {letter}
-                </span>
-              ))}
-            </div>
+  <!-- Suite du site : Dégradé du Noir au Blanc Cassé (#F5F2EB) + 2ème Vidéo & Cartes -->
+  <div id="collection-section" class="relative z-20 mt-[300vh]">
+    <div class="w-full h-64 bg-gradient-to-b from-[#121212] via-[#222222] to-[#F5F2EB]"></div>
 
-            <div className="flex items-center space-x-6 text-[11px] tracking-[0.2em] font-medium text-white/80">
-              <a href="#collection-section" className="hidden md:inline hover:text-white transition-colors">COLLECTIONS</a>
-            </div>
-          </header>
+    <div class="bg-[#F5F2EB] text-black px-8 md:px-16 pb-32">
+      <div class="text-center max-w-3xl mx-auto pt-8 pb-16">
+        <span class="text-[11px] uppercase tracking-[0.4em] font-bold text-black/50 block mb-3">LA COLLECTION EN ACTION</span>
+        <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase mb-6">DÉCOUVRIR LES MODÈLES</h2>
+        <p class="text-xs md:text-sm text-black/70 font-medium leading-relaxed">
+          Visionnez la présentation dynamique de nos garde-temps puis explorez les caractéristiques détaillées de chaque pièce.
+        </p>
+      </div>
 
-          {hoveredLetter && (
-            <div className="fixed top-20 left-1/2 -translate-x-1/2 z-40 bg-black/90 border border-white/20 px-6 py-4 text-center shadow-2xl backdrop-blur-md max-w-xs pointer-events-none">
-              <div className="text-xs font-black tracking-[0.3em] text-white">{homages[hoveredLetter].title}</div>
-              <div className="text-[9px] uppercase tracking-[0.2em] text-white/60 mb-1">{homages[hoveredLetter].sub}</div>
-              <p className="text-[10px] text-white/80 font-normal">{homages[hoveredLetter].desc}</p>
-            </div>
-          )}
+      <!-- Deuxième Vidéo -->
+      <div class="max-w-5xl mx-auto mb-24 rounded-2xl overflow-hidden shadow-2xl border border-black/10 bg-black">
+        <video autoplay loop muted playsinline controls class="w-full h-auto object-cover">
+          <source src="ylm-collection-showcase.mp4" type="video/mp4" />
+        </video>
+      </div>
 
-          <nav className="fixed right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col space-y-6">
-            {['Vision', 'Manifeste', 'Ingénierie', 'Réservation'].map((item, idx) => (
-              <button
-                key={idx}
-                onClick={() => scrollToSection(idx)}
-                className={`text-right text-[10px] uppercase tracking-[0.25em] transition-all duration-500 ${
-                  activeSection === idx ? 'text-white font-black scale-110 border-r-2 border-white pr-3' : 'text-white/30 hover:text-white'
-                }`}
-              >
-                {item}
-              </button>
-            ))}
-          </nav>
-
-          <div className="fixed inset-0 z-20 pointer-events-none flex items-center px-8 md:px-20">
-            <div className="w-full max-w-sm md:max-w-md text-glow">
-
-              <div className={`transition-all duration-700 absolute top-1/2 -translate-y-1/2 ${
-                activeSection === 0 ? 'opacity-100 translate-y-[-50%] pointer-events-auto' : 'opacity-0 translate-y-[-40%] pointer-events-none'
-              }`}>
-                <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ÉDITION SPÉCIALE</span>
-                <h1 className="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">YLM CALIBRE 01</h1>
-                <p className="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
-                  L'union de trois visions horlogères réunies dans une architecture squelette d'exception.
-                </p>
-              </div>
-
-              <div className={`transition-all duration-700 absolute top-1/2 -translate-y-1/2 ${
-                activeSection === 1 ? 'opacity-100 translate-y-[-50%] pointer-events-auto' : 'opacity-0 translate-y-[-40%] pointer-events-none'
-              }`}>
-                <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">HOMMAGE HORLOGER</span>
-                <h2 className="text-3xl md:text-4xl font-black tracking-tight uppercase mb-4 leading-none">TROIS LETTRES.<br />TROIS PIONNIERS.</h2>
-                <p className="text-xs text-white/80 leading-relaxed mb-4">
-                  <strong>Y</strong>ves • <strong>L</strong>ouis • <strong>M</strong>udge
-                </p>
-                <p className="text-xs text-white/70 leading-relaxed">
-                  Un hommage à l'élégance des formes, l'invention du tourbillon et le génie de l'échappement mécanique.
-                </p>
-              </div>
-
-              <div className={`transition-all duration-700 absolute top-1/2 -translate-y-1/2 ${
-                activeSection === 2 ? 'opacity-100 translate-y-[-50%] pointer-events-auto' : 'opacity-0 translate-y-[-40%] pointer-events-none'
-              }`}>
-                <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">CONSTRUCTION</span>
-                <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">PRÉCISION ABSOLUE</h2>
-                <p className="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
-                  Cadran ajouré et finitions brossées à la main révélant les rouages d'un mouvement automatique haute fréquence.
-                </p>
-              </div>
-
-              <div className={`transition-all duration-700 absolute top-1/2 -translate-y-1/2 ${
-                activeSection === 3 ? 'opacity-100 translate-y-[-50%] pointer-events-auto' : 'opacity-0 translate-y-[-40%] pointer-events-none'
-              }`}>
-                <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ACQUISITION</span>
-                <h2 className="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">ÉCRIN YLM</h2>
-                <p className="text-xs md:text-sm text-white/80 tracking-wide font-normal mb-6">
-                  Série limitée numérotée à la main.
-                </p>
-                <button
-                  onClick={() => setIsModalOpen(true)}
-                  className="px-8 py-3 bg-white text-black text-[10px] uppercase tracking-[0.3em] font-extrabold hover:bg-white/90 transition-all rounded-none shadow-2xl pointer-events-auto"
-                >
-                  PRENDRE RENDEZ-VOUS
-                </button>
-              </div>
-
-            </div>
-          </div>
-
-          <div id="collection-section" className="relative z-20 mt-[350vh]">
-            <div className="w-full h-64 bg-gradient-to-b from-[#121212] via-[#222222] to-[#F5F2EB]"></div>
-
-            <div className="bg-[#F5F2EB] text-black px-8 md:px-16 pb-32">
-              <div className="text-center max-w-3xl mx-auto pt-8 pb-16">
-                <span className="text-[11px] uppercase tracking-[0.4em] font-bold text-black/50 block mb-3">LA COLLECTION EN ACTION</span>
-                <h2 className="text-4xl md:text-6xl font-black tracking-tight uppercase mb-6">DÉCOUVRIR LES MODÈLES</h2>
-                <p className="text-xs md:text-sm text-black/70 font-medium leading-relaxed">
-                  Visionnez la présentation dynamique de nos garde-temps puis explorez les caractéristiques détaillées de chaque pièce.
-                </p>
-              </div>
-
-              <div className="max-w-5xl mx-auto mb-24 rounded-2xl overflow-hidden shadow-2xl border border-black/10 bg-black">
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls
-                  className="w-full h-auto object-cover"
-                >
-                  <source src="ylm-collection-showcase.mp4" type="video/mp4" />
-                  Votre navigateur ne prend pas en charge la lecture de vidéo.
-                </video>
-              </div>
-
-              <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-16">
-                  <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">CATALOGUE</span>
-                  <h3 className="text-2xl md:text-3xl font-black uppercase tracking-wider">CARACTÉRISTIQUES DES MONTRES</h3>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  {watches.map((watch) => (
-                    <div key={watch.id} className="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
-                      <div>
-                        <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">{watch.type}</span>
-                        <h4 className="text-2xl font-black uppercase mb-4">{watch.name}</h4>
-                        <p className="text-xs text-black/70 font-medium leading-relaxed mb-6">{watch.desc}</p>
-                      </div>
-                      <button 
-                        onClick={() => setIsModalOpen(true)}
-                        className="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300"
-                      >
-                        RÉSERVER CE MODÈLE
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          {isModalOpen && (
-            <div className="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
-              <div className="bg-[#181818] border border-white/20 p-8 max-w-md w-full relative text-left rounded-none shadow-2xl">
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="absolute top-4 right-4 text-white/60 hover:text-white text-lg font-bold"
-                >
-                  ✕
-                </button>
-                <h3 className="text-lg font-black uppercase mb-2 text-white tracking-wider">DEMANDE D'ATTRIBUTION</h3>
-                <p className="text-xs text-white/60 mb-6">Réservation prioritaire pour la collection YLM Calibre 01.</p>
-                <form onSubmit={(e) => {
-                  e.preventDefault();
-                  alert('Votre demande d\'attribution YLM a été enregistrée.');
-                  setIsModalOpen(false);
-                }} className="space-y-4 text-xs font-semibold">
-                  <input type="text" placeholder="NOM & PRÉNOM" required className="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
-                  <input type="email" placeholder="EMAIL CONFIDENTIEL" required className="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
-                  <button type="submit" className="w-full py-4 bg-white text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white/90 transition-colors">
-                    SOUMETTRE LA DEMANDE
-                  </button>
-                </form>
-              </div>
-            </div>
-          )}
-
-          <footer className="fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20">
-            <div>© YLM TIMEPIECES</div>
-            <div>0{activeSection + 1} / 04</div>
-            <div>SWISS DESIGN</div>
-          </footer>
-
+      <!-- Catalogue Cartes -->
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">CATALOGUE</span>
+          <h3 class="text-2xl md:text-3xl font-black uppercase tracking-wider">CARACTÉRISTIQUES DES MONTRES</h3>
         </div>
-      );
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div class="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">Plongée</span>
+              <h4 class="text-2xl font-black uppercase mb-4">YLM Diver Squelette</h4>
+              <p class="text-xs text-black/70 font-medium leading-relaxed mb-6">Boîtier en acier inoxydable avec lunette bleue et cadran squelette révélant le mouvement automatique.</p>
+            </div>
+            <button onclick="toggleModal(true)" class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300">RÉSERVER CE MODÈLE</button>
+          </div>
+
+          <div class="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">Cœur Ouvert</span>
+              <h4 class="text-2xl font-black uppercase mb-4">YLM Classique Noir</h4>
+              <p class="text-xs text-black/70 font-medium leading-relaxed mb-6">Boîtier polished silver, cadran noir mat avec chiffres romains et ouverture sur le balancier à 9h.</p>
+            </div>
+            <button onclick="toggleModal(true)" class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300">RÉSERVER CE MODÈLE</button>
+          </div>
+
+          <div class="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">Design Moderne</span>
+              <h4 class="text-2xl font-black uppercase mb-4">YLM Tonneau Bleu</h4>
+              <p class="text-xs text-black/70 font-medium leading-relaxed mb-6">Forme tonneau distinctive en ton or rose et bleu, cadran ajouré et bracelet en caoutchouc texturé.</p>
+            </div>
+            <button onclick="toggleModal(true)" class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300">RÉSERVER CE MODÈLE</button>
+          </div>
+
+          <div class="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">Style Genta</span>
+              <h4 class="text-2xl font-black uppercase mb-4">YLM Octo Acier</h4>
+              <p class="text-xs text-black/70 font-medium leading-relaxed mb-6">Design géométrique octogonal, acier brossé avec cadran noir guilloché et guichet de date.</p>
+            </div>
+            <button onclick="toggleModal(true)" class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300">RÉSERVER CE MODÈLE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modale -->
+  <div id="modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+    <div class="bg-[#181818] border border-white/20 p-8 max-w-md w-full relative text-left shadow-2xl text-white">
+      <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-white/60 hover:text-white text-lg font-bold">✕</button>
+      <h3 class="text-lg font-black uppercase mb-2 tracking-wider">DEMANDE D'ATTRIBUTION</h3>
+      <p class="text-xs text-white/60 mb-6">Réservation prioritaire pour la collection YLM Calibre 01.</p>
+      <form onsubmit="event.preventDefault(); alert('Votre demande a été enregistrée.'); toggleModal(false);" class="space-y-4 text-xs font-semibold">
+        <input type="text" placeholder="NOM & PRÉNOM" required class="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
+        <input type="email" placeholder="EMAIL CONFIDENTIEL" required class="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
+        <button type="submit" class="w-full py-4 bg-white text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white/90 transition-colors">SOUMETTRE LA DEMANDE</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20">
+    <div>© YLM TIMEPIECES</div>
+    <div id="footer-counter">01 / 04</div>
+    <div>SWISS DESIGN</div>
+  </footer>
+
+  <!-- Script de contrôle pur JavaScript -->
+  <script>
+    const video = document.getElementById('bgVideo');
+    let currentActive = 0;
+
+    window.addEventListener('scroll', () => {
+      const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollMax <= 0) return;
+      const progress = Math.min(Math.max(window.scrollY / scrollMax, 0), 1);
+
+      // Contrôle de la première vidéo
+      if (video && video.duration) {
+        video.currentTime = Math.min(progress * 2.5, 1) * video.duration;
+      }
+
+      // Changement de section texte
+      const sectionIndex = Math.min(Math.floor(progress * 3.8 / 0.7), 3);
+      if (sectionIndex !== currentActive && sectionIndex >= 0 && sectionIndex <= 3) {
+        setActiveSection(sectionIndex);
+      }
+    });
+
+    function setActiveSection(index) {
+      currentActive = index;
+      document.getElementById('footer-counter').innerText = `0${index + 1} / 04`;
+
+      for (let i = 0; i < 4; i++) {
+        const sec = document.getElementById(`sec-${i}`);
+        const nav = document.getElementById(`nav-${i}`);
+        if (i === index) {
+          sec.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+          sec.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          nav.className = "nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300";
+        } else {
+          sec.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          sec.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+          nav.className = "nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300";
+        }
+      }
     }
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    function scrollToIndex(index) {
+      const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
+      const target = (index / 3) * (scrollMax * 0.45);
+      window.scrollTo({ top: target, behavior: 'smooth' });
+    }
+
+    function toggleModal(show) {
+      const modal = document.getElementById('modal');
+      modal.style.display = show ? 'flex' : 'none';
+    }
   </script>
+
 </body>
 </html>
