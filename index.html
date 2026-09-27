@@ -45,7 +45,7 @@
     <div class="relative w-full h-full flex items-center justify-center p-4">
       <video
         id="boxVideo"
-        src="ylm-showcase-box.mp4"
+        src="Vidéo WhatsApp du 27/09/2026 à 01:59:25 (1).mp4"
         muted
         playsinline
         preload="auto"
@@ -220,7 +220,6 @@
 
     let currentActive = 0;
 
-    // Pré-chargement des métadonnées vidéo
     [calibreVideo, boxVideo].forEach(v => {
       if (v) {
         v.load();
@@ -251,7 +250,6 @@
 
       // GESTION DES TRANSITIONS ET AFFICHAGE DES VIDÉOS
       if (scrollY < windowH * 3.0) {
-        // Afficher 1ère vidéo (Fond Noir)
         firstVideoContainer.style.opacity = "1";
         secondVideoContainer.style.opacity = "0";
         secondVideoContainer.style.pointerEvents = "none";
@@ -261,7 +259,6 @@
         siteHeader.className = "fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white";
         siteFooter.className = "fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500";
       } else if (scrollY >= windowH * 3.0 && scrollY < windowH * 6.5) {
-        // Afficher 2ème vidéo (Fond Blanc Cassé)
         firstVideoContainer.style.opacity = "0";
         secondVideoContainer.style.opacity = "1";
         secondVideoContainer.style.pointerEvents = "auto";
@@ -271,13 +268,11 @@
         siteHeader.className = "fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-black/10 backdrop-blur-md bg-white/30 transition-colors duration-500 text-black";
         siteFooter.className = "fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 pointer-events-none border-t border-black/5 backdrop-blur-xs bg-white/20 transition-colors duration-500";
       } else {
-        // Masquer les vidéos fixes pour laisser place au catalogue
         firstVideoContainer.style.opacity = "0";
         secondVideoContainer.style.opacity = "0";
         secondVideoText.style.opacity = "0";
       }
 
-      // Index section texte 1ère vidéo
       const sectionIndex = Math.min(Math.floor(progressPhase1 * 3.99), 3);
       if (sectionIndex !== currentActive) {
         setActiveSection(sectionIndex);
