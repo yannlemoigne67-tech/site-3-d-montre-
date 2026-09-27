@@ -19,12 +19,12 @@
 </head>
 <body class="bg-[#121212] text-white antialiased selection:bg-white selection:text-black overflow-x-hidden">
 
-  <!-- ZONE DE SCROLL POUR LA PREMIÈRE VIDÉO DU CALIBRE 01 (4 ÉCRANS) -->
-  <div class="h-[400vh] w-full absolute top-0 left-0 pointer-events-none"></div>
+  <!-- ZONE DE SCROLL TOTALE (800vh pour 2 vidéos immersives + catalogue) -->
+  <div class="h-[800vh] w-full absolute top-0 left-0 pointer-events-none"></div>
 
-  <!-- PREMIÈRE VIDÉO FIXE AU SCROLL (CALIBRE 01) -->
-  <div id="firstVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212] transition-opacity duration-500">
-    <div class="relative w-full h-full max-w-5xl max-h-screen aspect-video flex items-center justify-center p-4">
+  <!-- PREMIÈRE VIDÉO FIXE EN PLEIN ÉCRAN (CALIBRE 01) -->
+  <div id="firstVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212] transition-opacity duration-700">
+    <div class="relative w-full h-full flex items-center justify-center">
       <video
         id="calibreVideo"
         src="vidéo.mp4"
@@ -40,33 +40,47 @@
     </div>
   </div>
 
+  <!-- DEUXIÈME VIDÉO FIXE EN PLEIN ÉCRAN (ÉCRIN / COLLECTION) - Synchronisée au scroll -->
+  <div id="secondVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#F5F2EB] opacity-0 pointer-events-none transition-opacity duration-700">
+    <div class="relative w-full h-full flex items-center justify-center p-4">
+      <video
+        id="boxVideo"
+        src="ylm-showcase-box.mp4"
+        muted
+        playsinline
+        preload="auto"
+        class="w-full h-full object-contain pointer-events-none"
+      ></video>
+    </div>
+  </div>
+
   <!-- HEADER -->
-  <header class="fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30">
+  <header id="siteHeader" class="fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white">
     <button class="flex items-center space-x-3 text-[11px] tracking-[0.25em] font-bold hover:opacity-70 transition-opacity">
       <span>— MENU</span>
     </button>
 
     <!-- LOGO YLM -->
-    <div class="flex items-center space-x-2 text-2xl font-black tracking-[0.3em] uppercase text-white font-sans">
+    <div class="flex items-center space-x-2 text-2xl font-black tracking-[0.3em] uppercase font-sans">
       <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">Y</span>
       <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">L</span>
       <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">M</span>
     </div>
 
-    <div class="flex items-center space-x-6 text-[11px] tracking-[0.2em] font-medium text-white/80">
-      <a href="#collection-section" class="hidden md:inline hover:text-white transition-colors">COLLECTIONS</a>
+    <div class="flex items-center space-x-6 text-[11px] tracking-[0.2em] font-medium opacity-80">
+      <a href="#collection-catalogue" class="hidden md:inline hover:opacity-100 transition-opacity">COLLECTIONS</a>
     </div>
   </header>
 
   <!-- NAVIGATION LATÉRALE DROITE -->
-  <nav class="fixed right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col space-y-6">
+  <nav id="siteNav" class="fixed right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col space-y-6 transition-opacity duration-500">
     <button onclick="scrollToIndex(0)" id="nav-0" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300">Vision</button>
     <button onclick="scrollToIndex(1)" id="nav-1" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Manifeste</button>
     <button onclick="scrollToIndex(2)" id="nav-2" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Ingénierie</button>
     <button onclick="scrollToIndex(3)" id="nav-3" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Réservation</button>
   </nav>
 
-  <!-- CONTENU TEXTE FIXE À GAUCHE (CALIBRE 01) -->
+  <!-- CONTENU TEXTE FIXE À GAUCHE (PREMIÈRE VIDÉO) -->
   <div id="textSection" class="fixed inset-0 z-20 pointer-events-none flex items-center px-8 md:px-20 transition-opacity duration-500">
     <div class="w-full max-w-sm md:max-w-md text-glow relative h-64">
 
@@ -115,38 +129,30 @@
     </div>
   </div>
 
+  <!-- SECTION TITRE DE LA DEUXIÈME VIDÉO (Incrustée sur la deuxième vidéo) -->
+  <div id="secondVideoText" class="fixed inset-0 z-20 pointer-events-none flex items-center justify-center px-8 opacity-0 transition-opacity duration-500">
+    <div class="text-center max-w-2xl text-black">
+      <span class="text-[11px] uppercase tracking-[0.4em] font-bold text-black/60 block mb-3">L'ÉCRIN & LA COLLECTION</span>
+      <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase mb-4">L'EXPÉRIENCE YLM</h2>
+      <p class="text-xs md:text-sm text-black/80 font-medium">Continuez à faire défiler pour explorer nos garde-temps.</p>
+    </div>
+  </div>
+
   <!-- ========================================================================= -->
-  <!-- SUITE DU SITE : DÉGRADÉ NOIR -> BLANC CASSÉ + DEUXIÈME VIDÉO + CATALOGUE -->
+  <!-- CATALOGUE - FOND BLANC CASSÉ PLACÉ APRÈS LES DEUX VIDÉOS (AU SCROLL) -->
   <!-- ========================================================================= -->
-  <div id="collection-section" class="relative z-20 mt-[380vh]">
+  <div id="collection-catalogue" class="relative z-20 mt-[650vh]">
     
     <!-- Dégradé de transition fluide -->
-    <div class="w-full h-80 bg-gradient-to-b from-[#121212] via-[#2a2a2a] to-[#F5F2EB]"></div>
+    <div class="w-full h-48 bg-gradient-to-b from-transparent to-[#F5F2EB]"></div>
 
-    <!-- Section sur fond Blanc Cassé -->
+    <!-- Section sur fond Blanc Cassé pour le Catalogue -->
     <div class="bg-[#F5F2EB] text-black px-8 md:px-16 pb-32">
       
-      <div class="text-center max-w-3xl mx-auto pt-8 pb-16">
-        <span class="text-[11px] uppercase tracking-[0.4em] font-bold text-black/50 block mb-3">PRÉSENTATION ÉCRIN</span>
-        <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase mb-6">L'ÉCRIN & LA COLLECTION</h2>
-        <p class="text-xs md:text-sm text-black/70 font-medium leading-relaxed">
-          Découvrez le coffret officiel YLM et la gamme complète de nos garde-temps.
-        </p>
-      </div>
-
-      <!-- DEUXIÈME VIDÉO (COFFRET & COLLECTION) -->
-      <div class="max-w-5xl mx-auto mb-24 rounded-2xl overflow-hidden shadow-2xl border border-black/10 bg-black">
-        <video autoplay loop muted playsinline controls class="w-full h-auto object-cover">
-          <source src="ylm-showcase-box.mp4" type="video/mp4" />
-          Votre navigateur ne supporte pas la vidéo.
-        </video>
-      </div>
-
-      <!-- CATALOGUE DES MONTRES -->
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-6xl mx-auto pt-16">
         <div class="text-center mb-16">
           <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">CATALOGUE</span>
-          <h3 class="text-2xl md:text-3xl font-black uppercase tracking-wider">NOS MODÈLES D'EXCEPTION</h3>
+          <h3 class="text-3xl md:text-4xl font-black uppercase tracking-wider">NOS MODÈLES D'EXCEPTION</h3>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -206,42 +212,77 @@
   </div>
 
   <!-- FOOTER -->
-  <footer class="fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20">
+  <footer id="siteFooter" class="fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500">
     <div>© YLM TIMEPIECES</div>
     <div id="footer-counter">01 / 04</div>
     <div>SWISS DESIGN</div>
   </footer>
 
-  <!-- SCRIPT JavaScript -->
+  <!-- SCRIPT DE CONTRÔLE DES DEUX VIDÉOS AU SCROLL -->
   <script>
-    const video = document.getElementById('calibreVideo');
+    const calibreVideo = document.getElementById('calibreVideo');
+    const boxVideo = document.getElementById('boxVideo');
+    
     const firstVideoContainer = document.getElementById('firstVideoContainer');
+    const secondVideoContainer = document.getElementById('secondVideoContainer');
+    
     const textSection = document.getElementById('textSection');
+    const secondVideoText = document.getElementById('secondVideoText');
+    const siteHeader = document.getElementById('siteHeader');
+    const siteNav = document.getElementById('siteNav');
+    const siteFooter = document.getElementById('siteFooter');
+
     let currentActive = 0;
 
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
       const windowH = window.innerHeight;
 
-      // Avancement dans la première vidéo (jusqu'à 3.5 écrans)
-      const maxScrollFirstPart = windowH * 3.2;
-      const progressFirstPart = Math.min(Math.max(scrollY / maxScrollFirstPart, 0), 1);
+      // --- PHASE 1 : PREMIÈRE VIDÉO (0 à 3.2vh) ---
+      const maxScrollPhase1 = windowH * 3.2;
+      const progressPhase1 = Math.min(Math.max(scrollY / maxScrollPhase1, 0), 1);
 
-      if (video && video.duration) {
-        video.currentTime = progressFirstPart * video.duration;
+      if (calibreVideo && calibreVideo.duration) {
+        calibreVideo.currentTime = progressPhase1 * calibreVideo.duration;
       }
 
-      // Masquer la 1ère vidéo et le texte quand on entre dans la section du bas
-      if (scrollY > windowH * 3.5) {
-        firstVideoContainer.style.opacity = "0";
-        textSection.style.opacity = "0";
-      } else {
+      // --- PHASE 2 : DEUXIÈME VIDÉO (3.5vh à 6.5vh) ---
+      const startPhase2 = windowH * 3.5;
+      const maxScrollPhase2 = windowH * 2.8;
+      const progressPhase2 = Math.min(Math.max((scrollY - startPhase2) / maxScrollPhase2, 0), 1);
+
+      if (boxVideo && boxVideo.duration) {
+        boxVideo.currentTime = progressPhase2 * boxVideo.duration;
+      }
+
+      // --- GESTION DE LA VISIBILITÉ ET DES TRANSITIONS ---
+      if (scrollY < windowH * 3.2) {
+        // Mode Vidéo 1 (Fond Sombre)
         firstVideoContainer.style.opacity = "1";
+        secondVideoContainer.style.opacity = "0";
         textSection.style.opacity = "1";
+        secondVideoText.style.opacity = "0";
+        siteNav.style.opacity = "1";
+        siteHeader.className = "fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white";
+        siteFooter.className = "fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500";
+      } else if (scrollY >= windowH * 3.2 && scrollY < windowH * 6.2) {
+        // Mode Vidéo 2 (Fond Blanc Cassé)
+        firstVideoContainer.style.opacity = "0";
+        secondVideoContainer.style.opacity = "1";
+        textSection.style.opacity = "0";
+        secondVideoText.style.opacity = "1";
+        siteNav.style.opacity = "0";
+        siteHeader.className = "fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-black/10 backdrop-blur-md bg-white/30 transition-colors duration-500 text-black";
+        siteFooter.className = "fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 pointer-events-none border-t border-black/5 backdrop-blur-xs bg-white/20 transition-colors duration-500";
+      } else {
+        // Mode Catalogue
+        firstVideoContainer.style.opacity = "0";
+        secondVideoContainer.style.opacity = "0";
+        secondVideoText.style.opacity = "0";
       }
 
-      // Gestion des sections texte 0 à 3
-      const sectionIndex = Math.min(Math.floor(progressFirstPart * 3.99), 3);
+      // Mise à jour de l'index des sections (0 à 3) pour la première vidéo
+      const sectionIndex = Math.min(Math.floor(progressPhase1 * 3.99), 3);
       if (sectionIndex !== currentActive) {
         setActiveSection(sectionIndex);
       }
