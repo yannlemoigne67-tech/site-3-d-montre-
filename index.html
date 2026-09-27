@@ -131,53 +131,132 @@
     <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase text-black">L'EXPÉRIENCE YLM</h2>
   </div>
 
-  <!-- CATALOGUE DES MONTRES -->
+  <!-- CATALOGUE DES MONTRES (AVEC PHOTOS, PRIX ET SPÉCIFICATIONS) -->
   <div id="collection-catalogue" class="relative z-20 mt-[680vh]">
     <div class="w-full h-32 bg-gradient-to-b from-transparent to-[#F5F2EB]"></div>
 
-    <div class="bg-[#F5F2EB] text-black px-8 md:px-16 pb-32">
-      <div class="max-w-6xl mx-auto pt-8">
+    <div class="bg-[#F5F2EB] text-black px-6 md:px-16 pb-32">
+      <div class="max-w-7xl mx-auto pt-8">
         <div class="text-center mb-16">
-          <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">CATALOGUE</span>
-          <h3 class="text-3xl md:text-4xl font-black uppercase tracking-wider">NOS MODÈLES D'EXCEPTION</h3>
+          <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">LA COLLECTION OFFICIELLE</span>
+          <h3 class="text-3xl md:text-5xl font-black uppercase tracking-wider">NOS MODÈLES D'EXCEPTION</h3>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div class="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+        <!-- GRILLE DES PRODUITS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+          <!-- MONTRE 1 -->
+          <div class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group">
             <div>
-              <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">Plongée</span>
-              <h4 class="text-2xl font-black uppercase mb-4">YLM Diver Squelette</h4>
-              <p class="text-xs text-black/70 font-medium leading-relaxed mb-6">Boîtier en acier inoxydable avec lunette bleue et cadran squelette révélant le mouvement automatique.</p>
+              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative">
+                <img src="montre-1.png" alt="YLM Diver Squelette" class="max-h-60 object-contain group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Plongée • Automatique</span>
+                  <h4 class="text-xl font-black uppercase tracking-tight">YLM Diver Squelette</h4>
+                </div>
+                <span class="text-sm font-black text-black/90">2 450 €</span>
+              </div>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
+                Boîtier en acier inoxydable avec lunette bleue et cadran squelette révélant le mouvement automatique.
+              </p>
+              <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
+                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier 316L (42mm)</span></div>
+                <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Automatique Squelette</span></div>
+                <div class="flex justify-between"><span>Verre :</span><span class="font-bold text-black">Saphir Anti-rayures</span></div>
+                <div class="flex justify-between"><span>Étanchéité :</span><span class="font-bold text-black">100m / 10 ATM</span></div>
+              </div>
             </div>
-            <button onclick="toggleModal(true)" class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300">RÉSERVER CE MODÈLE</button>
+            <button onclick="toggleModal(true)" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
+              RÉSERVER CE MODÈLE
+            </button>
           </div>
 
-          <div class="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <!-- MONTRE 2 -->
+          <div class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group">
             <div>
-              <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">Cœur Ouvert</span>
-              <h4 class="text-2xl font-black uppercase mb-4">YLM Classique Noir</h4>
-              <p class="text-xs text-black/70 font-medium leading-relaxed mb-6">Boîtier polished silver, cadran noir mat avec chiffres romains et ouverture sur le balancier à 9h.</p>
+              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative">
+                <img src="montre-2.png" alt="YLM Classique Noir" class="max-h-60 object-contain group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Cœur Ouvert • Chiffres Romains</span>
+                  <h4 class="text-xl font-black uppercase tracking-tight">YLM Classique Noir</h4>
+                </div>
+                <span class="text-sm font-black text-black/90">1 980 €</span>
+              </div>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
+                Boîtier polished silver, cadran noir mat avec chiffres romains et ouverture sur le balancier à 9h.
+              </p>
+              <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
+                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Polie (40mm)</span></div>
+                <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Automatique Cœur Ouvert</span></div>
+                <div class="flex justify-between"><span>Bracelet :</span><span class="font-bold text-black">Cuir Noir Surpiqué</span></div>
+                <div class="flex justify-between"><span>Étanchéité :</span><span class="font-bold text-black">50m / 5 ATM</span></div>
+              </div>
             </div>
-            <button onclick="toggleModal(true)" class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300">RÉSERVER CE MODÈLE</button>
+            <button onclick="toggleModal(true)" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
+              RÉSERVER CE MODÈLE
+            </button>
           </div>
 
-          <div class="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <!-- MONTRE 3 -->
+          <div class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group">
             <div>
-              <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">Design Moderne</span>
-              <h4 class="text-2xl font-black uppercase mb-4">YLM Tonneau Bleu</h4>
-              <p class="text-xs text-black/70 font-medium leading-relaxed mb-6">Forme tonneau distinctive en ton or rose et bleu, cadran ajouré et bracelet en caoutchouc texturé.</p>
+              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative">
+                <img src="montre-3.png" alt="YLM Tonneau Bleu" class="max-h-60 object-contain group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Design Tonneau • Rose Gold</span>
+                  <h4 class="text-xl font-black uppercase tracking-tight">YLM Tonneau Bleu</h4>
+                </div>
+                <span class="text-sm font-black text-black/90">2 850 €</span>
+              </div>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
+                Forme tonneau distinctive en ton or rose et bleu, cadran ajouré et bracelet en caoutchouc texturé.
+              </p>
+              <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
+                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">PVD Or Rose (43x48mm)</span></div>
+                <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Automatique Squelette</span></div>
+                <div class="flex justify-between"><span>Bracelet :</span><span class="font-bold text-black">Silicone High-Tech</span></div>
+                <div class="flex justify-between"><span>Étanchéité :</span><span class="font-bold text-black">50m / 5 ATM</span></div>
+              </div>
             </div>
-            <button onclick="toggleModal(true)" class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300">RÉSERVER CE MODÈLE</button>
+            <button onclick="toggleModal(true)" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
+              RÉSERVER CE MODÈLE
+            </button>
           </div>
 
-          <div class="bg-[#EFECE6] border border-black/10 p-8 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <!-- MONTRE 4 -->
+          <div class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group">
             <div>
-              <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/50 block mb-2">Style Genta</span>
-              <h4 class="text-2xl font-black uppercase mb-4">YLM Octo Acier</h4>
-              <p class="text-xs text-black/70 font-medium leading-relaxed mb-6">Design géométrique octogonal, acier brossé avec cadran noir guilloché et guichet de date.</p>
+              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative">
+                <img src="montre-4.png" alt="YLM Octo Acier" class="max-h-60 object-contain group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Design Géométrique • Acier</span>
+                  <h4 class="text-xl font-black uppercase tracking-tight">YLM Octo Acier</h4>
+                </div>
+                <span class="text-sm font-black text-black/90">2 100 €</span>
+              </div>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
+                Design géométrique octogonal, acier brossé avec cadran noir guilloché et guichet de date.
+              </p>
+              <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
+                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Brossé (41mm)</span></div>
+                <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Automatique Date</span></div>
+                <div class="flex justify-between"><span>Verre :</span><span class="font-bold text-black">Saphir Anti-reflet</span></div>
+                <div class="flex justify-between"><span>Étanchéité :</span><span class="font-bold text-black">100m / 10 ATM</span></div>
+              </div>
             </div>
-            <button onclick="toggleModal(true)" class="w-full py-4 border border-black text-black font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-black hover:text-white transition-colors duration-300">RÉSERVER CE MODÈLE</button>
+            <button onclick="toggleModal(true)" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
+              RÉSERVER CE MODÈLE
+            </button>
           </div>
+
         </div>
       </div>
     </div>
@@ -188,7 +267,7 @@
     <div class="bg-[#181818] border border-white/20 p-8 max-w-md w-full relative text-left shadow-2xl text-white">
       <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-white/60 hover:text-white text-lg font-bold">✕</button>
       <h3 class="text-lg font-black uppercase mb-2 tracking-wider">DEMANDE D'ATTRIBUTION</h3>
-      <p class="text-xs text-white/60 mb-6">Réservation prioritaire pour la collection YLM Calibre 01.</p>
+      <p class="text-xs text-white/60 mb-6">Réservation prioritaire pour la collection YLM.</p>
       <form onsubmit="event.preventDefault(); alert('Votre demande a été enregistrée.'); toggleModal(false);" class="space-y-4 text-xs font-semibold">
         <input type="text" placeholder="NOM & PRÉNOM" required class="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
         <input type="email" placeholder="EMAIL CONFIDENTIEL" required class="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
