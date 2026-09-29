@@ -1,543 +1,451 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YLM • Haute Horlogerie</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogue Interactif - CASHIRUI / CASIRUI</title>
   <style>
-    body { font-family: 'Montserrat', sans-serif; }
-    .text-glow { text-shadow: 0 4px 25px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.9); }
-    .section-content { transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      color: #1e293b;
+      padding: 20px;
+    }
+
+    .watch-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Visualiseur Principal */
+    .main-display {
+      display: flex;
+      gap: 32px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .main-display {
+        flex-direction: column;
+        padding: 20px;
+      }
+    }
+
+    .image-wrapper {
+      flex: 1;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      min-height: 380px;
+    }
+
+    .image-wrapper img {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      transition: opacity 0.25s ease-in-out;
+    }
+
+    .main-details {
+      flex: 1;
+      width: 100%;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .watch-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .variant-label {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      color: #475569;
+    }
+
+    .desc {
+      color: #64748b;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+
+    /* Sélecteur de couleurs & collections */
+    .selector-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .group-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .buttons-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .color-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .color-btn.active, .color-btn:hover {
+      transform: scale(1.15);
+      border-color: #2563eb;
+    }
+
+    /* Galerie complète (Grille) */
+    .collection-title {
+      margin-top: 48px;
+      margin-bottom: 24px;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .grid-collection {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      border: 1px solid #e2e8f0;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .card h4 {
+      margin: 0 0 4px;
+      font-size: 0.95rem;
+      color: #0f172a;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.825rem;
+      color: #64748b;
+    }
   </style>
 </head>
-<body class="bg-[#121212] text-white antialiased selection:bg-white selection:text-black overflow-x-hidden">
+<body>
 
-  <!-- HAUTEUR VIRTUELLE GLOBALE DU SCROLL (800vh) -->
-  <div class="h-[800vh] w-full absolute top-0 left-0 pointer-events-none"></div>
-
-  <!-- PREMIÈRE VIDÉO FIXE AU SCROLL (CALIBRE 01) -->
-  <div id="firstVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212] transition-opacity duration-700">
-    <div class="relative w-full h-full flex items-center justify-center p-4">
-      <video
-        id="calibreVideo"
-        src="vidéo.mp4"
-        muted
-        playsinline
-        preload="auto"
-        class="w-full h-full object-contain pointer-events-none"
-      ></video>
-      <div 
-        class="absolute inset-0 pointer-events-none"
-        style="background: radial-gradient(circle, transparent 40%, #121212 85%);"
-      ></div>
+<div class="watch-container">
+  <!-- Affichage principal dynamique -->
+  <div class="main-display">
+    <div class="image-wrapper">
+      <img id="main-watch-img" src="cashirui-automatic-black.jpg" alt="CASHIRUI Automatic Diver - Noir Mat">
     </div>
-  </div>
+    <div class="main-details">
+      <span class="badge" id="watch-collection-badge">Diver Series</span>
+      <h1 class="watch-title" id="watch-title">CASHIRUI Automatic Diver</h1>
+      <p class="variant-label">Finition : <strong id="watch-color-text">Noir Mat</strong></p>
+      <p id="watch-desc" class="desc">
+        Lunette graduée de plongée, cadran noir mat avec index luminescents et bracelet en acier inoxydable.
+      </p>
 
-  <!-- DEUXIÈME VIDÉO FIXE AU SCROLL (ÉCRIN / COLLECTION) -->
-  <div id="secondVideoContainer" class="fixed top-0 left-0 w-full h-full z-10 flex items-center justify-center bg-[#F5F2EB] opacity-0 pointer-events-none transition-opacity duration-700">
-    <div class="relative w-full h-full flex items-center justify-center p-4">
-      <video
-        id="boxVideo"
-        src="ylm-showcase-box.mp4.mp4"
-        muted
-        playsinline
-        preload="auto"
-        class="w-full h-full object-contain pointer-events-none"
-      ></video>
-    </div>
-  </div>
-
-  <!-- HEADER -->
-  <header id="siteHeader" class="fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white">
-    <button class="flex items-center space-x-3 text-[11px] tracking-[0.25em] font-bold hover:opacity-70 transition-opacity">
-      <span>— MENU</span>
-    </button>
-
-    <!-- LOGO YLM -->
-    <div class="flex items-center space-x-2 text-2xl font-black tracking-[0.3em] uppercase font-sans">
-      <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">Y</span>
-      <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">L</span>
-      <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">M</span>
-    </div>
-
-    <div class="flex items-center space-x-6 text-[11px] tracking-[0.2em] font-medium opacity-80">
-      <a href="#collection-catalogue" class="hidden md:inline hover:opacity-100 transition-opacity">COLLECTIONS</a>
-    </div>
-  </header>
-
-  <!-- NAVIGATION LATÉRALE DROITE -->
-  <nav id="siteNav" class="fixed right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col space-y-6 transition-opacity duration-500">
-    <button onclick="scrollToIndex(0)" id="nav-0" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300">Vision</button>
-    <button onclick="scrollToIndex(1)" id="nav-1" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Manifeste</button>
-    <button onclick="scrollToIndex(2)" id="nav-2" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Ingénierie</button>
-    <button onclick="scrollToIndex(3)" id="nav-3" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Réservation</button>
-  </nav>
-
-  <!-- CONTENU TEXTE 1ÈRE VIDÉO -->
-  <div id="textSection" class="fixed inset-0 z-20 pointer-events-none flex items-center px-8 md:px-20 transition-opacity duration-500">
-    <div class="w-full max-w-sm md:max-w-md text-glow relative h-64">
-
-      <div id="sec-0" class="section-content absolute inset-0 opacity-100 translate-y-0 pointer-events-auto">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ÉDITION SPÉCIALE</span>
-        <h1 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">YLM CALIBRE 01</h1>
-        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
-          L'union de trois visions horlogères réunies dans une architecture squelette d'exception.
-        </p>
-      </div>
-
-      <div id="sec-1" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">HOMMAGE HORLOGER</span>
-        <h2 class="text-3xl md:text-4xl font-black tracking-tight uppercase mb-4 leading-none">TROIS LETTRES.<br />TROIS PIONNIERS.</h2>
-        <p class="text-xs text-white/80 leading-relaxed mb-4">
-          <strong>Y</strong>ves • <strong>L</strong>ouis • <strong>M</strong>udge
-        </p>
-        <p class="text-xs text-white/70 leading-relaxed">
-          Un hommage à l'élégance des formes, l'invention du tourbillon et le génie de l'échappement mécanique.
-        </p>
-      </div>
-
-      <div id="sec-2" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">CONSTRUCTION</span>
-        <h2 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">PRÉCISION ABSOLUE</h2>
-        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
-          Cadran ajouré et finitions brossées à la main révélant les rouages d'un mouvement automatique haute fréquence.
-        </p>
-      </div>
-
-      <div id="sec-3" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ACQUISITION</span>
-        <h2 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">ÉCRIN YLM</h2>
-        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal mb-6">
-          Série limitée numérotée à la main.
-        </p>
-        <button onclick="toggleModal(true)" class="px-8 py-3 bg-white text-black text-[10px] uppercase tracking-[0.3em] font-extrabold hover:bg-white/90 transition-all shadow-2xl pointer-events-auto">
-          PRENDRE RENDEZ-VOUS
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- TEXTE D'ACCOMPAGNEMENT SUR LA 2ÈME VIDÉO -->
-  <div id="secondVideoText" class="fixed top-24 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center opacity-0 transition-opacity duration-500 w-full px-4">
-    <span class="text-[11px] uppercase tracking-[0.4em] font-bold text-black/60 block mb-2">L'ÉCRIN & LA COLLECTION</span>
-    <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase text-black">L'EXPÉRIENCE YLM</h2>
-  </div>
-
-  <!-- CATALOGUE DES MONTRES (3 MODÈLES) -->
-  <div id="collection-catalogue" class="relative z-20 mt-[680vh]">
-    <div class="w-full h-32 bg-gradient-to-b from-transparent to-[#F5F2EB]"></div>
-
-    <div class="bg-[#F5F2EB] text-black px-6 md:px-12 pb-32">
-      <div class="max-w-7xl mx-auto pt-8">
-        <div class="text-center mb-16">
-          <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">LA COLLECTION OFFICIELLE</span>
-          <h3 class="text-3xl md:text-5xl font-black uppercase tracking-wider">NOS MODÈLES D'EXCEPTION</h3>
+      <!-- Sélecteur de pastilles de couleurs organisées par collection -->
+      <div class="color-selector">
+        <p class="selector-title">Sélectionner la variante :</p>
+        
+        <!-- Collection 1 : Diver -->
+        <div class="group-label">1. Diver Series (Acier & Lunette Graduée)</div>
+        <div class="buttons-group">
+          <button class="color-btn active" data-id="cashirui-black" style="background-color: #1a1a1a;" title="Diver - Noir Mat"></button>
+          <button class="color-btn" data-id="cashirui-white" style="background-color: #f5f5f5; border: 1px solid #ccc;" title="Diver - Blanc Épuré"></button>
+          <button class="color-btn" data-id="cashirui-blue" style="background-color: #1e293b;" title="Diver - Bleu Marine"></button>
         </div>
 
-        <!-- GRILLE DES 3 PRODUITS DE LA COLLECTION -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Collection 2 : Square -->
+        <div class="group-label">2. Square Series (Boîtier Octogonal)</div>
+        <div class="buttons-group">
+          <button class="color-btn" data-id="cashirui-marron" style="background-color: #4a2e2b;" title="Square - Marron Chocolat"></button>
+          <button class="color-btn" data-id="cashirui-vert" style="background-color: #3f4839;" title="Square - Vert Olive"></button>
+          <button class="color-btn" data-id="cashirui-gris-noir" style="background-color: #2b2d31;" title="Square - Gris Anthracite"></button>
+        </div>
 
-          <!-- MONTRE 1 : YLM OCTO SQUELETTE -->
-          <div onclick="openProductDetail('octo')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
-            <div>
-              <div class="w-full h-80 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="ylm-octo-squelette.jpg" alt="YLM Octo Squelette" class="max-h-72 object-contain group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div class="flex justify-between items-start mb-2">
-                <div>
-                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Octogonal</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Octo Squelette</h4>
-                </div>
-                <span class="text-sm font-black text-black/90">2 490 €</span>
-              </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Boîtier géométrique en acier brossé avec cadran squelette ajouré.
-              </p>
-              <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
-                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier (40mm / 42mm)</span></div>
-                <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Automatique Apparent</span></div>
-                <div class="flex justify-between"><span>Finitions :</span><span class="font-bold text-black">Blanc / Bleu / Vert</span></div>
-              </div>
-            </div>
-            <button onclick="event.stopPropagation(); openProductDetail('octo');" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
-              DÉCOUVRIR LE MODÈLE
-            </button>
-          </div>
+        <!-- Collection 3 : Speedracer -->
+        <div class="group-label">3. Speedracer Series (Balancier Apparent)</div>
+        <div class="buttons-group">
+          <button class="color-btn" data-id="speedracer-blanc" style="background-color: #ffffff; border: 1px solid #ccc;" title="Speedracer - Blanc / Cuir Marron"></button>
+          <button class="color-btn" data-id="speedracer-noir" style="background-color: #111111;" title="Speedracer - Noir / Cuir Noir"></button>
+          <button class="color-btn" data-id="speedracer-bleu-ciel" style="background-color: #38bdf8;" title="Speedracer - Bleu Ciel / Cuir Noir"></button>
+        </div>
 
-          <!-- MONTRE 2 : YLM TANK SQUELETTE -->
-          <div onclick="openProductDetail('tank')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
-            <div>
-              <div class="w-full h-80 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="ylm-tank-noir.jpg" alt="YLM Tank Squelette" class="max-h-72 object-contain group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div class="flex justify-between items-start mb-2">
-                <div>
-                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Rectangulaire</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Tank Squelette</h4>
-                </div>
-                <span class="text-sm font-black text-black/90">2 290 €</span>
-              </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Design rectangulaire néo-classique à chiffres romains et cuir élégant.
-              </p>
-              <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
-                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Polie</span></div>
-                <div class="flex justify-between"><span>Bracelet :</span><span class="font-bold text-black">Cuir Façon Crocodile</span></div>
-                <div class="flex justify-between"><span>Finitions :</span><span class="font-bold text-black">Noir / Bleu / Marron</span></div>
-              </div>
-            </div>
-            <button onclick="event.stopPropagation(); openProductDetail('tank');" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
-              DÉCOUVRIR LE MODÈLE
-            </button>
-          </div>
-
-          <!-- MONTRE 3 : YLM SQUARE SQUELETTE (NOUVEAU) -->
-          <div onclick="openProductDetail('square')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
-            <div>
-              <div class="w-full h-80 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="ylm-square-blanc.jpg" alt="YLM Square Squelette" class="max-h-72 object-contain group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div class="flex justify-between items-start mb-2">
-                <div>
-                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Carré Acier</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Square Squelette</h4>
-                </div>
-                <span class="text-sm font-black text-black/90">2 590 €</span>
-              </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Silhouette carrée audacieuse en acier brossé avec bracelet intégré.
-              </p>
-              <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
-                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Inoxydable Carré</span></div>
-                <div class="flex justify-between"><span>Bracelet :</span><span class="font-bold text-black">Acier Intégré Brossé</span></div>
-                <div class="flex justify-between"><span>Finitions :</span><span class="font-bold text-black">Blanc / Bleu / Noir</span></div>
-              </div>
-            </div>
-            <button onclick="event.stopPropagation(); openProductDetail('square');" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
-              DÉCOUVRIR LE MODÈLE
-            </button>
-          </div>
-
+        <!-- Collection 4 : Open Heart -->
+        <div class="group-label">4. Open Heart Series (Double Ouverture & Guilloché)</div>
+        <div class="buttons-group">
+          <button class="color-btn" data-id="openheart-bleu" style="background-color: #1d4ed8;" title="Open Heart - Bleu / Cuir Bleu"></button>
+          <button class="color-btn" data-id="openheart-noir" style="background-color: #1f2937;" title="Open Heart - Noir / Cuir Noir"></button>
+          <button class="color-btn" data-id="openheart-blanc" style="background-color: #f8fafc; border: 1px solid #ccc;" title="Open Heart - Blanc / Cuir Marron"></button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- PAGE DE PRÉSENTATION DÉTAILLÉE DU PRODUIT (DYNAMIQUE) -->
-  <div id="productDetailModal" class="fixed inset-0 bg-white z-50 hidden overflow-y-auto text-black">
-    <div class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-black/10 px-8 py-4 flex justify-between items-center z-10">
-      <div class="text-lg font-black tracking-[0.2em]">YLM • HAUTE HORLOGERIE</div>
-      <button onclick="closeProductDetail()" class="text-xs font-black uppercase tracking-widest px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors">
-        ✕ FERMER
-      </button>
+  <!-- Galerie intégrale des 12 modèles -->
+  <h2 class="collection-title">Collection Complète (12 Modèles)</h2>
+  <div class="grid-collection">
+    <!-- 1. Diver -->
+    <div class="card" onclick="selectWatch('cashirui-black')">
+      <img src="cashirui-automatic-black.jpg" alt="Diver Noir Mat">
+      <h4>CASHIRUI Diver</h4>
+      <p>Noir Mat</p>
+    </div>
+    <div class="card" onclick="selectWatch('cashirui-white')">
+      <img src="cashirui-automatic-white.jpg" alt="Diver Blanc Épuré">
+      <h4>CASHIRUI Diver</h4>
+      <p>Blanc Épuré</p>
+    </div>
+    <div class="card" onclick="selectWatch('cashirui-blue')">
+      <img src="cashirui-automatic-blue.jpg" alt="Diver Bleu Marine">
+      <h4>CASHIRUI Diver</h4>
+      <p>Bleu Marine</p>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-16">
-      
-      <!-- COLONNE GAUCHE : PHOTO PRINCIPALE ET SÉLECTION DES COULEURS -->
-      <div class="space-y-6">
-        <!-- Photo principale -->
-        <div class="w-full h-[450px] bg-[#F9F8F6] border border-black/5 flex items-center justify-center p-8">
-          <img id="mainProductImage" src="" alt="Montre YLM" class="max-h-full object-contain transition-all duration-300" />
-        </div>
+    <!-- 2. Square -->
+    <div class="card" onclick="selectWatch('cashirui-marron')">
+      <img src="cashirui-automatic-marron.jpg" alt="Square Marron Chocolat">
+      <h4>CASHIRUI Square</h4>
+      <p>Marron Chocolat</p>
+    </div>
+    <div class="card" onclick="selectWatch('cashirui-vert')">
+      <img src="cashirui-automatic-vert.jpg" alt="Square Vert Olive">
+      <h4>CASHIRUI Square</h4>
+      <p>Vert Olive</p>
+    </div>
+    <div class="card" onclick="selectWatch('cashirui-gris-noir')">
+      <img src="cashirui-automatic-gris-noir.jpg" alt="Square Gris Anthracite">
+      <h4>CASHIRUI Square</h4>
+      <p>Gris Anthracite</p>
+    </div>
 
-        <!-- SELECTION DES COULEURS DYNAMIQUES -->
-        <div>
-          <span class="text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 block mb-3">CHOISIR LA FINITION :</span>
-          <div id="colorOptionsContainer" class="grid grid-cols-3 gap-4">
-            <!-- Injecté par JavaScript -->
-          </div>
-        </div>
-      </div>
+    <!-- 3. Speedracer -->
+    <div class="card" onclick="selectWatch('speedracer-blanc')">
+      <img src="casirui-speedracer-cadran-blanc-bracelet-marron.avif" alt="Speedracer Blanc">
+      <h4>CASIRUI Speedracer</h4>
+      <p>Blanc / Cuir Marron</p>
+    </div>
+    <div class="card" onclick="selectWatch('speedracer-noir')">
+      <img src="casirui-speedracer-cadran-noir-bracelet-noir.avif" alt="Speedracer Noir">
+      <h4>CASIRUI Speedracer</h4>
+      <p>Noir / Cuir Noir</p>
+    </div>
+    <div class="card" onclick="selectWatch('speedracer-bleu-ciel')">
+      <img src="casirui-speedracer-cadran-bleu-ciel-bracelet-noir.avif" alt="Speedracer Bleu Ciel">
+      <h4>CASIRUI Speedracer</h4>
+      <p>Bleu Ciel / Cuir Noir</p>
+    </div>
 
-      <!-- COLONNE DROITE : DÉTAILS ET SPÉCIFICATIONS COMPLÈTES -->
-      <div class="flex flex-col justify-between">
-        <div>
-          <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-black/40 block mb-2">NOUVEAUTÉ • SÉRIE LIMITÉE</span>
-          <h1 id="modalTitle" class="text-4xl font-black uppercase tracking-tight mb-2">MODÈLE YLM</h1>
-          <p class="text-xs uppercase tracking-widest text-black/60 mb-6">Finition sélectionnée : <span id="selectedColorName" class="font-bold text-black">-</span></p>
-          
-          <div id="modalPrice" class="text-3xl font-black mb-1">0 €</div>
-          <p class="text-[11px] text-black/50 mb-8">TVA incluse • Livraison gratuite sous 3-5 jours ouvrables.</p>
-
-          <p id="modalDescription" class="text-xs text-black/80 leading-relaxed mb-8 border-t border-b border-black/10 py-6">
-            Description du modèle...
-          </p>
-
-          <!-- TABLEAU DES SPÉCIFICATIONS -->
-          <h3 class="text-xs font-black uppercase tracking-widest mb-4">SPÉCIFICATIONS TECHNIQUES</h3>
-          <div id="specsContainer" class="space-y-2 text-xs font-medium text-black/70 mb-8">
-            <!-- Injecté par JavaScript -->
-          </div>
-        </div>
-
-        <button onclick="closeProductDetail(); toggleModal(true);" class="w-full py-5 bg-black text-white font-extrabold uppercase tracking-[0.25em] text-xs hover:bg-black/80 transition-colors shadow-xl">
-          RÉSERVER / COMMANDER CE MODÈLE
-        </button>
-      </div>
-
+    <!-- 4. Open Heart -->
+    <div class="card" onclick="selectWatch('openheart-bleu')">
+      <img src="casirui-openheart-cadran-bleu-bracelet-bleu.avif" alt="Open Heart Bleu">
+      <h4>CASIRUI Open Heart</h4>
+      <p>Bleu / Cuir Bleu</p>
+    </div>
+    <div class="card" onclick="selectWatch('openheart-noir')">
+      <img src="casirui-openheart-cadran-noir-bracelet-noir.avif" alt="Open Heart Noir">
+      <h4>CASIRUI Open Heart</h4>
+      <p>Noir / Cuir Noir</p>
+    </div>
+    <div class="card" onclick="selectWatch('openheart-blanc')">
+      <img src="casirui-openheart-cadran-blanc-bracelet-marron.avif" alt="Open Heart Blanc">
+      <h4>CASIRUI Open Heart</h4>
+      <p>Blanc / Cuir Marron</p>
     </div>
   </div>
+</div>
 
-  <!-- MODALE DE RÉSERVATION -->
-  <div id="modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden items-center justify-center p-4">
-    <div class="bg-[#181818] border border-white/20 p-8 max-w-md w-full relative text-left shadow-2xl text-white">
-      <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-white/60 hover:text-white text-lg font-bold">✕</button>
-      <h3 class="text-lg font-black uppercase mb-2 tracking-wider">DEMANDE D'ATTRIBUTION</h3>
-      <p class="text-xs text-white/60 mb-6">Réservation prioritaire pour la collection YLM.</p>
-      <form onsubmit="event.preventDefault(); alert('Votre demande a été enregistrée.'); toggleModal(false);" class="space-y-4 text-xs font-semibold">
-        <input type="text" placeholder="NOM & PRÉNOM" required class="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
-        <input type="email" placeholder="EMAIL CONFIDENTIEL" required class="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
-        <button type="submit" class="w-full py-4 bg-white text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white/90 transition-colors">SOUMETTRE LA DEMANDE</button>
-      </form>
-    </div>
-  </div>
+<script>
+  // Base de données globale contenant les 12 références
+  const watchesData = {
+    // --- Collection 1 : Diver ---
+    "cashirui-black": {
+      name: "CASHIRUI Automatic Diver",
+      collection: "Diver Series",
+      image: "cashirui-automatic-black.jpg",
+      colorText: "Noir Mat",
+      desc: "Lunette graduée de plongée, cadran noir mat avec index luminescents et bracelet en acier inoxydable."
+    },
+    "cashirui-white": {
+      name: "CASHIRUI Automatic Diver",
+      collection: "Diver Series",
+      image: "cashirui-automatic-white.jpg",
+      colorText: "Blanc Épuré",
+      desc: "Lunette graduée de plongée, cadran blanc argenté pour une lisibilité maximale et bracelet acier."
+    },
+    "cashirui-blue": {
+      name: "CASHIRUI Automatic Diver",
+      collection: "Diver Series",
+      image: "cashirui-automatic-blue.jpg",
+      colorText: "Bleu Marine",
+      desc: "Lunette graduée de plongée, cadran bleu nuit élégant et bracelet en acier inoxydable."
+    },
 
-  <!-- FOOTER -->
-  <footer id="siteFooter" class="fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500">
-    <div>© YLM TIMEPIECES</div>
-    <div id="footer-counter">01 / 04</div>
-    <div>SWISS DESIGN</div>
-  </footer>
+    // --- Collection 2 : Square ---
+    "cashirui-marron": {
+      name: "CASHIRUI Automatic Square",
+      collection: "Square Series",
+      image: "cashirui-automatic-marron.jpg",
+      colorText: "Marron Chocolat",
+      desc: "Boîtier octogonal brossé, cadran texturé à lignes horizontales marron dégradé."
+    },
+    "cashirui-vert": {
+      name: "CASHIRUI Automatic Square",
+      collection: "Square Series",
+      image: "cashirui-automatic-vert.jpg",
+      colorText: "Vert Olive",
+      desc: "Boîtier octogonal brossé, cadran texturé à lignes horizontales vert olive."
+    },
+    "cashirui-gris-noir": {
+      name: "CASHIRUI Automatic Square",
+      collection: "Square Series",
+      image: "cashirui-automatic-gris-noir.jpg",
+      colorText: "Gris Anthracite",
+      desc: "Boîtier octogonal brossé, cadran texturé à lignes horizontales gris foncé/noir."
+    },
 
-  <!-- SCRIPT CONTRÔLEUR DYNAMIQUE -->
-  <script>
-    // BASE DE DONNÉES DES 3 MONTRES ET LEURS COULEURS
-    const productsData = {
-      octo: {
-        title: "YLM OCTO SQUELETTE",
-        price: "2 490,00 €",
-        defaultColor: "Blanc / Argent",
-        defaultImg: "ylm-octo-squelette.jpg",
-        description: "L'alliance parfaite entre l'architecture octogonale contemporaine et la transparence mécanique. Ce garde-temps dévoile l'intégralité de son mouvement automatique à travers un cadran squelette ciselé avec une précision d'orfèvre.",
-        specs: [
-          { label: "Matériau du boîtier :", value: "Acier Inoxydable haute densité" },
-          { label: "Tailles disponibles :", value: "40mm, 42mm (Homme) / 38mm, 36mm" },
-          { label: "Mouvement :", value: "Mouvement Automatique Squelette" },
-          { label: "Verre :", value: "Verre Saphir Anti-rayures" },
-          { label: "Étanchéité :", value: "Résistant de 30m à 100m" },
-          { label: "Délais d'expédition :", value: "3-5 jours ouvrables" }
-        ],
-        colors: [
-          { name: "Blanc / Argent", img: "ylm-octo-squelette.jpg" },
-          { name: "Bleu Marine", img: "ylm-octo-bleu.jpg" },
-          { name: "Vert Émeraude", img: "ylm-octo-vert.jpg" }
-        ]
-      },
-      tank: {
-        title: "YLM TANK SQUELETTE",
-        price: "2 290,00 €",
-        defaultColor: "Cuir Noir",
-        defaultImg: "ylm-tank-noir.jpg",
-        description: "Élégance classique et modernité mécanique. Ce modèle rectangulaire aux chiffres romains ajourés combine un bracelet en cuir véritable façon crocodile avec un mouvement automatique squelette d'exception.",
-        specs: [
-          { label: "Matériau du boîtier :", value: "Acier Inoxydable Polie" },
-          { label: "Bracelet :", value: "Cuir Véritable façon Crocodile" },
-          { label: "Mouvement :", value: "Mouvement Automatique Squelette" },
-          { label: "Cadran :", value: "Chiffres Romains Ajourés" },
-          { label: "Verre :", value: "Verre Saphir Anti-rayures" },
-          { label: "Étanchéité :", value: "Résistant 30m" },
-          { label: "Délais d'expédition :", value: "3-5 jours ouvrables" }
-        ],
-        colors: [
-          { name: "Cuir Noir", img: "ylm-tank-noir.jpg" },
-          { name: "Cuir Bleu Marine", img: "ylm-tank-bleu.jpg" },
-          { name: "Cuir Marron", img: "ylm-tank-marron.jpg" }
-        ]
-      },
-      square: {
-        title: "YLM SQUARE SQUELETTE",
-        price: "2 590,00 €",
-        defaultColor: "Argent / Blanc",
-        defaultImg: "ylm-square-blanc.jpg",
-        description: "Une silhouette carrée audacieuse en acier brossé avec bracelet intégré. Son mouvement squelette géométrique ajouré met en valeur une architecture mécanique industrielle et futuriste.",
-        specs: [
-          { label: "Matériau du boîtier :", value: "Acier Inoxydable 316L Brossé" },
-          { label: "Bracelet :", value: "Acier Inoxydable Intégré" },
-          { label: "Mouvement :", value: "Mouvement Automatique Squelette" },
-          { label: "Verre :", value: "Verre Saphir Anti-rayures" },
-          { label: "Étanchéité :", value: "Résistant 50m" },
-          { label: "Délais d'expédition :", value: "3-5 jours ouvrables" }
-        ],
-        colors: [
-          { name: "Argent / Blanc", img: "ylm-square-blanc.jpg" },
-          { name: "Bleu Marine", img: "ylm-square-bleu.jpg" },
-          { name: "Noir Intense", img: "ylm-square-noir.jpg" }
-        ]
-      }
-    };
+    // --- Collection 3 : Speedracer ---
+    "speedracer-blanc": {
+      name: "CASIRUI Speedracer",
+      collection: "Speedracer Series",
+      image: "casirui-speedracer-cadran-blanc-bracelet-marron.avif",
+      colorText: "Blanc / Cuir Marron",
+      desc: "Design sport mécanique avec ouverture sur le balancier, cadran blanc et bracelet en cuir marron texturé."
+    },
+    "speedracer-noir": {
+      name: "CASIRUI Speedracer",
+      collection: "Speedracer Series",
+      image: "casirui-speedracer-cadran-noir-bracelet-noir.avif",
+      colorText: "Noir / Cuir Noir",
+      desc: "Design sport mécanique avec ouverture sur le balancier, cadran noir intense et bracelet en cuir noir."
+    },
+    "speedracer-bleu-ciel": {
+      name: "CASIRUI Speedracer",
+      collection: "Speedracer Series",
+      image: "casirui-speedracer-cadran-bleu-ciel-bracelet-noir.avif",
+      colorText: "Bleu Ciel / Cuir Noir",
+      desc: "Design sport mécanique avec ouverture sur le balancier, cadran bleu glacier et bracelet en cuir noir."
+    },
 
-    const calibreVideo = document.getElementById('calibreVideo');
-    const boxVideo = document.getElementById('boxVideo');
-    
-    const firstVideoContainer = document.getElementById('firstVideoContainer');
-    const secondVideoContainer = document.getElementById('secondVideoContainer');
-    
-    const textSection = document.getElementById('textSection');
-    const secondVideoText = document.getElementById('secondVideoText');
-    const siteHeader = document.getElementById('siteHeader');
-    const siteNav = document.getElementById('siteNav');
-    const siteFooter = document.getElementById('siteFooter');
+    // --- Collection 4 : Open Heart ---
+    "openheart-bleu": {
+      name: "CASIRUI Open Heart",
+      collection: "Open Heart Series",
+      image: "casirui-openheart-cadran-bleu-bracelet-bleu.avif",
+      colorText: "Bleu / Cuir Bleu",
+      desc: "Cadran bleu guilloché avec double ouverture sur le mécanisme automatique et bracelet en cuir bleu."
+    },
+    "openheart-noir": {
+      name: "CASIRUI Open Heart",
+      collection: "Open Heart Series",
+      image: "casirui-openheart-cadran-noir-bracelet-noir.avif",
+      colorText: "Noir / Cuir Noir",
+      desc: "Cadran noir guilloché avec double ouverture sur le mécanisme automatique et bracelet en cuir noir."
+    },
+    "openheart-blanc": {
+      name: "CASIRUI Open Heart",
+      collection: "Open Heart Series",
+      image: "casirui-openheart-cadran-blanc-bracelet-marron.avif",
+      colorText: "Blanc / Cuir Marron",
+      desc: "Cadran blanc argenté guilloché avec double ouverture sur le mécanisme et bracelet en cuir marron."
+    }
+  };
 
-    let currentActive = 0;
+  // Fonction centrale pour mettre à jour l'affichage
+  function selectWatch(watchId) {
+    const watch = watchesData[watchId];
+    if (!watch) return;
 
-    [calibreVideo, boxVideo].forEach(v => {
-      if (v) {
-        v.load();
-        v.pause();
-      }
-    });
-
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const windowH = window.innerHeight;
-
-      const maxScrollPhase1 = windowH * 3.2;
-      const progressPhase1 = Math.min(Math.max(scrollY / maxScrollPhase1, 0), 1);
-
-      if (calibreVideo && calibreVideo.duration) {
-        calibreVideo.currentTime = progressPhase1 * calibreVideo.duration;
-      }
-
-      const startPhase2 = windowH * 3.2;
-      const maxScrollPhase2 = windowH * 3.2;
-      const progressPhase2 = Math.min(Math.max((scrollY - startPhase2) / maxScrollPhase2, 0), 1);
-
-      if (boxVideo && boxVideo.duration) {
-        boxVideo.currentTime = progressPhase2 * boxVideo.duration;
-      }
-
-      if (scrollY < windowH * 3.0) {
-        firstVideoContainer.style.opacity = "1";
-        secondVideoContainer.style.opacity = "0";
-        secondVideoContainer.style.pointerEvents = "none";
-        textSection.style.opacity = "1";
-        secondVideoText.style.opacity = "0";
-        siteNav.style.opacity = "1";
-        siteHeader.className = "fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white";
-        siteFooter.className = "fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500";
-      } else if (scrollY >= windowH * 3.0 && scrollY < windowH * 6.5) {
-        firstVideoContainer.style.opacity = "0";
-        secondVideoContainer.style.opacity = "1";
-        secondVideoContainer.style.pointerEvents = "auto";
-        textSection.style.opacity = "0";
-        secondVideoText.style.opacity = "1";
-        siteNav.style.opacity = "0";
-        siteHeader.className = "fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-black/10 backdrop-blur-md bg-white/30 transition-colors duration-500 text-black";
-        siteFooter.className = "fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 pointer-events-none border-t border-black/5 backdrop-blur-xs bg-white/20 transition-colors duration-500";
+    // Mise à jour de l'état actif des boutons
+    document.querySelectorAll('.color-btn').forEach(btn => {
+      if (btn.getAttribute('data-id') === watchId) {
+        btn.classList.add('active');
       } else {
-        firstVideoContainer.style.opacity = "0";
-        secondVideoContainer.style.opacity = "0";
-        secondVideoText.style.opacity = "0";
-      }
-
-      const sectionIndex = Math.min(Math.floor(progressPhase1 * 3.99), 3);
-      if (sectionIndex !== currentActive) {
-        setActiveSection(sectionIndex);
+        btn.classList.remove('active');
       }
     });
 
-    function setActiveSection(index) {
-      currentActive = index;
-      document.getElementById('footer-counter').innerText = `0${index + 1} / 04`;
+    // Effet de transition fluide sur l'image
+    const imgElem = document.getElementById('main-watch-img');
+    imgElem.style.opacity = '0';
+    
+    setTimeout(() => {
+      imgElem.src = watch.image;
+      imgElem.alt = `${watch.name} - ${watch.colorText}`;
+      document.getElementById('watch-title').innerText = watch.name;
+      document.getElementById('watch-collection-badge').innerText = watch.collection;
+      document.getElementById('watch-color-text').innerText = watch.colorText;
+      document.getElementById('watch-desc').innerText = watch.desc;
+      imgElem.style.opacity = '1';
+    }, 200);
+  }
 
-      for (let i = 0; i < 4; i++) {
-        const sec = document.getElementById(`sec-${i}`);
-        const nav = document.getElementById(`nav-${i}`);
-        if (i === index) {
-          sec.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-          sec.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
-          nav.className = "nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300";
-        } else {
-          sec.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
-          sec.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
-          nav.className = "nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300";
-        }
-      }
-    }
-
-    function scrollToIndex(index) {
-      const windowH = window.innerHeight;
-      const target = (index / 3) * (windowH * 3.0);
-      window.scrollTo({ top: target, behavior: 'smooth' });
-    }
-
-    function toggleModal(show) {
-      const modal = document.getElementById('modal');
-      modal.style.display = show ? 'flex' : 'none';
-    }
-
-    // OUVRIR DYNAMIQUEMENT LE DÉTAIL D'UNE MONTRE
-    function openProductDetail(productId) {
-      const product = productsData[productId];
-      if (!product) return;
-
-      document.getElementById('modalTitle').innerText = product.title;
-      document.getElementById('modalPrice').innerText = product.price;
-      document.getElementById('modalDescription').innerText = product.description;
-      document.getElementById('selectedColorName').innerText = product.defaultColor;
-      
-      const mainImg = document.getElementById('mainProductImage');
-      mainImg.src = product.defaultImg;
-      mainImg.alt = product.title;
-
-      // Génération dynamique des boutons de couleur
-      const colorContainer = document.getElementById('colorOptionsContainer');
-      colorContainer.innerHTML = '';
-      product.colors.forEach((c, idx) => {
-        const btn = document.createElement('button');
-        btn.className = `${idx === 0 ? 'border-2 border-black' : 'border border-black/20'} p-3 bg-[#F9F8F6] hover:border-black transition-all text-center color-btn`;
-        btn.onclick = () => {
-          document.querySelectorAll('.color-btn').forEach(b => {
-            b.classList.remove('border-2', 'border-black');
-            b.classList.add('border', 'border-black/20');
-          });
-          btn.classList.remove('border', 'border-black/20');
-          btn.classList.add('border-2', 'border-black');
-          changeProductColor(c.img, c.name);
-        };
-        btn.innerHTML = `
-          <img src="${c.img}" alt="${c.name}" class="h-20 w-full object-contain mx-auto mb-2" />
-          <span class="text-[10px] font-bold uppercase tracking-wider block">${c.name}</span>
-        `;
-        colorContainer.appendChild(btn);
+  // Écoute des clics sur les boutons de couleur
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.color-btn').forEach(button => {
+      button.addEventListener('click', function() {
+        const id = this.getAttribute('data-id');
+        selectWatch(id);
       });
-
-      // Génération dynamique des spécifications
-      const specsContainer = document.getElementById('specsContainer');
-      specsContainer.innerHTML = '';
-      product.specs.forEach(s => {
-        const div = document.createElement('div');
-        div.className = 'flex justify-between py-2 border-b border-black/5';
-        div.innerHTML = `<span>${s.label}</span><span class="font-bold text-black">${s.value}</span>`;
-        specsContainer.appendChild(div);
-      });
-
-      document.getElementById('productDetailModal').classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeProductDetail() {
-      document.getElementById('productDetailModal').classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    }
-
-    function changeProductColor(imageSrc, colorName) {
-      const mainImage = document.getElementById('mainProductImage');
-      const colorText = document.getElementById('selectedColorName');
-      
-      if (mainImage) mainImage.src = imageSrc;
-      if (colorText) colorText.innerText = colorName;
-    }
-  </script>
+    });
+  });
+</script>
 
 </body>
 </html>
