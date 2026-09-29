@@ -131,19 +131,19 @@
     <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase text-black">L'EXPÉRIENCE YLM</h2>
   </div>
 
-  <!-- CATALOGUE DES MONTRES (AVEC PHOTOS, PRIX ET SPÉCIFICATIONS) -->
+  <!-- CATALOGUE DES MONTRES (3 MODÈLES) -->
   <div id="collection-catalogue" class="relative z-20 mt-[680vh]">
     <div class="w-full h-32 bg-gradient-to-b from-transparent to-[#F5F2EB]"></div>
 
-    <div class="bg-[#F5F2EB] text-black px-6 md:px-16 pb-32">
+    <div class="bg-[#F5F2EB] text-black px-6 md:px-12 pb-32">
       <div class="max-w-7xl mx-auto pt-8">
         <div class="text-center mb-16">
           <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">LA COLLECTION OFFICIELLE</span>
           <h3 class="text-3xl md:text-5xl font-black uppercase tracking-wider">NOS MODÈLES D'EXCEPTION</h3>
         </div>
 
-        <!-- GRILLE DES PRODUITS DE LA COLLECTION -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
+        <!-- GRILLE DES 3 PRODUITS DE LA COLLECTION -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
           <!-- MONTRE 1 : YLM OCTO SQUELETTE -->
           <div onclick="openProductDetail('octo')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
@@ -153,16 +153,16 @@
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
-                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Squelette Octogonal</span>
-                  <h4 class="text-xl font-black uppercase tracking-tight">YLM Octo Squelette</h4>
+                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Octogonal</span>
+                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Octo Squelette</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">2 490 €</span>
               </div>
               <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Boîtier géométrique en acier brossé avec cadran squelette ajouré. Disponible en 3 déclinaisons (Blanc, Bleu, Vert).
+                Boîtier géométrique en acier brossé avec cadran squelette ajouré.
               </p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
-                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Inoxydable (40mm / 42mm)</span></div>
+                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier (40mm / 42mm)</span></div>
                 <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Automatique Apparent</span></div>
                 <div class="flex justify-between"><span>Finitions :</span><span class="font-bold text-black">Blanc / Bleu / Vert</span></div>
               </div>
@@ -180,21 +180,48 @@
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
-                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Squelette Rectangulaire</span>
-                  <h4 class="text-xl font-black uppercase tracking-tight">YLM Tank Squelette</h4>
+                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Rectangulaire</span>
+                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Tank Squelette</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">2 290 €</span>
               </div>
               <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Design rectangulaire néo-classique à chiffres romains et mouvement squelette. Disponible en 3 déclinaisons de cuir (Noir, Bleu, Marron).
+                Design rectangulaire néo-classique à chiffres romains et cuir élégant.
               </p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
-                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Inoxydable Polie</span></div>
-                <div class="flex justify-between"><span>Bracelet :</span><span class="font-bold text-black">Cuir Véritable façon Crocodile</span></div>
+                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Polie</span></div>
+                <div class="flex justify-between"><span>Bracelet :</span><span class="font-bold text-black">Cuir Façon Crocodile</span></div>
                 <div class="flex justify-between"><span>Finitions :</span><span class="font-bold text-black">Noir / Bleu / Marron</span></div>
               </div>
             </div>
             <button onclick="event.stopPropagation(); openProductDetail('tank');" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
+              DÉCOUVRIR LE MODÈLE
+            </button>
+          </div>
+
+          <!-- MONTRE 3 : YLM SQUARE SQUELETTE (NOUVEAU) -->
+          <div onclick="openProductDetail('square')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+            <div>
+              <div class="w-full h-80 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
+                <img src="ylm-square-blanc.jpg" alt="YLM Square Squelette" class="max-h-72 object-contain group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Carré Acier</span>
+                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Square Squelette</h4>
+                </div>
+                <span class="text-sm font-black text-black/90">2 590 €</span>
+              </div>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
+                Silhouette carrée audacieuse en acier brossé avec bracelet intégré.
+              </p>
+              <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
+                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Inoxydable Carré</span></div>
+                <div class="flex justify-between"><span>Bracelet :</span><span class="font-bold text-black">Acier Intégré Brossé</span></div>
+                <div class="flex justify-between"><span>Finitions :</span><span class="font-bold text-black">Blanc / Bleu / Noir</span></div>
+              </div>
+            </div>
+            <button onclick="event.stopPropagation(); openProductDetail('square');" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
               DÉCOUVRIR LE MODÈLE
             </button>
           </div>
@@ -283,7 +310,7 @@
 
   <!-- SCRIPT CONTRÔLEUR DYNAMIQUE -->
   <script>
-    // BASE DE DONNÉES DES MONTRES ET LEURS COULEURS
+    // BASE DE DONNÉES DES 3 MONTRES ET LEURS COULEURS
     const productsData = {
       octo: {
         title: "YLM OCTO SQUELETTE",
@@ -297,7 +324,6 @@
           { label: "Mouvement :", value: "Mouvement Automatique Squelette" },
           { label: "Verre :", value: "Verre Saphir Anti-rayures" },
           { label: "Étanchéité :", value: "Résistant de 30m à 100m" },
-          { label: "Option Emballage :", value: "Écrin sur-mesure inclus" },
           { label: "Délais d'expédition :", value: "3-5 jours ouvrables" }
         ],
         colors: [
@@ -325,6 +351,26 @@
           { name: "Cuir Noir", img: "ylm-tank-noir.jpg" },
           { name: "Cuir Bleu Marine", img: "ylm-tank-bleu.jpg" },
           { name: "Cuir Marron", img: "ylm-tank-marron.jpg" }
+        ]
+      },
+      square: {
+        title: "YLM SQUARE SQUELETTE",
+        price: "2 590,00 €",
+        defaultColor: "Argent / Blanc",
+        defaultImg: "ylm-square-blanc.jpg",
+        description: "Une silhouette carrée audacieuse en acier brossé avec bracelet intégré. Son mouvement squelette géométrique ajouré met en valeur une architecture mécanique industrielle et futuriste.",
+        specs: [
+          { label: "Matériau du boîtier :", value: "Acier Inoxydable 316L Brossé" },
+          { label: "Bracelet :", value: "Acier Inoxydable Intégré" },
+          { label: "Mouvement :", value: "Mouvement Automatique Squelette" },
+          { label: "Verre :", value: "Verre Saphir Anti-rayures" },
+          { label: "Étanchéité :", value: "Résistant 50m" },
+          { label: "Délais d'expédition :", value: "3-5 jours ouvrables" }
+        ],
+        colors: [
+          { name: "Argent / Blanc", img: "ylm-square-blanc.jpg" },
+          { name: "Bleu Marine", img: "ylm-square-bleu.jpg" },
+          { name: "Noir Intense", img: "ylm-square-noir.jpg" }
         ]
       }
     };
