@@ -142,24 +142,24 @@
           <h3 class="text-3xl md:text-5xl font-black uppercase tracking-wider">NOS MODÈLES D'EXCEPTION</h3>
         </div>
 
-        <!-- GRILLE DES PRODUITS -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <!-- GRILLE DES PRODUITS DE LA COLLECTION -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12">
 
           <!-- MONTRE 1 : YLM OCTO SQUELETTE -->
-          <div onclick="openProductDetail()" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <div onclick="openProductDetail('octo')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
               <div class="w-full h-80 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="ylm-octo-squelette.jpg" alt="YLM Octo Squelette Acier" class="max-h-72 object-contain group-hover:scale-105 transition-transform duration-500" />
+                <img src="ylm-octo-squelette.jpg" alt="YLM Octo Squelette" class="max-h-72 object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
-                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Squelette</span>
+                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Squelette Octogonal</span>
                   <h4 class="text-xl font-black uppercase tracking-tight">YLM Octo Squelette</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">2 490 €</span>
               </div>
               <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Boîtier géométrique en acier brossé avec cadran squelette ajouré révélant le mouvement automatique haute précision. Disponible en 3 déclinaisons.
+                Boîtier géométrique en acier brossé avec cadran squelette ajouré. Disponible en 3 déclinaisons (Blanc, Bleu, Vert).
               </p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
                 <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Inoxydable (40mm / 42mm)</span></div>
@@ -167,7 +167,34 @@
                 <div class="flex justify-between"><span>Finitions :</span><span class="font-bold text-black">Blanc / Bleu / Vert</span></div>
               </div>
             </div>
-            <button onclick="event.stopPropagation(); openProductDetail();" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
+            <button onclick="event.stopPropagation(); openProductDetail('octo');" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
+              DÉCOUVRIR LE MODÈLE
+            </button>
+          </div>
+
+          <!-- MONTRE 2 : YLM TANK SQUELETTE -->
+          <div onclick="openProductDetail('tank')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+            <div>
+              <div class="w-full h-80 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
+                <img src="ylm-tank-noir.jpg" alt="YLM Tank Squelette" class="max-h-72 object-contain group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Squelette Rectangulaire</span>
+                  <h4 class="text-xl font-black uppercase tracking-tight">YLM Tank Squelette</h4>
+                </div>
+                <span class="text-sm font-black text-black/90">2 290 €</span>
+              </div>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
+                Design rectangulaire néo-classique à chiffres romains et mouvement squelette. Disponible en 3 déclinaisons de cuir (Noir, Bleu, Marron).
+              </p>
+              <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
+                <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Inoxydable Polie</span></div>
+                <div class="flex justify-between"><span>Bracelet :</span><span class="font-bold text-black">Cuir Véritable façon Crocodile</span></div>
+                <div class="flex justify-between"><span>Finitions :</span><span class="font-bold text-black">Noir / Bleu / Marron</span></div>
+              </div>
+            </div>
+            <button onclick="event.stopPropagation(); openProductDetail('tank');" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
               DÉCOUVRIR LE MODÈLE
             </button>
           </div>
@@ -177,7 +204,7 @@
     </div>
   </div>
 
-  <!-- PAGE DE PRÉSENTATION DÉTAILLÉE DU PRODUIT (STYLE CITIZEN) -->
+  <!-- PAGE DE PRÉSENTATION DÉTAILLÉE DU PRODUIT (DYNAMIQUE) -->
   <div id="productDetailModal" class="fixed inset-0 bg-white z-50 hidden overflow-y-auto text-black">
     <div class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-black/10 px-8 py-4 flex justify-between items-center z-10">
       <div class="text-lg font-black tracking-[0.2em]">YLM • HAUTE HORLOGERIE</div>
@@ -188,36 +215,18 @@
 
     <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-16">
       
-      <!-- COLONNE GAUCHE : PHOTO PRINCIPALE ET SÉLECTION DES 3 COULEURS -->
+      <!-- COLONNE GAUCHE : PHOTO PRINCIPALE ET SÉLECTION DES COULEURS -->
       <div class="space-y-6">
         <!-- Photo principale -->
         <div class="w-full h-[450px] bg-[#F9F8F6] border border-black/5 flex items-center justify-center p-8">
-          <img id="mainProductImage" src="ylm-octo-squelette.jpg" alt="YLM Octo Squelette" class="max-h-full object-contain transition-all duration-300" />
+          <img id="mainProductImage" src="" alt="Montre YLM" class="max-h-full object-contain transition-all duration-300" />
         </div>
 
-        <!-- SELECTION DES 3 COULEURS (BLANC, BLEU, VERT) -->
+        <!-- SELECTION DES COULEURS DYNAMIQUES -->
         <div>
-          <span class="text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 block mb-3">CHOISIR LA FINITION DU CADRAN :</span>
-          <div class="grid grid-cols-3 gap-4">
-            
-            <!-- BLANC / ARGENT (ylm-octo-squelette.jpg) -->
-            <button onclick="changeProductColor('ylm-octo-squelette.jpg', 'Blanc / Argent')" class="border-2 border-black p-3 bg-[#F9F8F6] hover:opacity-80 transition-all text-center">
-              <img src="ylm-octo-squelette.jpg" alt="Blanc" class="h-20 w-full object-contain mx-auto mb-2" />
-              <span class="text-[10px] font-bold uppercase tracking-wider block">Blanc / Argent</span>
-            </button>
-
-            <!-- BLEU MARINE (ylm-octo-bleu.jpg) -->
-            <button onclick="changeProductColor('ylm-octo-bleu.jpg', 'Bleu Marine')" class="border border-black/20 p-3 bg-[#F9F8F6] hover:border-black transition-all text-center">
-              <img src="ylm-octo-bleu.jpg" alt="Bleu Marine" class="h-20 w-full object-contain mx-auto mb-2" />
-              <span class="text-[10px] font-bold uppercase tracking-wider block">Bleu Marine</span>
-            </button>
-
-            <!-- VERT ÉMERAUDE (ylm-octo-vert.jpg) -->
-            <button onclick="changeProductColor('ylm-octo-vert.jpg', 'Vert Émeraude')" class="border border-black/20 p-3 bg-[#F9F8F6] hover:border-black transition-all text-center">
-              <img src="ylm-octo-vert.jpg" alt="Vert" class="h-20 w-full object-contain mx-auto mb-2" />
-              <span class="text-[10px] font-bold uppercase tracking-wider block">Vert Émeraude</span>
-            </button>
-
+          <span class="text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 block mb-3">CHOISIR LA FINITION :</span>
+          <div id="colorOptionsContainer" class="grid grid-cols-3 gap-4">
+            <!-- Injecté par JavaScript -->
           </div>
         </div>
       </div>
@@ -226,26 +235,20 @@
       <div class="flex flex-col justify-between">
         <div>
           <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-black/40 block mb-2">NOUVEAUTÉ • SÉRIE LIMITÉE</span>
-          <h1 class="text-4xl font-black uppercase tracking-tight mb-2">YLM OCTO SQUELETTE</h1>
-          <p class="text-xs uppercase tracking-widest text-black/60 mb-6">Finition sélectionnée : <span id="selectedColorName" class="font-bold text-black">Blanc / Argent</span></p>
+          <h1 id="modalTitle" class="text-4xl font-black uppercase tracking-tight mb-2">MODÈLE YLM</h1>
+          <p class="text-xs uppercase tracking-widest text-black/60 mb-6">Finition sélectionnée : <span id="selectedColorName" class="font-bold text-black">-</span></p>
           
-          <div class="text-3xl font-black mb-1">2 490,00 €</div>
+          <div id="modalPrice" class="text-3xl font-black mb-1">0 €</div>
           <p class="text-[11px] text-black/50 mb-8">TVA incluse • Livraison gratuite sous 3-5 jours ouvrables.</p>
 
-          <p class="text-xs text-black/80 leading-relaxed mb-8 border-t border-b border-black/10 py-6">
-            L'alliance parfaite entre l'architecture octogonale contemporaine et la transparence mécanique. Ce garde-temps dévoile l'intégralité de son mouvement automatique à travers un cadran squelette ciselé avec une précision d'orfèvre.
+          <p id="modalDescription" class="text-xs text-black/80 leading-relaxed mb-8 border-t border-b border-black/10 py-6">
+            Description du modèle...
           </p>
 
           <!-- TABLEAU DES SPÉCIFICATIONS -->
           <h3 class="text-xs font-black uppercase tracking-widest mb-4">SPÉCIFICATIONS TECHNIQUES</h3>
-          <div class="space-y-2 text-xs font-medium text-black/70 mb-8">
-            <div class="flex justify-between py-2 border-b border-black/5"><span>Matériau du boîtier :</span><span class="font-bold text-black">Acier Inoxydable haute densité</span></div>
-            <div class="flex justify-between py-2 border-b border-black/5"><span>Tailles disponibles :</span><span class="font-bold text-black">40mm, 42mm (Homme) / 38mm, 36mm</span></div>
-            <div class="flex justify-between py-2 border-b border-black/5"><span>Mouvement :</span><span class="font-bold text-black">Mouvement Automatique Squelette</span></div>
-            <div class="flex justify-between py-2 border-b border-black/5"><span>Verre :</span><span class="font-bold text-black">Verre Saphir Anti-rayures</span></div>
-            <div class="flex justify-between py-2 border-b border-black/5"><span>Étanchéité :</span><span class="font-bold text-black">Résistant de 30m à 100m</span></div>
-            <div class="flex justify-between py-2 border-b border-black/5"><span>Option Emballage :</span><span class="font-bold text-black">Écrin sur-mesure inclus</span></div>
-            <div class="flex justify-between py-2 border-b border-black/5"><span>Délais d'expédition :</span><span class="font-bold text-black">3-5 jours ouvrables</span></div>
+          <div id="specsContainer" class="space-y-2 text-xs font-medium text-black/70 mb-8">
+            <!-- Injecté par JavaScript -->
           </div>
         </div>
 
@@ -278,8 +281,54 @@
     <div>SWISS DESIGN</div>
   </footer>
 
-  <!-- SCRIPT CONTRÔLEUR DES VIDÉOS, COULEURS ET MODALES -->
+  <!-- SCRIPT CONTRÔLEUR DYNAMIQUE -->
   <script>
+    // BASE DE DONNÉES DES MONTRES ET LEURS COULEURS
+    const productsData = {
+      octo: {
+        title: "YLM OCTO SQUELETTE",
+        price: "2 490,00 €",
+        defaultColor: "Blanc / Argent",
+        defaultImg: "ylm-octo-squelette.jpg",
+        description: "L'alliance parfaite entre l'architecture octogonale contemporaine et la transparence mécanique. Ce garde-temps dévoile l'intégralité de son mouvement automatique à travers un cadran squelette ciselé avec une précision d'orfèvre.",
+        specs: [
+          { label: "Matériau du boîtier :", value: "Acier Inoxydable haute densité" },
+          { label: "Tailles disponibles :", value: "40mm, 42mm (Homme) / 38mm, 36mm" },
+          { label: "Mouvement :", value: "Mouvement Automatique Squelette" },
+          { label: "Verre :", value: "Verre Saphir Anti-rayures" },
+          { label: "Étanchéité :", value: "Résistant de 30m à 100m" },
+          { label: "Option Emballage :", value: "Écrin sur-mesure inclus" },
+          { label: "Délais d'expédition :", value: "3-5 jours ouvrables" }
+        ],
+        colors: [
+          { name: "Blanc / Argent", img: "ylm-octo-squelette.jpg" },
+          { name: "Bleu Marine", img: "ylm-octo-bleu.jpg" },
+          { name: "Vert Émeraude", img: "ylm-octo-vert.jpg" }
+        ]
+      },
+      tank: {
+        title: "YLM TANK SQUELETTE",
+        price: "2 290,00 €",
+        defaultColor: "Cuir Noir",
+        defaultImg: "ylm-tank-noir.jpg",
+        description: "Élégance classique et modernité mécanique. Ce modèle rectangulaire aux chiffres romains ajourés combine un bracelet en cuir véritable façon crocodile avec un mouvement automatique squelette d'exception.",
+        specs: [
+          { label: "Matériau du boîtier :", value: "Acier Inoxydable Polie" },
+          { label: "Bracelet :", value: "Cuir Véritable façon Crocodile" },
+          { label: "Mouvement :", value: "Mouvement Automatique Squelette" },
+          { label: "Cadran :", value: "Chiffres Romains Ajourés" },
+          { label: "Verre :", value: "Verre Saphir Anti-rayures" },
+          { label: "Étanchéité :", value: "Résistant 30m" },
+          { label: "Délais d'expédition :", value: "3-5 jours ouvrables" }
+        ],
+        colors: [
+          { name: "Cuir Noir", img: "ylm-tank-noir.jpg" },
+          { name: "Cuir Bleu Marine", img: "ylm-tank-bleu.jpg" },
+          { name: "Cuir Marron", img: "ylm-tank-marron.jpg" }
+        ]
+      }
+    };
+
     const calibreVideo = document.getElementById('calibreVideo');
     const boxVideo = document.getElementById('boxVideo');
     
@@ -305,7 +354,6 @@
       const scrollY = window.scrollY;
       const windowH = window.innerHeight;
 
-      // PHASE 1 : VIDÉO 1 (0 -> 3.2vh)
       const maxScrollPhase1 = windowH * 3.2;
       const progressPhase1 = Math.min(Math.max(scrollY / maxScrollPhase1, 0), 1);
 
@@ -313,7 +361,6 @@
         calibreVideo.currentTime = progressPhase1 * calibreVideo.duration;
       }
 
-      // PHASE 2 : VIDÉO 2 (3.2vh -> 6.5vh)
       const startPhase2 = windowH * 3.2;
       const maxScrollPhase2 = windowH * 3.2;
       const progressPhase2 = Math.min(Math.max((scrollY - startPhase2) / maxScrollPhase2, 0), 1);
@@ -322,7 +369,6 @@
         boxVideo.currentTime = progressPhase2 * boxVideo.duration;
       }
 
-      // GESTION DES TRANSITIONS ET AFFICHAGE DES VIDÉOS
       if (scrollY < windowH * 3.0) {
         firstVideoContainer.style.opacity = "1";
         secondVideoContainer.style.opacity = "0";
@@ -383,7 +429,52 @@
       modal.style.display = show ? 'flex' : 'none';
     }
 
-    function openProductDetail() {
+    // OUVRIR DYNAMIQUEMENT LE DÉTAIL D'UNE MONTRE
+    function openProductDetail(productId) {
+      const product = productsData[productId];
+      if (!product) return;
+
+      document.getElementById('modalTitle').innerText = product.title;
+      document.getElementById('modalPrice').innerText = product.price;
+      document.getElementById('modalDescription').innerText = product.description;
+      document.getElementById('selectedColorName').innerText = product.defaultColor;
+      
+      const mainImg = document.getElementById('mainProductImage');
+      mainImg.src = product.defaultImg;
+      mainImg.alt = product.title;
+
+      // Génération dynamique des boutons de couleur
+      const colorContainer = document.getElementById('colorOptionsContainer');
+      colorContainer.innerHTML = '';
+      product.colors.forEach((c, idx) => {
+        const btn = document.createElement('button');
+        btn.className = `${idx === 0 ? 'border-2 border-black' : 'border border-black/20'} p-3 bg-[#F9F8F6] hover:border-black transition-all text-center color-btn`;
+        btn.onclick = () => {
+          document.querySelectorAll('.color-btn').forEach(b => {
+            b.classList.remove('border-2', 'border-black');
+            b.classList.add('border', 'border-black/20');
+          });
+          btn.classList.remove('border', 'border-black/20');
+          btn.classList.add('border-2', 'border-black');
+          changeProductColor(c.img, c.name);
+        };
+        btn.innerHTML = `
+          <img src="${c.img}" alt="${c.name}" class="h-20 w-full object-contain mx-auto mb-2" />
+          <span class="text-[10px] font-bold uppercase tracking-wider block">${c.name}</span>
+        `;
+        colorContainer.appendChild(btn);
+      });
+
+      // Génération dynamique des spécifications
+      const specsContainer = document.getElementById('specsContainer');
+      specsContainer.innerHTML = '';
+      product.specs.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'flex justify-between py-2 border-b border-black/5';
+        div.innerHTML = `<span>${s.label}</span><span class="font-bold text-black">${s.value}</span>`;
+        specsContainer.appendChild(div);
+      });
+
       document.getElementById('productDetailModal').classList.remove('hidden');
       document.body.style.overflow = 'hidden';
     }
