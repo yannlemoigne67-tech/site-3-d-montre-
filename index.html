@@ -159,12 +159,12 @@
                 <span class="text-sm font-black text-black/90">2 490 €</span>
               </div>
               <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Boîtier géométrique en acier brossé avec cadran squelette argenté révélant le mouvement automatique haute précision.
+                Boîtier géométrique en acier brossé avec cadran squelette ajouré révélant le mouvement automatique haute précision. Disponible en 3 déclinaisons.
               </p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
                 <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier Inoxydable (40mm / 42mm)</span></div>
                 <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Automatique Apparent</span></div>
-                <div class="flex justify-between"><span>Étanchéité :</span><span class="font-bold text-black">30m à 100m</span></div>
+                <div class="flex justify-between"><span>Finitions :</span><span class="font-bold text-black">Blanc / Bleu / Vert</span></div>
               </div>
             </div>
             <button onclick="event.stopPropagation(); openProductDetail();" class="w-full py-4 border border-black bg-black text-white font-extrabold uppercase tracking-[0.2em] text-[10px] hover:bg-white hover:text-black transition-colors duration-300">
@@ -188,10 +188,37 @@
 
     <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-16">
       
-      <!-- COLONNE GAUCHE : GALERIE / PHOTO -->
+      <!-- COLONNE GAUCHE : PHOTO PRINCIPALE ET SÉLECTION DES 3 COULEURS -->
       <div class="space-y-6">
-        <div class="w-full h-[500px] bg-[#F9F8F6] border border-black/5 flex items-center justify-center p-8">
-          <img src="ylm-octo-squelette.jpg" alt="YLM Octo Squelette" class="max-h-full object-contain" />
+        <!-- Photo principale -->
+        <div class="w-full h-[450px] bg-[#F9F8F6] border border-black/5 flex items-center justify-center p-8">
+          <img id="mainProductImage" src="ylm-octo-squelette.jpg" alt="YLM Octo Squelette" class="max-h-full object-contain transition-all duration-300" />
+        </div>
+
+        <!-- SELECTION DES 3 COULEURS (BLANC, BLEU, VERT) -->
+        <div>
+          <span class="text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 block mb-3">CHOISIR LA FINITION DU CADRAN :</span>
+          <div class="grid grid-cols-3 gap-4">
+            
+            <!-- BLANC / ARGENT (ylm-octo-squelette.jpg) -->
+            <button onclick="changeProductColor('ylm-octo-squelette.jpg', 'Blanc / Argent')" class="border-2 border-black p-3 bg-[#F9F8F6] hover:opacity-80 transition-all text-center">
+              <img src="ylm-octo-squelette.jpg" alt="Blanc" class="h-20 w-full object-contain mx-auto mb-2" />
+              <span class="text-[10px] font-bold uppercase tracking-wider block">Blanc / Argent</span>
+            </button>
+
+            <!-- BLEU MARINE (ylm-octo-bleu.jpg) -->
+            <button onclick="changeProductColor('ylm-octo-bleu.jpg', 'Bleu Marine')" class="border border-black/20 p-3 bg-[#F9F8F6] hover:border-black transition-all text-center">
+              <img src="ylm-octo-bleu.jpg" alt="Bleu Marine" class="h-20 w-full object-contain mx-auto mb-2" />
+              <span class="text-[10px] font-bold uppercase tracking-wider block">Bleu Marine</span>
+            </button>
+
+            <!-- VERT ÉMERAUDE (ylm-octo-vert.jpg) -->
+            <button onclick="changeProductColor('ylm-octo-vert.jpg', 'Vert Émeraude')" class="border border-black/20 p-3 bg-[#F9F8F6] hover:border-black transition-all text-center">
+              <img src="ylm-octo-vert.jpg" alt="Vert" class="h-20 w-full object-contain mx-auto mb-2" />
+              <span class="text-[10px] font-bold uppercase tracking-wider block">Vert Émeraude</span>
+            </button>
+
+          </div>
         </div>
       </div>
 
@@ -199,8 +226,8 @@
       <div class="flex flex-col justify-between">
         <div>
           <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-black/40 block mb-2">NOUVEAUTÉ • SÉRIE LIMITÉE</span>
-          <h1 class="text-4xl font-black uppercase tracking-tight mb-2">YLM OCTO SQUELETTE ACIER</h1>
-          <p class="text-xs uppercase tracking-widest text-black/60 mb-6">Homme & Unisex • Mouvement Automatique Apparent</p>
+          <h1 class="text-4xl font-black uppercase tracking-tight mb-2">YLM OCTO SQUELETTE</h1>
+          <p class="text-xs uppercase tracking-widest text-black/60 mb-6">Finition sélectionnée : <span id="selectedColorName" class="font-bold text-black">Blanc / Argent</span></p>
           
           <div class="text-3xl font-black mb-1">2 490,00 €</div>
           <p class="text-[11px] text-black/50 mb-8">TVA incluse • Livraison gratuite sous 3-5 jours ouvrables.</p>
@@ -217,8 +244,8 @@
             <div class="flex justify-between py-2 border-b border-black/5"><span>Mouvement :</span><span class="font-bold text-black">Mouvement Automatique Squelette</span></div>
             <div class="flex justify-between py-2 border-b border-black/5"><span>Verre :</span><span class="font-bold text-black">Verre Saphir Anti-rayures</span></div>
             <div class="flex justify-between py-2 border-b border-black/5"><span>Étanchéité :</span><span class="font-bold text-black">Résistant de 30m à 100m</span></div>
-            <div class="flex justify-between py-2 border-b border-black/5"><span>Couleurs disponibles :</span><span class="font-bold text-black">Argent, Or Rose, Noir, Or</span></div>
-            <div class="flex justify-between py-2 border-b border-black/5"><span>Livraison :</span><span class="font-bold text-black">Expédition rapide sous 3-5 jours</span></div>
+            <div class="flex justify-between py-2 border-b border-black/5"><span>Option Emballage :</span><span class="font-bold text-black">Écrin sur-mesure inclus</span></div>
+            <div class="flex justify-between py-2 border-b border-black/5"><span>Délais d'expédition :</span><span class="font-bold text-black">3-5 jours ouvrables</span></div>
           </div>
         </div>
 
@@ -251,7 +278,7 @@
     <div>SWISS DESIGN</div>
   </footer>
 
-  <!-- SCRIPT CONTRÔLEUR DES VIDÉOS ET MODALES -->
+  <!-- SCRIPT CONTRÔLEUR DES VIDÉOS, COULEURS ET MODALES -->
   <script>
     const calibreVideo = document.getElementById('calibreVideo');
     const boxVideo = document.getElementById('boxVideo');
@@ -364,6 +391,14 @@
     function closeProductDetail() {
       document.getElementById('productDetailModal').classList.add('hidden');
       document.body.style.overflow = 'auto';
+    }
+
+    function changeProductColor(imageSrc, colorName) {
+      const mainImage = document.getElementById('mainProductImage');
+      const colorText = document.getElementById('selectedColorName');
+      
+      if (mainImage) mainImage.src = imageSrc;
+      if (colorText) colorText.innerText = colorName;
     }
   </script>
 
