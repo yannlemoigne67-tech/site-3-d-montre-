@@ -24,7 +24,7 @@
 
   <!-- PREMIÈRE VIDÉO FIXE AU SCROLL (CALIBRE 01) -->
   <div id="firstVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212] transition-opacity duration-700">
-    <div class="relative w-full h-full flex items-center justify-center p-4">
+    <div class="relative w-full h-full flex items-center justify-center p-2 md:p-4">
       <video
         id="calibreVideo"
         src="vidéo.mp4"
@@ -35,14 +35,14 @@
       ></video>
       <div 
         class="absolute inset-0 pointer-events-none"
-        style="background: radial-gradient(circle, transparent 40%, #121212 85%);"
+        style="background: radial-gradient(circle, transparent 35%, #121212 85%);"
       ></div>
     </div>
   </div>
 
   <!-- DEUXIÈME VIDÉO FIXE AU SCROLL (ÉCRIN / COLLECTION) -->
   <div id="secondVideoContainer" class="fixed top-0 left-0 w-full h-full z-10 flex items-center justify-center bg-[#F5F2EB] opacity-0 pointer-events-none transition-opacity duration-700">
-    <div class="relative w-full h-full flex items-center justify-center p-4">
+    <div class="relative w-full h-full flex items-center justify-center p-2 md:p-4">
       <video
         id="boxVideo"
         src="ylm-showcase-box.mp4.mp4"
@@ -54,48 +54,48 @@
     </div>
   </div>
 
-  <!-- HEADER -->
-  <header id="siteHeader" class="fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white">
-    <button class="flex items-center space-x-3 text-[11px] tracking-[0.25em] font-bold hover:opacity-70 transition-opacity">
+  <!-- HEADER OPTIMISÉ MOBILE -->
+  <header id="siteHeader" class="fixed top-0 left-0 w-full px-4 md:px-16 py-4 md:py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white">
+    <button class="flex items-center space-x-2 text-[10px] md:text-[11px] tracking-[0.2em] md:tracking-[0.25em] font-bold hover:opacity-70 transition-opacity">
       <span>— MENU</span>
     </button>
 
     <!-- LOGO YLM -->
-    <div class="flex items-center space-x-2 text-2xl font-black tracking-[0.3em] uppercase font-sans">
+    <div class="flex items-center space-x-2 text-xl md:text-2xl font-black tracking-[0.3em] uppercase font-sans">
       <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">Y</span>
       <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">L</span>
       <span class="hover:scale-125 transition-transform duration-300 cursor-pointer">M</span>
     </div>
 
-    <div class="flex items-center space-x-6 text-[11px] tracking-[0.2em] font-medium opacity-80">
-      <a href="#collection-catalogue" class="hidden md:inline hover:opacity-100 transition-opacity">COLLECTIONS</a>
+    <div class="flex items-center space-x-6 text-[10px] md:text-[11px] tracking-[0.2em] font-medium opacity-80">
+      <a href="#collection-catalogue" class="hover:opacity-100 transition-opacity">COLLECTIONS</a>
     </div>
   </header>
 
-  <!-- NAVIGATION LATÉRALE DROITE -->
-  <nav id="siteNav" class="fixed right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col space-y-6 transition-opacity duration-500">
+  <!-- NAVIGATION LATÉRALE DROITE (MASQUÉE SUR MOBILE 'hidden md:flex') -->
+  <nav id="siteNav" class="fixed right-8 top-1/2 -translate-y-1/2 z-30 hidden md:flex flex-col space-y-6 transition-opacity duration-500">
     <button onclick="scrollToIndex(0)" id="nav-0" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300">Vision</button>
     <button onclick="scrollToIndex(1)" id="nav-1" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Manifeste</button>
     <button onclick="scrollToIndex(2)" id="nav-2" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Ingénierie</button>
     <button onclick="scrollToIndex(3)" id="nav-3" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Réservation</button>
   </nav>
 
-  <!-- CONTENU TEXTE 1ÈRE VIDÉO -->
-  <div id="textSection" class="fixed inset-0 z-20 pointer-events-none flex items-center px-8 md:px-20 transition-opacity duration-500">
-    <div class="w-full max-w-sm md:max-w-md text-glow relative h-64">
+  <!-- CONTENU TEXTE 1ÈRE VIDÉO (AJUSTÉ MOBILE) -->
+  <div id="textSection" class="fixed inset-0 z-20 pointer-events-none flex items-start md:items-center justify-center md:justify-start pt-24 md:pt-0 px-6 md:px-20 transition-opacity duration-500">
+    <div class="w-full max-w-xs md:max-w-md text-glow relative h-64 text-center md:text-left">
 
       <div id="sec-0" class="section-content absolute inset-0 opacity-100 translate-y-0 pointer-events-auto">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ÉDITION SPÉCIALE</span>
-        <h1 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">YLM CALIBRE 01</h1>
+        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/60 block mb-2">ÉDITION SPÉCIALE</span>
+        <h1 class="text-3xl md:text-5xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">YLM CALIBRE 01</h1>
         <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
-          L'excellence horlogère à portée de main. Mouvement automatique d'exception dans un écrin de luxe.
+          L'excellence horlogère à portée de hand. Mouvement automatique d'exception dans un écrin de luxe.
         </p>
       </div>
 
       <div id="sec-1" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">HOMMAGE HORLOGER</span>
-        <h2 class="text-3xl md:text-4xl font-black tracking-tight uppercase mb-4 leading-none">TROIS LETTRES.<br />TROIS PIONNIERS.</h2>
-        <p class="text-xs text-white/80 leading-relaxed mb-4">
+        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/60 block mb-2">HOMMAGE HORLOGER</span>
+        <h2 class="text-2xl md:text-4xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">TROIS LETTRES.<br />TROIS PIONNIERS.</h2>
+        <p class="text-xs text-white/80 leading-relaxed mb-2 md:mb-4">
           <strong>Y</strong>ves • <strong>L</strong>ouis • <strong>M</strong>udge
         </p>
         <p class="text-xs text-white/70 leading-relaxed">
@@ -104,20 +104,20 @@
       </div>
 
       <div id="sec-2" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">CONSTRUCTION</span>
-        <h2 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">PRÉCISION ABSOLUE</h2>
+        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/60 block mb-2">CONSTRUCTION</span>
+        <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">PRÉCISION ABSOLUE</h2>
         <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
           Cadran ajouré et finitions brossées à la main révélant les rouages d'un mouvement automatique haute fréquence.
         </p>
       </div>
 
       <div id="sec-3" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
-        <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-white/60 block mb-2">ACQUISITION</span>
-        <h2 class="text-4xl md:text-5xl font-black tracking-tight uppercase mb-4 leading-none">ÉCRIN YLM</h2>
-        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal mb-6">
+        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/60 block mb-2">ACQUISITION</span>
+        <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">ÉCRIN YLM</h2>
+        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal mb-4 md:mb-6">
           Livraison Express Internationale Offerte (4 à 7 jours).
         </p>
-        <button onclick="toggleModal(true)" class="px-8 py-3 bg-white text-black text-[10px] uppercase tracking-[0.3em] font-extrabold hover:bg-white/90 transition-all shadow-2xl pointer-events-auto">
+        <button onclick="toggleModal(true)" class="px-6 md:px-8 py-3 bg-white text-black text-[10px] uppercase tracking-[0.3em] font-extrabold hover:bg-white/90 transition-all shadow-2xl pointer-events-auto">
           PRENDRE RENDEZ-VOUS
         </button>
       </div>
@@ -126,35 +126,35 @@
   </div>
 
   <!-- TEXTE D'ACCOMPAGNEMENT SUR LA 2ÈME VIDÉO -->
-  <div id="secondVideoText" class="fixed top-24 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center opacity-0 transition-opacity duration-500 w-full px-4">
-    <span class="text-[11px] uppercase tracking-[0.4em] font-bold text-black/60 block mb-2">L'ÉCRIN & LA COLLECTION</span>
-    <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase text-black">L'EXPÉRIENCE YLM TIMEPIECES</h2>
+  <div id="secondVideoText" class="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center opacity-0 transition-opacity duration-500 w-full px-4">
+    <span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-black/60 block mb-1 md:mb-2">L'ÉCRIN & LA COLLECTION</span>
+    <h2 class="text-2xl md:text-5xl font-black tracking-tight uppercase text-black">L'EXPÉRIENCE YLM TIMEPIECES</h2>
   </div>
 
   <!-- CATALOGUE DES MONTRES (7 MODÈLES COMPLETS) -->
   <div id="collection-catalogue" class="relative z-20 mt-[680vh]">
-    <div class="w-full h-32 bg-gradient-to-b from-transparent to-[#F5F2EB]"></div>
+    <div class="w-full h-24 md:h-32 bg-gradient-to-b from-transparent to-[#F5F2EB]"></div>
 
-    <div class="bg-[#F5F2EB] text-black px-6 md:px-12 pb-32">
-      <div class="max-w-7xl mx-auto pt-8">
-        <div class="text-center mb-16">
-          <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">LA COLLECTION OFFICIELLE • LIVRAISON EXPRESS OFFERTE</span>
-          <h3 class="text-3xl md:text-5xl font-black uppercase tracking-wider">NOS MODÈLES D'EXCEPTION</h3>
+    <div class="bg-[#F5F2EB] text-black px-4 md:px-12 pb-32">
+      <div class="max-w-7xl mx-auto pt-4 md:pt-8">
+        <div class="text-center mb-12 md:mb-16">
+          <span class="text-[9px] md:text-[10px] uppercase tracking-[0.25em] md:tracking-[0.3em] font-bold text-black/40 block mb-2">LA COLLECTION OFFICIELLE • LIVRAISON EXPRESS OFFERTE</span>
+          <h3 class="text-2xl md:text-5xl font-black uppercase tracking-wider">NOS MODÈLES D'EXCEPTION</h3>
         </div>
 
         <!-- GRILLE DES PRODUITS DE LA COLLECTION (7 MODÈLES) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
           <!-- MODÈLE 1 : YLM OCTO SQUELETTE -->
-          <div onclick="openProductDetail('octo')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <div onclick="openProductDetail('octo')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
-              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="ylm-octo-squelette.jpg" alt="YLM Octo Squelette" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
+              <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
+                <img src="ylm-octo-squelette.jpg" alt="YLM Octo Squelette" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
                   <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Octogonal</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Octo Squelette</h4>
+                  <h4 class="text-base md:text-lg font-black uppercase tracking-tight">YLM Octo Squelette</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">279 €</span>
               </div>
@@ -173,15 +173,15 @@
           </div>
 
           <!-- MODÈLE 2 : YLM TANK SQUELETTE -->
-          <div onclick="openProductDetail('tank')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <div onclick="openProductDetail('tank')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
-              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="ylm-tank-noir.jpg" alt="YLM Tank Squelette" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
+              <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
+                <img src="ylm-tank-noir.jpg" alt="YLM Tank Squelette" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
                   <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Rectangulaire</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Tank Squelette</h4>
+                  <h4 class="text-base md:text-lg font-black uppercase tracking-tight">YLM Tank Squelette</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">279 €</span>
               </div>
@@ -200,15 +200,15 @@
           </div>
 
           <!-- MODÈLE 3 : YLM SQUARE SQUELETTE -->
-          <div onclick="openProductDetail('square')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <div onclick="openProductDetail('square')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
-              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="ylm-square-blanc.jpg" alt="YLM Square Squelette" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
+              <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
+                <img src="ylm-square-blanc.jpg" alt="YLM Square Squelette" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
                   <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Carré Acier</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Square Squelette</h4>
+                  <h4 class="text-base md:text-lg font-black uppercase tracking-tight">YLM Square Squelette</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">279 €</span>
               </div>
@@ -227,15 +227,15 @@
           </div>
 
           <!-- MODÈLE 4 : YLM AUTOMATIC DIVER -->
-          <div onclick="openProductDetail('diver')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <div onclick="openProductDetail('diver')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
-              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="cashirui-automatic-black.jpg" alt="YLM Automatic Diver" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
+              <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
+                <img src="cashirui-automatic-black.jpg" alt="YLM Automatic Diver" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
                   <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Plongée</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Automatic Diver</h4>
+                  <h4 class="text-base md:text-lg font-black uppercase tracking-tight">YLM Automatic Diver</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">189 €</span>
               </div>
@@ -254,15 +254,15 @@
           </div>
 
           <!-- MODÈLE 5 : YLM SQUARE TEXTURED -->
-          <div onclick="openProductDetail('squareTextured')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <div onclick="openProductDetail('squareTextured')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
-              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="cashirui-automatic-marron.jpg" alt="YLM Square Textured" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
+              <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
+                <img src="cashirui-automatic-marron.jpg" alt="YLM Square Textured" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
                   <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Sport-Chic</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Square Textured</h4>
+                  <h4 class="text-base md:text-lg font-black uppercase tracking-tight">YLM Square Textured</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">219 €</span>
               </div>
@@ -281,15 +281,15 @@
           </div>
 
           <!-- MODÈLE 6 : YLM SPEEDRACER -->
-          <div onclick="openProductDetail('speedracer')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <div onclick="openProductDetail('speedracer')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
-              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="casirui-speedracer-cadran-blanc-bracelet-marron.avif" alt="YLM Speedracer" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
+              <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
+                <img src="casirui-speedracer-cadran-blanc-bracelet-marron.avif" alt="YLM Speedracer" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
                   <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Mécanique • Open Heart</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Speedracer</h4>
+                  <h4 class="text-base md:text-lg font-black uppercase tracking-tight">YLM Speedracer</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">249 €</span>
               </div>
@@ -308,15 +308,15 @@
           </div>
 
           <!-- MODÈLE 7 : YLM OPEN HEART -->
-          <div onclick="openProductDetail('openheart')" class="bg-white border border-black/10 p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <div onclick="openProductDetail('openheart')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
-              <div class="w-full h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
-                <img src="casirui-openheart-cadran-bleu-bracelet-bleu.avif" alt="YLM Open Heart" class="max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
+              <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
+                <img src="casirui-openheart-cadran-bleu-bracelet-bleu.avif" alt="YLM Open Heart" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <div class="flex justify-between items-start mb-2">
                 <div>
                   <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-black/40 block">Automatique • Double Cœur</span>
-                  <h4 class="text-lg font-black uppercase tracking-tight">YLM Open Heart</h4>
+                  <h4 class="text-base md:text-lg font-black uppercase tracking-tight">YLM Open Heart</h4>
                 </div>
                 <span class="text-sm font-black text-black/90">249 €</span>
               </div>
@@ -341,26 +341,26 @@
 
   <!-- PAGE DE PRÉSENTATION DÉTAILLÉE DU PRODUIT (DYNAMIQUE) -->
   <div id="productDetailModal" class="fixed inset-0 bg-white z-50 hidden overflow-y-auto text-black">
-    <div class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-black/10 px-8 py-4 flex justify-between items-center z-10">
-      <div class="text-lg font-black tracking-[0.2em]">YLM TIMEPIECES • HAUTE HORLOGERIE</div>
-      <button onclick="closeProductDetail()" class="text-xs font-black uppercase tracking-widest px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors">
+    <div class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-black/10 px-4 md:px-8 py-4 flex justify-between items-center z-10">
+      <div class="text-xs md:text-lg font-black tracking-[0.15em] md:tracking-[0.2em]">YLM TIMEPIECES</div>
+      <button onclick="closeProductDetail()" class="text-[10px] md:text-xs font-black uppercase tracking-widest px-3 md:px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors">
         ✕ FERMER
       </button>
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-2 gap-16">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
       
       <!-- COLONNE GAUCHE : PHOTO PRINCIPALE ET SÉLECTION DES COULEURS -->
       <div class="space-y-6">
         <!-- Photo principale -->
-        <div class="w-full h-[450px] bg-[#F9F8F6] border border-black/5 flex items-center justify-center p-8">
+        <div class="w-full h-[320px] md:h-[450px] bg-[#F9F8F6] border border-black/5 flex items-center justify-center p-4 md:p-8">
           <img id="mainProductImage" src="" alt="Montre YLM" class="max-h-full object-contain transition-all duration-300" />
         </div>
 
         <!-- SELECTION DES COULEURS DYNAMIQUES -->
         <div>
           <span class="text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 block mb-3">CHOISIR LA FINITION :</span>
-          <div id="colorOptionsContainer" class="grid grid-cols-3 gap-4">
+          <div id="colorOptionsContainer" class="grid grid-cols-3 gap-3 md:gap-4">
             <!-- Injecté par JavaScript -->
           </div>
         </div>
@@ -369,14 +369,14 @@
       <!-- COLONNE DROITE : DÉTAILS ET SPÉCIFICATIONS COMPLÈTES -->
       <div class="flex flex-col justify-between">
         <div>
-          <span class="text-[10px] uppercase tracking-[0.4em] font-bold text-black/40 block mb-2">SÉRIE LIMITÉE YLM • ÉCRIN INCLUS</span>
-          <h1 id="modalTitle" class="text-4xl font-black uppercase tracking-tight mb-2">MODÈLE YLM</h1>
+          <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-black/40 block mb-2">SÉRIE LIMITÉE YLM • ÉCRIN INCLUS</span>
+          <h1 id="modalTitle" class="text-2xl md:text-4xl font-black uppercase tracking-tight mb-2">MODÈLE YLM</h1>
           <p class="text-xs uppercase tracking-widest text-black/60 mb-6">Finition sélectionnée : <span id="selectedColorName" class="font-bold text-black">-</span></p>
           
-          <div id="modalPrice" class="text-3xl font-black mb-1">0 €</div>
-          <p class="text-[11px] text-black/50 mb-8">TVA incluse • 🚀 <strong>Livraison Express Offerte</strong> (4 à 7 jours ouvrés).</p>
+          <div id="modalPrice" class="text-2xl md:text-3xl font-black mb-1">0 €</div>
+          <p class="text-[11px] text-black/50 mb-6 md:mb-8">TVA incluse • 🚀 <strong>Livraison Express Offerte</strong> (4 à 7 jours ouvrés).</p>
 
-          <p id="modalDescription" class="text-xs text-black/80 leading-relaxed mb-8 border-t border-b border-black/10 py-6">
+          <p id="modalDescription" class="text-xs text-black/80 leading-relaxed mb-6 md:mb-8 border-t border-b border-black/10 py-4 md:py-6">
             Description du modèle...
           </p>
 
@@ -387,7 +387,7 @@
           </div>
         </div>
 
-        <button onclick="closeProductDetail(); toggleModal(true);" class="w-full py-5 bg-black text-white font-extrabold uppercase tracking-[0.25em] text-xs hover:bg-black/80 transition-colors shadow-xl">
+        <button onclick="closeProductDetail(); toggleModal(true);" class="w-full py-4 md:py-5 bg-black text-white font-extrabold uppercase tracking-[0.2em] md:tracking-[0.25em] text-xs hover:bg-black/80 transition-colors shadow-xl">
           RÉSERVER / COMMANDER CE MODÈLE
         </button>
       </div>
@@ -397,9 +397,9 @@
 
   <!-- MODALE DE RÉSERVATION -->
   <div id="modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 hidden items-center justify-center p-4">
-    <div class="bg-[#181818] border border-white/20 p-8 max-w-md w-full relative text-left shadow-2xl text-white">
+    <div class="bg-[#181818] border border-white/20 p-6 md:p-8 max-w-md w-full relative text-left shadow-2xl text-white">
       <button onclick="toggleModal(false)" class="absolute top-4 right-4 text-white/60 hover:text-white text-lg font-bold">✕</button>
-      <h3 class="text-lg font-black uppercase mb-2 tracking-wider">DEMANDE D'ATTRIBUTION YLM</h3>
+      <h3 class="text-base md:text-lg font-black uppercase mb-2 tracking-wider">DEMANDE D'ATTRIBUTION YLM</h3>
       <p class="text-xs text-white/60 mb-6">Réservation prioritaire avec livraison express gratuite.</p>
       <form onsubmit="event.preventDefault(); alert('Votre demande d\'attribution YLM a été enregistrée avec succès.'); toggleModal(false);" class="space-y-4 text-xs font-semibold">
         <input type="text" placeholder="NOM & PRÉNOM" required class="w-full bg-black/70 border border-white/20 p-4 text-white placeholder-white/40 focus:outline-none focus:border-white" />
@@ -409,8 +409,8 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <footer id="siteFooter" class="fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500">
+  <!-- FOOTER ADAPTÉ MOBILE -->
+  <footer id="siteFooter" class="fixed bottom-0 left-0 w-full px-4 md:px-16 py-3 md:py-5 flex justify-between items-center z-30 text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500">
     <div>© YLM TIMEPIECES</div>
     <div id="footer-counter">01 / 04</div>
     <div>SWISS DESIGN</div>
@@ -418,7 +418,6 @@
 
   <!-- SCRIPT CONTRÔLEUR DYNAMIQUE -->
   <script>
-    // BASE DE DONNÉES DE TOUS LES 7 MODÈLES YLM ET LEURS VARIANTES (CORRIGÉE AVEC CASHIRUI)
     const productsData = {
       octo: {
         title: "YLM OCTO SQUELETTE",
@@ -597,8 +596,8 @@
         textSection.style.opacity = "1";
         secondVideoText.style.opacity = "0";
         siteNav.style.opacity = "1";
-        siteHeader.className = "fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white";
-        siteFooter.className = "fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500";
+        siteHeader.className = "fixed top-0 left-0 w-full px-4 md:px-16 py-4 md:py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white";
+        siteFooter.className = "fixed bottom-0 left-0 w-full px-4 md:px-16 py-3 md:py-5 flex justify-between items-center z-30 text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500";
       } else if (scrollY >= windowH * 3.0 && scrollY < windowH * 6.5) {
         firstVideoContainer.style.opacity = "0";
         secondVideoContainer.style.opacity = "1";
@@ -606,8 +605,8 @@
         textSection.style.opacity = "0";
         secondVideoText.style.opacity = "1";
         siteNav.style.opacity = "0";
-        siteHeader.className = "fixed top-0 left-0 w-full px-8 md:px-16 py-6 flex justify-between items-center z-30 border-b border-black/10 backdrop-blur-md bg-white/30 transition-colors duration-500 text-black";
-        siteFooter.className = "fixed bottom-0 left-0 w-full px-8 md:px-16 py-5 flex justify-between items-center z-30 text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 pointer-events-none border-t border-black/5 backdrop-blur-xs bg-white/20 transition-colors duration-500";
+        siteHeader.className = "fixed top-0 left-0 w-full px-4 md:px-16 py-4 md:py-6 flex justify-between items-center z-30 border-b border-black/10 backdrop-blur-md bg-white/30 transition-colors duration-500 text-black";
+        siteFooter.className = "fixed bottom-0 left-0 w-full px-4 md:px-16 py-3 md:py-5 flex justify-between items-center z-30 text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.25em] font-bold text-black/50 pointer-events-none border-t border-black/5 backdrop-blur-xs bg-white/20 transition-colors duration-500";
       } else {
         firstVideoContainer.style.opacity = "0";
         secondVideoContainer.style.opacity = "0";
@@ -630,11 +629,11 @@
         if (i === index) {
           sec.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
           sec.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
-          nav.className = "nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300";
+          if (nav) nav.className = "nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300";
         } else {
           sec.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
           sec.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
-          nav.className = "nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300";
+          if (nav) nav.className = "nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300";
         }
       }
     }
@@ -650,7 +649,6 @@
       modal.style.display = show ? 'flex' : 'none';
     }
 
-    // OUVRIR DYNAMIQUEMENT LE DÉTAIL D'UNE MONTRE
     function openProductDetail(productId) {
       const product = productsData[productId];
       if (!product) return;
@@ -664,12 +662,11 @@
       mainImg.src = product.defaultImg;
       mainImg.alt = product.title;
 
-      // Génération dynamique des boutons de couleur
       const colorContainer = document.getElementById('colorOptionsContainer');
       colorContainer.innerHTML = '';
       product.colors.forEach((c, idx) => {
         const btn = document.createElement('button');
-        btn.className = `${idx === 0 ? 'border-2 border-black' : 'border border-black/20'} p-3 bg-[#F9F8F6] hover:border-black transition-all text-center color-btn`;
+        btn.className = `${idx === 0 ? 'border-2 border-black' : 'border border-black/20'} p-2 md:p-3 bg-[#F9F8F6] hover:border-black transition-all text-center color-btn`;
         btn.onclick = () => {
           document.querySelectorAll('.color-btn').forEach(b => {
             b.classList.remove('border-2', 'border-black');
@@ -680,13 +677,12 @@
           changeProductColor(c.img, c.name);
         };
         btn.innerHTML = `
-          <img src="${c.img}" alt="${c.name}" class="h-20 w-full object-contain mx-auto mb-2" />
-          <span class="text-[10px] font-bold uppercase tracking-wider block">${c.name}</span>
+          <img src="${c.img}" alt="${c.name}" class="h-16 md:h-20 w-full object-contain mx-auto mb-1 md:mb-2" />
+          <span class="text-[9px] md:text-[10px] font-bold uppercase tracking-wider block">${c.name}</span>
         `;
         colorContainer.appendChild(btn);
       });
 
-      // Génération dynamique des spécifications
       const specsContainer = document.getElementById('specsContainer');
       specsContainer.innerHTML = '';
       product.specs.forEach(s => {
