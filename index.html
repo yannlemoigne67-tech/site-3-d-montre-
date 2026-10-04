@@ -22,41 +22,43 @@
   <!-- HAUTEUR VIRTUELLE GLOBALE DU SCROLL (800vh) -->
   <div class="h-[800vh] w-full absolute top-0 left-0 pointer-events-none"></div>
 
-  <!-- PREMIÈRE VIDÉO FIXE AU SCROLL (CALIBRE 01) -->
-  <div id="firstVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212] transition-opacity duration-700">
-    <div class="relative w-full h-full flex items-center justify-center p-2 md:p-4">
+  <!-- PREMIÈRE VIDÉO FIXE AU SCROLL (CALIBRE 01 - PLEIN ÉCRIN IMMERSIF) -->
+  <div id="firstVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212] transition-opacity duration-700 overflow-hidden">
+    <div class="relative w-full h-full flex items-center justify-center">
+      <!-- Changement clé : object-cover pour occuper 100% de l'écran mobile -->
       <video
         id="calibreVideo"
         src="vidéo.mp4"
         muted
         playsinline
         preload="auto"
-        class="w-full h-full object-contain pointer-events-none"
+        class="w-full h-full object-cover pointer-events-none"
       ></video>
+      <!-- Overlay sombre pour garantir la lisibilité du texte sur mobile -->
       <div 
-        class="absolute inset-0 pointer-events-none"
-        style="background: radial-gradient(circle, transparent 35%, #121212 85%);"
+        class="absolute inset-0 pointer-events-none bg-black/40 md:bg-transparent"
+        style="background: radial-gradient(circle, transparent 20%, #121212 90%);"
       ></div>
     </div>
   </div>
 
-  <!-- DEUXIÈME VIDÉO FIXE AU SCROLL (ÉCRIN / COLLECTION) -->
-  <div id="secondVideoContainer" class="fixed top-0 left-0 w-full h-full z-10 flex items-center justify-center bg-[#F5F2EB] opacity-0 pointer-events-none transition-opacity duration-700">
-    <div class="relative w-full h-full flex items-center justify-center p-2 md:p-4">
+  <!-- DEUXIÈME VIDÉO FIXE AU SCROLL (ÉCRIN / COLLECTION - PLEIN ÉCRAN) -->
+  <div id="secondVideoContainer" class="fixed top-0 left-0 w-full h-full z-10 flex items-center justify-center bg-[#F5F2EB] opacity-0 pointer-events-none transition-opacity duration-700 overflow-hidden">
+    <div class="relative w-full h-full flex items-center justify-center">
       <video
         id="boxVideo"
         src="ylm-showcase-box.mp4.mp4"
         muted
         playsinline
         preload="auto"
-        class="w-full h-full object-contain pointer-events-none"
+        class="w-full h-full object-cover pointer-events-none"
       ></video>
     </div>
   </div>
 
   <!-- HEADER OPTIMISÉ MOBILE -->
-  <header id="siteHeader" class="fixed top-0 left-0 w-full px-4 md:px-16 py-4 md:py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white">
-    <button class="flex items-center space-x-2 text-[10px] md:text-[11px] tracking-[0.2em] md:tracking-[0.25em] font-bold hover:opacity-70 transition-opacity">
+  <header id="siteHeader" class="fixed top-0 left-0 w-full px-6 md:px-16 py-5 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/40 transition-colors duration-500 text-white">
+    <button class="flex items-center space-x-2 text-[10px] md:text-[11px] tracking-[0.2em] font-bold hover:opacity-70 transition-opacity">
       <span>— MENU</span>
     </button>
 
@@ -72,7 +74,7 @@
     </div>
   </header>
 
-  <!-- NAVIGATION LATÉRALE DROITE (MASQUÉE SUR MOBILE 'hidden md:flex') -->
+  <!-- NAVIGATION LATÉRALE DROITE (MASQUÉE SUR MOBILE) -->
   <nav id="siteNav" class="fixed right-8 top-1/2 -translate-y-1/2 z-30 hidden md:flex flex-col space-y-6 transition-opacity duration-500">
     <button onclick="scrollToIndex(0)" id="nav-0" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300">Vision</button>
     <button onclick="scrollToIndex(1)" id="nav-1" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Manifeste</button>
@@ -80,41 +82,41 @@
     <button onclick="scrollToIndex(3)" id="nav-3" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Réservation</button>
   </nav>
 
-  <!-- CONTENU TEXTE 1ÈRE VIDÉO (AJUSTÉ MOBILE) -->
-  <div id="textSection" class="fixed inset-0 z-20 pointer-events-none flex items-start md:items-center justify-center md:justify-start pt-24 md:pt-0 px-6 md:px-20 transition-opacity duration-500">
-    <div class="w-full max-w-xs md:max-w-md text-glow relative h-64 text-center md:text-left">
+  <!-- CONTENU TEXTE 1ÈRE VIDÉO (PARFAITEMENT CENTRÉ SUR MOBILE) -->
+  <div id="textSection" class="fixed inset-0 z-20 pointer-events-none flex items-center justify-center md:justify-start px-6 md:px-20 transition-opacity duration-500">
+    <div class="w-full max-w-sm md:max-w-md text-glow relative h-64 text-center md:text-left">
 
       <div id="sec-0" class="section-content absolute inset-0 opacity-100 translate-y-0 pointer-events-auto">
-        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/60 block mb-2">ÉDITION SPÉCIALE</span>
+        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/70 block mb-2">ÉDITION SPÉCIALE</span>
         <h1 class="text-3xl md:text-5xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">YLM CALIBRE 01</h1>
-        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
-          L'excellence horlogère à portée de hand. Mouvement automatique d'exception dans un écrin de luxe.
+        <p class="text-xs md:text-sm text-white/90 tracking-wide font-normal leading-relaxed">
+          L'excellence horlogère à portée de main. Mouvement automatique d'exception dans un écrin de luxe.
         </p>
       </div>
 
       <div id="sec-1" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
-        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/60 block mb-2">HOMMAGE HORLOGER</span>
+        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/70 block mb-2">HOMMAGE HORLOGER</span>
         <h2 class="text-2xl md:text-4xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">TROIS LETTRES.<br />TROIS PIONNIERS.</h2>
-        <p class="text-xs text-white/80 leading-relaxed mb-2 md:mb-4">
+        <p class="text-xs text-white/90 leading-relaxed mb-2 md:mb-4">
           <strong>Y</strong>ves • <strong>L</strong>ouis • <strong>M</strong>udge
         </p>
-        <p class="text-xs text-white/70 leading-relaxed">
+        <p class="text-xs text-white/80 leading-relaxed">
           Un hommage à l'élégance des formes, l'invention du tourbillon et le génie de l'échappement mécanique.
         </p>
       </div>
 
       <div id="sec-2" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
-        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/60 block mb-2">CONSTRUCTION</span>
+        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/70 block mb-2">CONSTRUCTION</span>
         <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">PRÉCISION ABSOLUE</h2>
-        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal leading-relaxed">
+        <p class="text-xs md:text-sm text-white/90 tracking-wide font-normal leading-relaxed">
           Cadran ajouré et finitions brossées à la main révélant les rouages d'un mouvement automatique haute fréquence.
         </p>
       </div>
 
       <div id="sec-3" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
-        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/60 block mb-2">ACQUISITION</span>
+        <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/70 block mb-2">ACQUISITION</span>
         <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">ÉCRIN YLM</h2>
-        <p class="text-xs md:text-sm text-white/80 tracking-wide font-normal mb-4 md:mb-6">
+        <p class="text-xs md:text-sm text-white/90 tracking-wide font-normal mb-4 md:mb-6">
           Livraison Express Internationale Offerte (4 à 7 jours).
         </p>
         <button onclick="toggleModal(true)" class="px-6 md:px-8 py-3 bg-white text-black text-[10px] uppercase tracking-[0.3em] font-extrabold hover:bg-white/90 transition-all shadow-2xl pointer-events-auto">
@@ -127,7 +129,7 @@
 
   <!-- TEXTE D'ACCOMPAGNEMENT SUR LA 2ÈME VIDÉO -->
   <div id="secondVideoText" class="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center opacity-0 transition-opacity duration-500 w-full px-4">
-    <span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-black/60 block mb-1 md:mb-2">L'ÉCRIN & LA COLLECTION</span>
+    <span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-bold text-black/60 block mb-1 md:mb-2">L'ÉCRIN & LA COLLECTION</span>
     <h2 class="text-2xl md:text-5xl font-black tracking-tight uppercase text-black">L'EXPÉRIENCE YLM TIMEPIECES</h2>
   </div>
 
@@ -339,37 +341,30 @@
     </div>
   </div>
 
-  <!-- PAGE DE PRÉSENTATION DÉTAILLÉE DU PRODUIT (DYNAMIQUE) -->
+  <!-- PAGE DE PRÉSENTATION DÉTAILLÉE DU PRODUIT -->
   <div id="productDetailModal" class="fixed inset-0 bg-white z-50 hidden overflow-y-auto text-black">
     <div class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-black/10 px-4 md:px-8 py-4 flex justify-between items-center z-10">
-      <div class="text-xs md:text-lg font-black tracking-[0.15em] md:tracking-[0.2em]">YLM TIMEPIECES</div>
+      <div class="text-xs md:text-lg font-black tracking-[0.15em]">YLM TIMEPIECES</div>
       <button onclick="closeProductDetail()" class="text-[10px] md:text-xs font-black uppercase tracking-widest px-3 md:px-4 py-2 border border-black hover:bg-black hover:text-white transition-colors">
         ✕ FERMER
       </button>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
-      
-      <!-- COLONNE GAUCHE : PHOTO PRINCIPALE ET SÉLECTION DES COULEURS -->
       <div class="space-y-6">
-        <!-- Photo principale -->
         <div class="w-full h-[320px] md:h-[450px] bg-[#F9F8F6] border border-black/5 flex items-center justify-center p-4 md:p-8">
           <img id="mainProductImage" src="" alt="Montre YLM" class="max-h-full object-contain transition-all duration-300" />
         </div>
 
-        <!-- SELECTION DES COULEURS DYNAMIQUES -->
         <div>
           <span class="text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 block mb-3">CHOISIR LA FINITION :</span>
-          <div id="colorOptionsContainer" class="grid grid-cols-3 gap-3 md:gap-4">
-            <!-- Injecté par JavaScript -->
-          </div>
+          <div id="colorOptionsContainer" class="grid grid-cols-3 gap-3 md:gap-4"></div>
         </div>
       </div>
 
-      <!-- COLONNE DROITE : DÉTAILS ET SPÉCIFICATIONS COMPLÈTES -->
       <div class="flex flex-col justify-between">
         <div>
-          <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-black/40 block mb-2">SÉRIE LIMITÉE YLM • ÉCRIN INCLUS</span>
+          <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold text-black/40 block mb-2">SÉRIE LIMITÉE YLM • ÉCRIN INCLUS</span>
           <h1 id="modalTitle" class="text-2xl md:text-4xl font-black uppercase tracking-tight mb-2">MODÈLE YLM</h1>
           <p class="text-xs uppercase tracking-widest text-black/60 mb-6">Finition sélectionnée : <span id="selectedColorName" class="font-bold text-black">-</span></p>
           
@@ -380,18 +375,14 @@
             Description du modèle...
           </p>
 
-          <!-- TABLEAU DES SPÉCIFICATIONS -->
           <h3 class="text-xs font-black uppercase tracking-widest mb-4">SPÉCIFICATIONS TECHNIQUES</h3>
-          <div id="specsContainer" class="space-y-2 text-xs font-medium text-black/70 mb-8">
-            <!-- Injecté par JavaScript -->
-          </div>
+          <div id="specsContainer" class="space-y-2 text-xs font-medium text-black/70 mb-8"></div>
         </div>
 
-        <button onclick="closeProductDetail(); toggleModal(true);" class="w-full py-4 md:py-5 bg-black text-white font-extrabold uppercase tracking-[0.2em] md:tracking-[0.25em] text-xs hover:bg-black/80 transition-colors shadow-xl">
+        <button onclick="closeProductDetail(); toggleModal(true);" class="w-full py-4 md:py-5 bg-black text-white font-extrabold uppercase tracking-[0.2em] text-xs hover:bg-black/80 transition-colors shadow-xl">
           RÉSERVER / COMMANDER CE MODÈLE
         </button>
       </div>
-
     </div>
   </div>
 
@@ -410,7 +401,7 @@
   </div>
 
   <!-- FOOTER ADAPTÉ MOBILE -->
-  <footer id="siteFooter" class="fixed bottom-0 left-0 w-full px-4 md:px-16 py-3 md:py-5 flex justify-between items-center z-30 text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500">
+  <footer id="siteFooter" class="fixed bottom-0 left-0 w-full px-4 md:px-16 py-3 md:py-5 flex justify-between items-center z-30 text-[9px] md:text-[10px] uppercase tracking-[0.15em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500">
     <div>© YLM TIMEPIECES</div>
     <div id="footer-counter">01 / 04</div>
     <div>SWISS DESIGN</div>
@@ -596,8 +587,8 @@
         textSection.style.opacity = "1";
         secondVideoText.style.opacity = "0";
         siteNav.style.opacity = "1";
-        siteHeader.className = "fixed top-0 left-0 w-full px-4 md:px-16 py-4 md:py-6 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/30 transition-colors duration-500 text-white";
-        siteFooter.className = "fixed bottom-0 left-0 w-full px-4 md:px-16 py-3 md:py-5 flex justify-between items-center z-30 text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.25em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500";
+        siteHeader.className = "fixed top-0 left-0 w-full px-6 md:px-16 py-5 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/40 transition-colors duration-500 text-white";
+        siteFooter.className = "fixed bottom-0 left-0 w-full px-4 md:px-16 py-3 md:py-5 flex justify-between items-center z-30 text-[9px] md:text-[10px] uppercase tracking-[0.15em] font-bold text-white/50 pointer-events-none border-t border-white/5 backdrop-blur-xs bg-black/20 transition-colors duration-500";
       } else if (scrollY >= windowH * 3.0 && scrollY < windowH * 6.5) {
         firstVideoContainer.style.opacity = "0";
         secondVideoContainer.style.opacity = "1";
@@ -605,8 +596,8 @@
         textSection.style.opacity = "0";
         secondVideoText.style.opacity = "1";
         siteNav.style.opacity = "0";
-        siteHeader.className = "fixed top-0 left-0 w-full px-4 md:px-16 py-4 md:py-6 flex justify-between items-center z-30 border-b border-black/10 backdrop-blur-md bg-white/30 transition-colors duration-500 text-black";
-        siteFooter.className = "fixed bottom-0 left-0 w-full px-4 md:px-16 py-3 md:py-5 flex justify-between items-center z-30 text-[9px] md:text-[10px] uppercase tracking-[0.15em] md:tracking-[0.25em] font-bold text-black/50 pointer-events-none border-t border-black/5 backdrop-blur-xs bg-white/20 transition-colors duration-500";
+        siteHeader.className = "fixed top-0 left-0 w-full px-6 md:px-16 py-5 flex justify-between items-center z-30 border-b border-black/10 backdrop-blur-md bg-white/40 transition-colors duration-500 text-black";
+        siteFooter.className = "fixed bottom-0 left-0 w-full px-4 md:px-16 py-3 md:py-5 flex justify-between items-center z-30 text-[9px] md:text-[10px] uppercase tracking-[0.15em] font-bold text-black/50 pointer-events-none border-t border-black/5 backdrop-blur-xs bg-white/20 transition-colors duration-500";
       } else {
         firstVideoContainer.style.opacity = "0";
         secondVideoContainer.style.opacity = "0";
