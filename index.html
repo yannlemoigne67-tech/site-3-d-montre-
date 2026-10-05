@@ -15,6 +15,24 @@
     body { font-family: 'Montserrat', sans-serif; }
     .text-glow { text-shadow: 0 4px 25px rgba(0, 0, 0, 0.95), 0 2px 10px rgba(0, 0, 0, 0.9); }
     .section-content { transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; }
+
+    /* Photo du dos : le blanc de l'image se fond dans la couleur du site */
+    #backShot {
+      mix-blend-mode: multiply;
+      filter: brightness(1.12) contrast(1.04);
+      -webkit-mask-image: radial-gradient(ellipse 55% 55% at center, #000 60%, transparent 100%);
+      mask-image: radial-gradient(ellipse 55% 55% at center, #000 60%, transparent 100%);
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    /* Mobile : la vidéo 16:9 reste entière, ses bords se fondent dans le fond */
+    @media (max-width: 767px) {
+      #boxVideo {
+        -webkit-mask-image: radial-gradient(ellipse 58% 62% at center, #000 62%, transparent 100%);
+        mask-image: radial-gradient(ellipse 58% 62% at center, #000 62%, transparent 100%);
+      }
+    }
   </style>
 </head>
 <body class="bg-[#121212] text-white antialiased selection:bg-white selection:text-black overflow-x-hidden">
@@ -40,18 +58,28 @@
     </div>
   </div>
 
-  <!-- DEUXIÈME VIDÉO FIXE AU SCROLL (ÉCRIN - DÉZOOMÉE & FOND ASSORTI SUR MOBILE) -->
+  <!-- DEUXIÈME VIDÉO FIXE AU SCROLL (ÉCRIN) -->
   <div id="secondVideoContainer" class="fixed top-0 left-0 w-full h-full z-10 flex items-center justify-center bg-[#B6B3AC] opacity-0 pointer-events-none transition-opacity duration-700 overflow-hidden">
-    <div class="relative w-full h-full flex items-center justify-center">
-      <!-- object-contain sur mobile pour voir l'écrin en entier, object-cover sur ordinateur -->
+    <div class="relative w-full h-full flex flex-col items-center justify-start md:justify-center pt-[11rem] pb-16 md:p-0">
+      <!-- Mobile : vidéo 16:9 entière (rien n'est coupé) / Ordinateur : plein écran -->
       <video
         id="boxVideo"
         src="ylm-showcase-box.mp4.mp4"
         muted
         playsinline
         preload="auto"
-        class="w-full h-full object-contain md:object-cover pointer-events-none"
+        class="w-full shrink-0 aspect-video md:aspect-auto md:h-full object-cover pointer-events-none"
       ></video>
+
+      <!-- PHOTO DU DOS (mobile uniquement) : s'adapte à la place restante sous la vidéo -->
+      <div class="md:hidden flex-1 min-h-0 w-full flex items-center justify-center pt-4">
+        <img
+          id="backShot"
+          src="ylm-dos-mouvement.jpg"
+          alt="Dos de la montre YLM avec mouvement automatique apparent"
+          class="max-h-full max-w-[90%] w-auto h-auto object-contain pointer-events-none"
+        />
+      </div>
     </div>
   </div>
 
@@ -129,7 +157,7 @@
   <!-- TEXTE D'ACCOMPAGNEMENT SUR LA 2ÈME VIDÉO -->
   <div id="secondVideoText" class="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center opacity-0 transition-opacity duration-500 w-full px-4">
     <span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-bold text-black/60 block mb-1 md:mb-2">L'ÉCRIN & LA COLLECTION</span>
-    <h2 class="text-2xl md:text-5xl font-black tracking-tight uppercase text-black">L'EXPÉRIENCE YLM TIMEPIECES</h2>
+    <h2 class="text-xl md:text-5xl font-black tracking-tight uppercase text-black">L'EXPÉRIENCE YLM TIMEPIECES</h2>
   </div>
 
   <!-- CATALOGUE DES MONTRES (7 MODÈLES) -->
@@ -549,6 +577,7 @@
     const siteHeader = document.getElementById('siteHeader');
     const siteNav = document.getElementById('siteNav');
     const siteFooter = document.getElementById('siteFooter');
+    const backShot = document.getElementById('backShot');
 
     let currentActive = 0;
 
@@ -576,6 +605,10 @@
 
       if (boxVideo && boxVideo.duration) {
         boxVideo.currentTime = progressPhase2 * boxVideo.duration;
+      }
+
+      if (backShot) {
+        backShot.style.transform = `scale(${1 + progressPhase2 * 0.06})`;
       }
 
       if (scrollY < windowH * 3.0) {
