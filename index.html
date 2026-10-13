@@ -50,7 +50,7 @@
   <!-- HAUTEUR VIRTUELLE GLOBALE DU SCROLL (800vh) -->
   <div class="h-[800vh] w-full absolute top-0 left-0 pointer-events-none"></div>
 
-  <!-- PREMIÈRE VIDÉO FIXE AU SCROLL (CALIBRE 01) -->
+  <!-- PREMIÈRE VIDÉO FIXE -->
   <div id="firstVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212] transition-opacity duration-700 overflow-hidden">
     <div class="relative w-full h-full flex items-center justify-center">
       <video
@@ -68,7 +68,7 @@
     </div>
   </div>
 
-  <!-- DEUXIÈME VIDÉO FIXE AU SCROLL (ÉCRIN) -->
+  <!-- DEUXIÈME VIDÉO FIXE (ÉCRIN) -->
   <div id="secondVideoContainer" class="fixed top-0 left-0 w-full h-full z-10 flex items-center justify-center bg-[#B6B3AC] opacity-0 pointer-events-none transition-opacity duration-700 overflow-hidden">
     <div class="relative w-full h-full flex flex-col items-center justify-start md:justify-center pt-[11rem] pb-16 md:p-0">
       <video
@@ -80,22 +80,21 @@
         class="w-full shrink-0 aspect-video md:aspect-auto md:h-full object-cover pointer-events-none"
       ></video>
 
-      <!-- PHOTO DU DOS (mobile uniquement) -->
       <div class="md:hidden flex-1 min-h-0 w-full flex items-center justify-center pt-4">
         <img
           id="backShot"
           src="ylm-dos-mouvement.jpg"
-          alt="Dos de la montre YLM avec mouvement automatique apparent"
+          alt="Dos de la montre YLM"
           class="max-h-full max-w-[90%] w-auto h-auto object-contain pointer-events-none"
         />
       </div>
     </div>
   </div>
 
-  <!-- HEADER -->
+  <!-- HEADER AVEC MENU DÉROULANT INTERACTIF -->
   <header id="siteHeader" class="fixed top-0 left-0 w-full px-6 md:px-16 py-5 flex justify-between items-center z-30 border-b border-white/10 backdrop-blur-md bg-black/40 transition-colors duration-500 text-white">
-    <button class="flex items-center space-x-2 text-[10px] md:text-[11px] tracking-[0.2em] font-bold hover:opacity-70 transition-opacity">
-      <span>— ATELIER</span>
+    <button onclick="toggleDropdownMenu()" class="flex items-center space-x-2 text-[10px] md:text-[11px] tracking-[0.2em] font-bold hover:opacity-70 transition-opacity focus:outline-none">
+      <span>— MENU</span>
     </button>
 
     <div class="flex items-center space-x-2 text-2xl md:text-3xl font-black tracking-[0.3em] uppercase logo-ylm">
@@ -109,6 +108,26 @@
     </div>
   </header>
 
+  <!-- PANNEAU DU MENU DÉROULANT -->
+  <div id="dropdownMenu" class="fixed inset-x-0 top-0 bg-black/95 backdrop-blur-xl z-40 transform -translate-y-full transition-transform duration-500 border-b border-white/10 text-white px-6 md:px-20 pt-28 pb-12 shadow-2xl hidden">
+    <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center">
+      <div class="space-y-4 mb-8 md:mb-0">
+        <span class="text-[9px] uppercase tracking-[0.4em] text-white/40 block">Navigation</span>
+        <ul class="space-y-3 text-lg md:text-2xl font-black uppercase tracking-widest">
+          <li><a href="#collection-catalogue" onclick="toggleDropdownMenu()" class="hover:opacity-60 transition-opacity">01. Les Collections</a></li>
+          <li><a href="#collection-catalogue" onclick="toggleDropdownMenu(); scrollToIndex(0);" class="hover:opacity-60 transition-opacity">02. L'Atelier & Vision</a></li>
+          <li><a href="#" onclick="toggleDropdownMenu(); toggleModal(true);" class="hover:opacity-60 transition-opacity">03. Service & Support</a></li>
+        </ul>
+      </div>
+      <div class="border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-12 space-y-3 text-xs text-white/70">
+        <p class="font-bold text-white uppercase tracking-widest">YLM Timepieces</p>
+        <p>Garantie mouvement 2 ans</p>
+        <p>Livraison Express Offerte (4-7 jours)</p>
+        <button onclick="toggleDropdownMenu()" class="mt-4 px-4 py-2 border border-white/30 text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-colors">Fermer le menu</button>
+      </div>
+    </div>
+  </div>
+
   <!-- NAVIGATION LATÉRALE DROITE -->
   <nav id="siteNav" class="fixed right-8 top-1/2 -translate-y-1/2 z-30 hidden md:flex flex-col space-y-6 transition-opacity duration-500">
     <button onclick="scrollToIndex(0)" id="nav-0" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white font-black scale-110 border-r-2 border-white pr-3 transition-all duration-300">Vision</button>
@@ -117,7 +136,7 @@
     <button onclick="scrollToIndex(3)" id="nav-3" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Collection</button>
   </nav>
 
-  <!-- CONTENU TEXTE 1ÈRE VIDÉO -->
+  <!-- CONTENU TEXTE 1ÈRE VIDÉO (SANS BOUTON RENDEZ-VOUS À LA FIN) -->
   <div id="textSection" class="fixed inset-0 z-20 pointer-events-none flex items-center justify-center md:justify-start px-6 md:px-20 transition-opacity duration-500">
     <div class="w-full max-w-sm md:max-w-md text-glow relative h-64 text-center md:text-left">
 
@@ -162,7 +181,7 @@
     </div>
   </div>
 
-  <!-- TEXTE D'ACCOMPAGNEMENT SUR LA 2ÈME VIDÉO -->
+  <!-- TEXTE SUR LA 2ÈME VIDÉO -->
   <div id="secondVideoText" class="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center opacity-0 transition-opacity duration-500 w-full px-4">
     <span class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-bold text-black/60 block mb-1 md:mb-2">L'ÉCRIN & LA COLLECTION</span>
     <h2 class="text-2xl md:text-6xl font-black tracking-tight uppercase text-black">L'EXPÉRIENCE YLM TIMEPIECES</h2>
@@ -181,8 +200,8 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
-          <!-- MODÈLE 1 : YLM OCTO SQUELETTE -->
-          <div onclick="openProductDetail('octo')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <!-- MODÈLE 1 : OCTO -->
+          <div onclick="openProductDetail('octo')" class="bg-white border border-black/10 p-5 md:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
               <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
                 <img src="ylm-octo-squelette.jpg" alt="YLM Octo Squelette" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
@@ -194,9 +213,7 @@
                 </div>
                 <span class="text-sm font-black text-black/90">269 €</span>
               </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Boîtier géométrique en acier brossé avec cadran squelette ajouré.
-              </p>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">Boîtier géométrique en acier brossé avec cadran squelette ajouré.</p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
                 <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier (40mm / 42mm)</span></div>
                 <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Automatique Apparent</span></div>
@@ -208,8 +225,8 @@
             </button>
           </div>
 
-          <!-- MODÈLE 2 : YLM TANK SQUELETTE -->
-          <div onclick="openProductDetail('tank')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <!-- MODÈLE 2 : TANK -->
+          <div onclick="openProductDetail('tank')" class="bg-white border border-black/10 p-5 md:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
               <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
                 <img src="ylm-tank-noir.jpg" alt="YLM Tank Squelette" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
@@ -221,9 +238,7 @@
                 </div>
                 <span class="text-sm font-black text-black/90">269 €</span>
               </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Design rectangulaire néo-classique à chiffres romains et cuir élégant.
-              </p>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">Design rectangulaire néo-classique à chiffres romains et cuir élégant.</p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
                 <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">40 mm (Ép. 16mm)</span></div>
                 <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Mécanique Automatique</span></div>
@@ -235,8 +250,8 @@
             </button>
           </div>
 
-          <!-- MODÈLE 3 : YLM SQUARE SQUELETTE -->
-          <div onclick="openProductDetail('square')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <!-- MODÈLE 3 : SQUARE -->
+          <div onclick="openProductDetail('square')" class="bg-white border border-black/10 p-5 md:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
               <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
                 <img src="ylm-square-blanc.jpg" alt="YLM Square Squelette" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
@@ -248,9 +263,7 @@
                 </div>
                 <span class="text-sm font-black text-black/90">269 €</span>
               </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Silhouette carrée audacieuse en acier brossé avec bracelet intégré.
-              </p>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">Silhouette carrée audacieuse en acier brossé avec bracelet intégré.</p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
                 <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier 43 mm (Ép. 14mm)</span></div>
                 <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Automatique Squelette</span></div>
@@ -262,8 +275,8 @@
             </button>
           </div>
 
-          <!-- MODÈLE 4 : YLM AUTOMATIC DIVER -->
-          <div onclick="openProductDetail('diver')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <!-- MODÈLE 4 : DIVER -->
+          <div onclick="openProductDetail('diver')" class="bg-white border border-black/10 p-5 md:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
               <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
                 <img src="cashirui-automatic-black.jpg" alt="YLM Automatic Diver" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
@@ -275,9 +288,7 @@
                 </div>
                 <span class="text-sm font-black text-black/90">189 €</span>
               </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Montre de plongée classique avec lunette graduée et guichet dateur à 3h.
-              </p>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">Montre de plongée classique avec lunette graduée et guichet dateur à 3h.</p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
                 <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier 42 mm (Ép. 12mm)</span></div>
                 <div class="flex justify-between"><span>Complication :</span><span class="font-bold text-black">Date Automatique</span></div>
@@ -289,8 +300,8 @@
             </button>
           </div>
 
-          <!-- MODÈLE 5 : YLM SQUARE TEXTURED -->
-          <div onclick="openProductDetail('squareTextured')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <!-- MODÈLE 5 : SQUARE TEXTURED -->
+          <div onclick="openProductDetail('squareTextured')" class="bg-white border border-black/10 p-5 md:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
               <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
                 <img src="cashirui-automatic-marron.jpg" alt="YLM Square Textured" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
@@ -302,9 +313,7 @@
                 </div>
                 <span class="text-sm font-black text-black/90">219 €</span>
               </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Boîtier octogonal brossé avec cadran guilloché horizontalement.
-              </p>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">Boîtier octogonal brossé avec cadran guilloché horizontalement.</p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
                 <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">Acier 42 mm (Ép. 12mm)</span></div>
                 <div class="flex justify-between"><span>Cadran :</span><span class="font-bold text-black">Rayures Horizontales</span></div>
@@ -316,8 +325,8 @@
             </button>
           </div>
 
-          <!-- MODÈLE 6 : YLM SPEEDRACER -->
-          <div onclick="openProductDetail('speedracer')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <!-- MODÈLE 6 : SPEEDRACER -->
+          <div onclick="openProductDetail('speedracer')" class="bg-white border border-black/10 p-5 md:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
               <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
                 <img src="casirui-speedracer-cadran-blanc-bracelet-marron.avif" alt="YLM Speedracer" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
@@ -329,9 +338,7 @@
                 </div>
                 <span class="text-sm font-black text-black/90">249 €</span>
               </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Design sport automobile avec ouverture sur le balancier et cuir surpiqué.
-              </p>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">Design sport automobile avec ouverture sur le balancier et cuir surpiqué.</p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
                 <div class="flex justify-between"><span>Boîtier :</span><span class="font-bold text-black">40 mm (Ép. 16mm)</span></div>
                 <div class="flex justify-between"><span>Mouvement :</span><span class="font-bold text-black">Balancier Apparent</span></div>
@@ -343,8 +350,8 @@
             </button>
           </div>
 
-          <!-- MODÈLE 7 : YLM OPEN HEART -->
-          <div onclick="openProductDetail('openheart')" class="bg-white border border-black/10 p-5 md:p-6 rounded-none shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+          <!-- MODÈLE 7 : OPEN HEART -->
+          <div onclick="openProductDetail('openheart')" class="bg-white border border-black/10 p-5 md:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group cursor-pointer">
             <div>
               <div class="w-full h-64 md:h-72 bg-[#F9F8F6] flex items-center justify-center mb-6 overflow-hidden relative p-4">
                 <img src="casirui-openheart-cadran-bleu-bracelet-bleu.avif" alt="YLM Open Heart" class="max-h-56 md:max-h-64 object-contain group-hover:scale-105 transition-transform duration-500" />
@@ -356,9 +363,7 @@
                 </div>
                 <span class="text-sm font-black text-black/90">249 €</span>
               </div>
-              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">
-                Cadran guilloché raffiné avec double ouverture sur l'échappement mécanique.
-              </p>
+              <p class="text-xs text-black/60 font-medium leading-relaxed mb-6">Cadran guilloché raffiné avec double ouverture sur l'échappement mécanique.</p>
               <div class="border-t border-b border-black/10 py-3 mb-6 space-y-1.5 text-[10px] font-semibold text-black/70">
                 <div class="flex justify-between"><span>Cadran :</span><span class="font-bold text-black">Motif Guilloché & Double Cœur</span></div>
                 <div class="flex justify-between"><span>Bracelet :</span><span class="font-bold text-black">Cuir Véritable</span></div>
@@ -375,7 +380,7 @@
     </div>
   </div>
 
-  <!-- PAGE DE PRÉSENTATION DÉTAILLÉE DU PRODUIT -->
+  <!-- MODALE DÉTAIL PRODUIT -->
   <div id="productDetailModal" class="fixed inset-0 bg-white z-50 hidden overflow-y-auto text-black">
     <div class="sticky top-0 bg-white/90 backdrop-blur-md border-b border-black/10 px-4 md:px-8 py-4 flex justify-between items-center z-10">
       <div class="text-lg md:text-2xl font-black tracking-[0.15em] logo-ylm">YLM TIMEPIECES</div>
@@ -389,7 +394,6 @@
         <div class="w-full h-[320px] md:h-[450px] bg-[#F9F8F6] border border-black/5 flex items-center justify-center p-4 md:p-8">
           <img id="mainProductImage" src="" alt="Montre YLM" class="max-h-full object-contain transition-all duration-300" />
         </div>
-
         <div>
           <span class="text-[10px] uppercase tracking-[0.25em] font-bold text-black/50 block mb-3">CHOISIR LA FINITION :</span>
           <div id="colorOptionsContainer" class="grid grid-cols-3 gap-3 md:gap-4"></div>
@@ -405,9 +409,7 @@
           <div id="modalPrice" class="text-3xl md:text-4xl font-black mb-1">0 €</div>
           <p class="text-[11px] text-black/50 mb-6 md:mb-8">TVA incluse • 🚀 <strong>Livraison Express Offerte</strong> (4 à 7 jours ouvrés).</p>
 
-          <p id="modalDescription" class="text-xs text-black/80 leading-relaxed mb-6 md:mb-8 border-t border-b border-black/10 py-4 md:py-6">
-            Description du modèle...
-          </p>
+          <p id="modalDescription" class="text-xs text-black/80 leading-relaxed mb-6 md:mb-8 border-t border-b border-black/10 py-4 md:py-6">Description...</p>
 
           <h3 class="text-lg md:text-xl font-black uppercase tracking-widest mb-4">SPÉCIFICATIONS TECHNIQUES</h3>
           <div id="specsContainer" class="space-y-2 text-xs font-medium text-black/70 mb-8"></div>
@@ -448,7 +450,7 @@
     <div>DESIGN YLM</div>
   </footer>
 
-  <!-- SCRIPT CONTRÔLEUR DYNAMIQUE -->
+  <!-- SCRIPT -->
   <script>
     const productsData = {
       octo: {
@@ -456,10 +458,9 @@
         price: "269,00 €",
         defaultColor: "Blanc / Argent",
         defaultImg: "ylm-octo-squelette.jpg",
-        description: "L'alliance parfaite entre l'architecture octogonale contemporaine et la transparence mécanique. Ce garde-temps dévoile son mouvement automatique à travers un cadran squelette ciselé.",
+        description: "L'alliance parfaite entre l'architecture octogonale contemporaine et la transparence mécanique.",
         specs: [
           { label: "Boîtier :", value: "Acier Inoxydable haute densité" },
-          { label: "Tailles disponibles :", value: "40mm, 42mm / 38mm, 36mm" },
           { label: "Mouvement :", value: "Mouvement Automatique Squelette" },
           { label: "Verre :", value: "Verre Minéral Trempé Haute Résistance" },
           { label: "Expédition :", value: "Express Offerte (4 à 7 jours)" }
@@ -475,12 +476,11 @@
         price: "269,00 €",
         defaultColor: "Cuir Noir",
         defaultImg: "ylm-tank-noir.jpg",
-        description: "Élégance classique et modernité mécanique. Modèle rectangulaire aux chiffres romains ajourés combiné à un bracelet en cuir véritable façon crocodile.",
+        description: "Élégance classique et modernité mécanique avec chiffres romains ajourés.",
         specs: [
           { label: "Boîtier :", value: "40 mm (Épaisseur 16 mm)" },
           { label: "Mouvement :", value: "Mécanique Automatique" },
           { label: "Bracelet :", value: "Cuir Véritable (24 mm)" },
-          { label: "Poids :", value: "70 g" },
           { label: "Expédition :", value: "Express Offerte (4 à 7 jours)" }
         ],
         colors: [
@@ -494,12 +494,10 @@
         price: "269,00 €",
         defaultColor: "Argent / Blanc",
         defaultImg: "ylm-square-blanc.jpg",
-        description: "Silhouette carrée audacieuse en acier brossé avec bracelet intégré. Mouvement squelette géométrique ajouré à l'architecture industrielle.",
+        description: "Silhouette carrée audacieuse en acier brossé avec bracelet intégré.",
         specs: [
-          { label: "Boîtier :", value: "Acier Inoxydable Carré • 43 mm (Ép. 14mm)" },
+          { label: "Boîtier :", value: "Acier Inoxydable Carré • 43 mm" },
           { label: "Bracelet :", value: "Acier Inoxydable avec Fermoir Papillon" },
-          { label: "Mouvement :", value: "Mécanique Automatique" },
-          { label: "Verre :", value: "Verre Minéral Squelette Évidé" },
           { label: "Expédition :", value: "Express Offerte (4 à 7 jours)" }
         ],
         colors: [
@@ -513,12 +511,10 @@
         price: "189,00 €",
         defaultColor: "Noir Mat",
         defaultImg: "cashirui-automatic-black.jpg",
-        description: "Montre de plongée professionnelle à cadran mat, index luminescents géométriques, lunette rotative graduée et guichet dateur encadré à 3h.",
+        description: "Montre de plongée professionnelle à cadran mat et lunette rotative graduée.",
         specs: [
-          { label: "Boîtier :", value: "Acier Inoxydable • 42 mm (Ép. 12mm)" },
-          { label: "Lunette :", value: "Rotative Graduée Plongée" },
+          { label: "Boîtier :", value: "Acier Inoxydable • 42 mm" },
           { label: "Complication :", value: "Date Automatique à 3h" },
-          { label: "Poids :", value: "120 g" },
           { label: "Expédition :", value: "Express Offerte (4 à 7 jours)" }
         ],
         colors: [
@@ -532,12 +528,10 @@
         price: "219,00 €",
         defaultColor: "Marron Chocolat",
         defaultImg: "cashirui-automatic-marron.jpg",
-        description: "Design sport-chic à boîtier octogonal coussin. Le cadran présente des rayures horizontales en relief et un guichet dateur discret.",
+        description: "Design sport-chic à boîtier octogonal coussin avec rayures horizontales.",
         specs: [
-          { label: "Boîtier :", value: "Acier Inoxydable • 42 mm (Ép. 12mm)" },
+          { label: "Boîtier :", value: "Acier Inoxydable • 42 mm" },
           { label: "Cadran :", value: "Rayures Horizontales en Relief" },
-          { label: "Mouvement :", value: "Automatique avec Date" },
-          { label: "Poids :", value: "120 g" },
           { label: "Expédition :", value: "Express Offerte (4 à 7 jours)" }
         ],
         colors: [
@@ -551,12 +545,10 @@
         price: "249,00 €",
         defaultColor: "Blanc / Cuir Marron",
         defaultImg: "casirui-speedracer-cadran-blanc-bracelet-marron.avif",
-        description: "Inspirée du monde de la course automobile, cette pièce intègre une ouverture sur le balancier (Open Heart) et un bracelet en cuir surpiqué.",
+        description: "Inspirée du sport automobile avec ouverture sur le balancier (Open Heart).",
         specs: [
           { label: "Boîtier :", value: "40 mm (Épaisseur 16 mm)" },
-          { label: "Mouvement :", value: "Mécanique Automatique / Balancier Apparent" },
-          { label: "Bracelet :", value: "Cuir Véritable Surpiqué (24 mm)" },
-          { label: "Poids :", value: "70 g" },
+          { label: "Mouvement :", value: "Balancier Apparent" },
           { label: "Expédition :", value: "Express Offerte (4 à 7 jours)" }
         ],
         colors: [
@@ -570,11 +562,10 @@
         price: "249,00 €",
         defaultColor: "Bleu / Cuir Bleu",
         defaultImg: "casirui-openheart-cadran-bleu-bracelet-bleu.avif",
-        description: "Finesse et haute horlogerie : cadran au motif guilloché élaboré avec une double fenêtre révélant le cœur battant du calibre mécanique.",
+        description: "Cadran au motif guilloché élaboré avec double fenêtre sur l'échappement.",
         specs: [
           { label: "Cadran :", value: "Motif Guilloché & Double Cœur Ajouré" },
           { label: "Bracelet :", value: "Cuir Véritable" },
-          { label: "Mouvement :", value: "Automatique Squelette Partiel" },
           { label: "Expédition :", value: "Express Offerte (4 à 7 jours)" }
         ],
         colors: [
@@ -585,12 +576,22 @@
       }
     };
 
+    // Gestion du menu déroulant
+    function toggleDropdownMenu() {
+      const menu = document.getElementById('dropdownMenu');
+      if (menu.classList.contains('hidden')) {
+        menu.classList.remove('hidden');
+        setTimeout(() => menu.classList.remove('-translate-y-full'), 10);
+      } else {
+        menu.classList.add('-translate-y-full');
+        setTimeout(() => menu.classList.add('hidden'), 500);
+      }
+    }
+
     const calibreVideo = document.getElementById('calibreVideo');
     const boxVideo = document.getElementById('boxVideo');
-    
     const firstVideoContainer = document.getElementById('firstVideoContainer');
     const secondVideoContainer = document.getElementById('secondVideoContainer');
-    
     const textSection = document.getElementById('textSection');
     const secondVideoText = document.getElementById('secondVideoText');
     const siteHeader = document.getElementById('siteHeader');
@@ -600,10 +601,7 @@
     let currentActive = 0;
 
     [calibreVideo, boxVideo].forEach(v => {
-      if (v) {
-        v.load();
-        v.pause();
-      }
+      if (v) { v.load(); v.pause(); }
     });
 
     window.addEventListener('scroll', () => {
@@ -612,7 +610,6 @@
 
       const maxScrollPhase1 = windowH * 3.2;
       const progressPhase1 = Math.min(Math.max(scrollY / maxScrollPhase1, 0), 1);
-
       if (calibreVideo && calibreVideo.duration) {
         calibreVideo.currentTime = progressPhase1 * calibreVideo.duration;
       }
@@ -620,7 +617,6 @@
       const startPhase2 = windowH * 3.2;
       const maxScrollPhase2 = windowH * 3.2;
       const progressPhase2 = Math.min(Math.max((scrollY - startPhase2) / maxScrollPhase2, 0), 1);
-
       if (boxVideo && boxVideo.duration) {
         boxVideo.currentTime = progressPhase2 * boxVideo.duration;
       }
@@ -740,7 +736,6 @@
     function changeProductColor(imageSrc, colorName) {
       const mainImage = document.getElementById('mainProductImage');
       const colorText = document.getElementById('selectedColorName');
-      
       if (mainImage) mainImage.src = imageSrc;
       if (colorText) colorText.innerText = colorName;
     }
