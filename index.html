@@ -50,7 +50,7 @@
   <!-- HAUTEUR VIRTUELLE GLOBALE DU SCROLL (800vh) -->
   <div class="h-[800vh] w-full absolute top-0 left-0 pointer-events-none"></div>
 
-  <!-- PREMIÈRE VIDÉO FIXE (PILOTÉE PAR LE SCROLL) -->
+  <!-- PREMIÈRE VIDÉO FIXE (PILOTÉE STRICTEMENT PAR LE SCROLL) -->
   <div id="firstVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212] transition-opacity duration-700 overflow-hidden">
     <div class="relative w-full h-full flex items-center justify-center">
       <video
@@ -594,12 +594,15 @@
 
     let currentActive = 0;
 
-    [calibreVideo, boxVideo].forEach(v => {
-      if (v) {
-        v.load();
-        v.pause();
-      }
-    });
+    // Forcer la vidéo à se bloquer au départ à 0 seconde (pas d'autoplays parasites)
+    if (calibreVideo) {
+      calibreVideo.pause();
+      calibreVideo.currentTime = 0;
+    }
+    if (boxVideo) {
+      boxVideo.pause();
+      boxVideo.currentTime = 0;
+    }
 
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
@@ -714,7 +717,7 @@
 
       const specsContainer = document.getElementById('specsContainer');
       specsContainer.innerHTML = '';
-      product.specs.forEach(s => {
+      product.specs.format ? '' : product.specs.forEach(s => {
         const div = document.createElement('div');
         div.className = 'flex justify-between py-2 border-b border-black/5';
         div.innerHTML = `<span>${s.label}</span><span class="font-bold text-black">${s.value}</span>`;
