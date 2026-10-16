@@ -50,7 +50,7 @@
   <!-- HAUTEUR VIRTUELLE GLOBALE DU SCROLL (800vh) -->
   <div class="h-[800vh] w-full absolute top-0 left-0 pointer-events-none"></div>
 
-  <!-- PREMIÈRE VIDÉO FIXE -->
+  <!-- PREMIÈRE VIDÉO FIXE (PILOTÉE PAR LE SCROLL) -->
   <div id="firstVideoContainer" class="fixed top-0 left-0 w-full h-full z-0 flex items-center justify-center bg-[#121212] transition-opacity duration-700 overflow-hidden">
     <div class="relative w-full h-full flex items-center justify-center">
       <video
@@ -58,8 +58,6 @@
         src="vidéo.mp4"
         muted
         playsinline
-        autoplay
-        loop
         preload="auto"
         class="w-full h-full object-cover pointer-events-none"
       ></video>
@@ -136,7 +134,7 @@
     <button onclick="scrollToIndex(3)" id="nav-3" class="nav-btn text-right text-[10px] uppercase tracking-[0.25em] text-white/30 hover:text-white transition-all duration-300">Collection</button>
   </nav>
 
-  <!-- CONTENU TEXTE 1ÈRE VIDÉO (SANS BOUTON DE REDIRECTION GÊNANT) -->
+  <!-- CONTENU TEXTE 1ÈRE VIDÉO -->
   <div id="textSection" class="fixed inset-0 z-20 pointer-events-none flex items-center justify-center md:justify-start px-6 md:px-20 transition-opacity duration-500">
     <div class="w-full max-w-sm md:max-w-md text-glow relative h-64 text-center md:text-left">
 
@@ -150,7 +148,7 @@
 
       <div id="sec-1" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
         <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/70 block mb-2">HOMMAGE HORLOGER</span>
-        <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">MAISON FONDÉE SUR L'EXigence</h2>
+        <h2 class="text-3xl md:text-5xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">MAISON FONDÉE SUR L'EXIGENCE</h2>
         <p class="text-xs text-white/90 leading-relaxed mb-2 md:mb-4">
           <strong>Yates</strong> • <strong>Mudge</strong>
         </p>
@@ -169,7 +167,7 @@
 
       <div id="sec-3" class="section-content absolute inset-0 opacity-0 translate-y-4 pointer-events-none">
         <span class="text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-bold text-white/70 block mb-2">L'ÉCRIN SIGNATURE</span>
-        <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">L'EXPÉRIMENTATION</h2>
+        <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase mb-3 md:mb-4 leading-none">L'EXPÉRIENCE</h2>
         <p class="text-xs md:text-sm text-white/90 tracking-wide font-normal mb-4 md:mb-6">
           Livraison Express Internationale Offerte • Garantie 2 Ans. Continuez le défilement.
         </p>
@@ -596,17 +594,10 @@
 
     let currentActive = 0;
 
-    // Correction du freeze et chargement préventif des vidéos
     [calibreVideo, boxVideo].forEach(v => {
       if (v) {
         v.load();
         v.pause();
-      }
-    });
-
-    window.addEventListener('load', () => {
-      if (calibreVideo) {
-        calibreVideo.play().catch(() => {});
       }
     });
 
